@@ -14,18 +14,23 @@ export default class PowershellRunner {
     const scriptPath = Path.join(__dirname, 'modules', 'dummy', 'powershell', 'init.ps1');
 
     this.ps.addCommand(`. ${scriptPath}`, []);
-    this.ready = this.ps.invoke();
+    // this.ready = this.ps.invoke();
   }
 
   run(command) {
-    return this.ready.then(() => {
-      this.ps.addCommand(`${command} | ConvertTo-Json`);
-      this.ready = this.ps.invoke().then((res) => {
+    this.ps.addCommand(`${command} | ConvertTo-Json`);
+    return this.ps.invoke()
+      .then((res) => {
         console.log(`received res : ${res}`);
-        JSON.parse(res);
+        const obj = JSON.parse(res);
+        if (obj === null) { return []; }
+        if (!obj.length) { return [obj]; }
+        return obj;
+      })
+      .catch((err) => {
+        console.error(`Runner ERROR while trying to run command ${command}`);
+        console.error(err);
       });
-      return this.ready;
-    });
   }
 }
 
