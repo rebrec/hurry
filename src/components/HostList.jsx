@@ -8,6 +8,11 @@ class HostList extends React.Component {
       { columnName: 'Username', property: 'username' },
       { columnName: 'Something', property: 'something' },
     ];
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(element){
+    this.props.onClick(element);
   }
 
   renderHeader() {
@@ -27,13 +32,7 @@ class HostList extends React.Component {
 
     for (let i = 0; i < data.length; i++) {
       const d = data[i];
-      const trElements = [];
-      for (let j = 0; j < columns.length; j++) {
-        const col = columns[j];
-        const colValue = d[col.property];
-        trElements.push(<td key={colValue}>{colValue}</td>);
-      }
-      tbodyElements.push(<tr>{trElements}</tr>);
+      tbodyElements.push(<HostListLine key={i} onClick={this.handleClick} element={d} columns={columns} />);
     }
     return <tbody>{tbodyElements}</tbody>;
   }
@@ -43,10 +42,14 @@ class HostList extends React.Component {
     return (
       <div className="row">
         <div className="col-sm-1"/>
-        <table className="table col-sm-10">
-          {this.renderHeader()}
-          {this.renderBody()}
-        </table>
+        { (!this.props.data || !this.props.data.length || this.props.data.length === 0) ? (
+            <span>No result found for {this.props.keyword}.</span>
+         ) : (
+          <table className="table col-sm-10">
+            {this.renderHeader()}
+            {this.renderBody()}
+          </table>
+        )}
         <div className="col-sm-1"/>
       </div>
     );
@@ -56,13 +59,24 @@ class HostList extends React.Component {
 class HostListLine extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick(e){
+    // console.log("clicked on ", this.props.element);
+    this.props.onClick(this.props.element);
+  }
   render() {
+    const columns = this.props.columns;
+    const trElements = [];
+    const elt = this.props.element;
+    for (let j = 0; j < columns.length; j++) {
+      const col = columns[j];
+      const colValue = elt[col.property];
+      trElements.push(<td key={colValue}>{colValue}</td>);
+    }
     return (
-      <div>
-
-      </div>
+      <tr onClick={this.handleClick}>{trElements}</tr>
     );
   }
 }
