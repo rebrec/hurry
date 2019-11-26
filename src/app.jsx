@@ -25,6 +25,7 @@ export default class App extends React.Component {
 
     // this.handleChange = this.handleChange.bind(this)
     this.handleOnSearchClick = this.handleOnSearchClick.bind(this);
+    this.handleSearchResultRowClick= this.handleSearchResultRowClick.bind(this);
   }
 
   handleOnSearchClick(keyword) {
@@ -49,6 +50,9 @@ export default class App extends React.Component {
   //     this.props.onSearchClick(this.state.searchedText);
   //     event.preventDefault();
   // }
+  handleSearchResultRowClick(element){
+    console.log('clicked on ', element);
+  }
 
   render() {
     return (<div>
@@ -63,7 +67,7 @@ export default class App extends React.Component {
       <div className="row">
         <div className="col-sm-12">
           {(this.state.status === APP_STATUS.DISPLAYING_RESULTS) && (
-            <HostList data={this.state.searchResults}/>
+            <HostList onClick={this.handleSearchResultRowClick} keyword={this.state.searchKeyword} data={this.state.searchResults} />
           )}
 
         </div>
