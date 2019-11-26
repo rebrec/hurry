@@ -2,6 +2,7 @@ import React from 'react';
 
 import PowershellRunner from './runner';
 import SearchBox from './components/SearchBox';
+import HostList from './components/HostList';
 
 
 const APP_STATUS = {
@@ -28,13 +29,16 @@ export default class App extends React.Component {
 
   handleOnSearchClick(keyword) {
     this.setState({ status: APP_STATUS.SEARCHING });
-    this.setState({ searchKeyword: keyword });
 
-    let a= this.runner.run(`$dummy.search('${keyword}')`);
-    console.log(a);
-      // .then( res => {
-      //   console.log(res);
-      // });
+    this.runner.run(`$dummy.search('${keyword}')`)
+      .then((res) => {
+        console.log('res = ', res);
+        this.setState({
+          status: APP_STATUS.DISPLAYING_RESULTS,
+          searchKeyword: keyword,
+          searchResults: res,
+        });
+      });
   }
 
   // handleChange(e) {
@@ -48,11 +52,22 @@ export default class App extends React.Component {
 
   render() {
     return (<div>
-      <SearchBox onSearchClick={this.handleOnSearchClick} />
+      <div className="row">
+        <div className="col-sm-12">
+          <SearchBox onSearchClick={this.handleOnSearchClick}/>
+        </div>
 
-      {(this.state.status === APP_STATUS.SEARCHING) ? (
-        <div>Searching for {this.state.searchKeyword} ...</div>) : (null)}
+        {(this.state.status === APP_STATUS.SEARCHING) && (
+          <div>Searching for {this.state.searchKeyword} ...</div>)}
+      </div>
+      <div className="row">
+        <div className="col-sm-12">
+          {(this.state.status === APP_STATUS.DISPLAYING_RESULTS) && (
+            <HostList data={this.state.searchResults}/>
+          )}
 
+        </div>
+      </div>
     </div>);
   }
 }
