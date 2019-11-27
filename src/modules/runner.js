@@ -11,7 +11,10 @@ export default class PowershellRunner {
       noProfile: true,
     });
 
-    const scriptPath = Path.join(__dirname, 'modules', 'dummy', 'powershell', 'init.ps1');
+    const scriptPath = Path.join(__dirname, 'dummy', 'powershell', 'init.ps1');
+    // adding this line will  make webpack copy the data.json file at the same location as init.ps1
+    const dataFile = Path.join(__dirname, 'dummy', 'powershell', 'data.json'); // basic workaround until i find correct way to let webpack  copy this file
+
 
     this.ps.addCommand(`. ${scriptPath}`, []);
     // this.ready = this.ps.invoke();
