@@ -50,8 +50,8 @@ export default class App extends React.Component {
   //     this.props.onSearchClick(this.state.searchedText);
   //     event.preventDefault();
   // }
-  handleSearchResultRowClick(element){
-    console.log('clicked on ', element);
+  handleSearchResultRowClick(e, data){
+    console.log('displaying menu for ', data);
   }
 
   render() {

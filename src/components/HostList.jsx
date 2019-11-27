@@ -8,11 +8,6 @@ class HostList extends React.Component {
       { columnName: 'Username', property: 'username' },
       { columnName: 'Something', property: 'something' },
     ];
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(element){
-    this.props.onClick(element);
   }
 
   renderHeader() {
@@ -32,7 +27,7 @@ class HostList extends React.Component {
 
     for (let i = 0; i < data.length; i++) {
       const d = data[i];
-      tbodyElements.push(<HostListLine key={i} onClick={this.handleClick} element={d} columns={columns} />);
+      tbodyElements.push(<HostListLine key={i} onClick={this.props.onClick} element={d} columns={columns} />);
     }
     return <tbody>{tbodyElements}</tbody>;
   }
@@ -59,13 +54,8 @@ class HostList extends React.Component {
 class HostListLine extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e){
-    // console.log("clicked on ", this.props.element);
-    this.props.onClick(this.props.element);
-  }
   render() {
     const columns = this.props.columns;
     const trElements = [];
@@ -76,7 +66,7 @@ class HostListLine extends React.Component {
       trElements.push(<td key={colValue}>{colValue}</td>);
     }
     return (
-      <tr onClick={this.handleClick}>{trElements}</tr>
+      <tr onClick={(e) => {this.props.onClick(e, this.props.element)}}>{trElements}</tr>
     );
   }
 }
