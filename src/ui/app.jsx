@@ -1,8 +1,11 @@
 import React from 'react';
 
-import PowershellRunner from './runner';
+import PowershellRunner from '../modules/runner';
 import SearchBox from './components/SearchBox';
 import HostList from './components/HostList';
+import RunnerDebugConsole from './components/RunnerDebugConsole';
+
+import './app.css'
 
 
 const APP_STATUS = {
@@ -67,9 +70,17 @@ export default class App extends React.Component {
       <div className="row">
         <div className="col-sm-12">
           {(this.state.status === APP_STATUS.DISPLAYING_RESULTS) && (
-            <HostList onClick={this.handleSearchResultRowClick} keyword={this.state.searchKeyword} data={this.state.searchResults} />
+            <HostList
+              onClick={this.handleSearchResultRowClick}
+              keyword={this.state.searchKeyword}
+              data={this.state.searchResults}
+            />
           )}
 
+        </div>
+        <div className="fixed-bottom debug-console">
+          <RunnerDebugConsole history={this.runner.ps.history} />
+          {/*<RunnerDebugConsole  />*/}
         </div>
       </div>
     </div>);
