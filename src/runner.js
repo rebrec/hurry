@@ -22,6 +22,7 @@ export default class PowershellRunner {
     return this.ps.invoke()
       .then((res) => {
         console.log(`received res : ${res}`);
+        this.ps.streams
         const obj = JSON.parse(res);
         if (obj === null) { return []; }
         if (!obj.length) { return [obj]; }
