@@ -3,6 +3,7 @@ import React from 'react';
 import PowershellRunner from '../modules/runner';
 import SearchBox from './components/SearchBox';
 import HostList from './components/HostList';
+import CollapsiblePanel from './components/CollapsiblePanel';
 import RunnerDebugConsole from './components/RunnerDebugConsole';
 
 import './app.css'
@@ -78,10 +79,9 @@ export default class App extends React.Component {
           )}
 
         </div>
-        <div className="fixed-bottom debug-console">
+        <CollapsiblePanel position="bottom">
           <RunnerDebugConsole history={this.runner.ps.history} />
-          {/*<RunnerDebugConsole  />*/}
-        </div>
+        </CollapsiblePanel>
       </div>
     </div>);
   }
