@@ -84,15 +84,15 @@ class Menu extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="menu-container row">
+      <div menu-panel-right>
+        <div className="row">
           <div className="col-sm-1">
             <button onClick={this.goBack} disabled={this.state.dataLHistory.length === 0}>Up</button>
           </div>
         </div>
         <div className="menu-container row">
           <PanelLeft data={this.state.dataL} selected={this.state.panelLeftSelection} onClick={this.handlePanelLeftClick}/>
-          <PanelRight data={this.state.dataR} selected={this.state.panelRightSelection} onClick={this.handlePanelRightClick}/> }
+          <PanelRight data={this.state.dataR} selected={this.state.panelRightSelection} onClick={this.handlePanelRightClick}/>
         </div>
       </div>
     );
@@ -115,10 +115,11 @@ class PanelLeft extends React.Component {
         key={i}
         data={elt}
         onClick={this.props.onClick}
+        handlerOn="onMouseOver"
         selected={selected != null ? (selected.caption === elt.caption) : false } />);
     }
     return (
-      <div className="col-sm-6">
+      <div className="col-sm-6 menu-panel-left">
         {elts}
       </div>
     );
@@ -134,10 +135,10 @@ class PanelRight extends React.Component {
     const {data}= this.props;
     let elts = [];
     for (let i=0;i<data.length;i++){
-      elts.push(<MenuElement key={i} data={data[i]} onClick={this.props.onClick} />);
+      elts.push(<MenuElement key={i} data={data[i]} onClick={this.props.onClick} handlerOn="onClick" />);
     }
     return (
-      <div className="col-sm-6">
+      <div className="col-sm-6 menu-panel-right">
         {elts.length > 0 ? elts : "Nothing here."}
       </div>
     );
@@ -151,10 +152,12 @@ class MenuElement extends React.Component {
   }
 
   render() {
-    const selected = this.props.selected ? 'menu-item-selected' : '';
+    const selected = this.props.selected ? 'arrow_box' : '';
     return (
-      <div className={`menu-item-${this.props.data.type.toLowerCase()} ${selected}` } onClick={this.handleClick}>
-        {this.props.data.type.toLowerCase()} : {this.props.data.caption}
+      <div className="row">
+        <div className={`col-sm-12 menu-item-${this.props.data.type.toLowerCase()} ${selected}` } {...{[this.props.handlerOn]: this.handleClick}}>
+          {this.props.data.type.toLowerCase()} : {this.props.data.caption}
+        </div>
       </div>
     );
   }
