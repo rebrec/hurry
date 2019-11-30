@@ -1,3 +1,43 @@
+.menu-container{
+    border: 3px solid #c2e1f5;
+}
+.menu-panel-left{
+    z-index:1;
+    background: #9dcfed;
+    border-right: 3px solid #c2e1f5;
+}
+.menu-panel-right{
+    background: #88b7d5;
+    /*border-left: 3px solid #c2e1f5;*/
+}
 .menu-item-selected {
     background-color: cornflowerblue;
+}
+.arrow_box {
+    position: relative;
+    background: #88b7d5;
+    border: 0px solid #c2e1f5;
+}
+.arrow_box:after, .arrow_box:before {
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow_box:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-left-color: #88b7d5;
+    border-width: 12px;
+    margin-top: -12px;
+}
+.arrow_box:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-left-color: #c2e1f5;
+    border-width: 16px;
+    margin-top: -16px;
 }

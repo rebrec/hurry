@@ -61,14 +61,14 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
-          <SearchBox onSearchClick={this.handleOnSearchClick}/>
+        <SearchBox onSearchClick={this.handleOnSearchClick}/>
         </div>
 
-        {(this.state.status === APP_STATUS.SEARCHING) && (
-          <div>Searching for {this.state.searchKeyword} ...</div>)}
+        {/*{(this.state.status === APP_STATUS.SEARCHING) && (*/}
+        {/*  <div>Searching for {this.state.searchKeyword} ...</div>)}*/}
       </div>
       <div className="row">
         <div className="col-sm-12">
