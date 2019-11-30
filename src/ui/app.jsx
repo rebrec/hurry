@@ -5,6 +5,8 @@ import SearchBox from './components/SearchBox';
 import HostList from './components/HostList';
 import CollapsiblePanel from './components/CollapsiblePanel';
 import RunnerDebugConsole from './components/RunnerDebugConsole';
+import Menu from './components/Menu';
+import menuConfig from '../modules/menuConfig.js'
 
 import './app.css'
 
@@ -67,6 +69,11 @@ export default class App extends React.Component {
 
         {(this.state.status === APP_STATUS.SEARCHING) && (
           <div>Searching for {this.state.searchKeyword} ...</div>)}
+      </div>
+      <div className="row">
+        <div className="col-sm-12">
+          <Menu data={menuConfig} main={true} />
+        </div>
       </div>
       <div className="row">
         <div className="col-sm-12">
