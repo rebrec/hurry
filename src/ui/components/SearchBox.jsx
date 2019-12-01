@@ -22,8 +22,8 @@ export default class SearchBox extends React.Component {
   render() {
     return (
       <div className="row">
-        <div className="col-sm-1"/>
-          <form className="col-sm-10" onSubmit={this.handleSubmit}>
+        {/*<div className="col-sm-1"/>*/}
+          <form className="col-sm-12" onSubmit={this.handleSubmit}>
             <div className="row">
               <input
                 className="col-sm-10"
@@ -32,10 +32,10 @@ export default class SearchBox extends React.Component {
                 placeholder="Enter Keyword (Computer, User, etc.)"
                 onChange={ this.handleChange }
               />
-              <input className="col-sm-2" type="submit" value="Submit" />
+              <input className="col-sm-2 btn" type="submit" value="Submit" />
             </div>
           </form>
-        <div className="col-sm-1"/>
+        {/*<div className="col-sm-1"/>*/}
       </div>
     );
   }

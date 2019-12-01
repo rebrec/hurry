@@ -87,7 +87,7 @@ class Menu extends React.Component {
       <div menu-panel-right>
         <div className="row">
           <div className="col-sm-1">
-            <button onClick={this.goBack} disabled={this.state.dataLHistory.length === 0}>Up</button>
+            <button onClick={this.goBack} className="btn button " disabled={this.state.dataLHistory.length === 0}>Up</button>
           </div>
         </div>
         <div className="menu-container row">
