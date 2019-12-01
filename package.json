@@ -67,7 +67,8 @@
     "electron-squirrel-startup": "^1.0.0",
     "node-powershell": "^4.0.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "stateful-process-command-proxy": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
