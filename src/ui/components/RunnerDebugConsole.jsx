@@ -1,5 +1,5 @@
 import React from 'react';
-import './RunnerDebugConsole.css';
+import './RunnerDebugConsole.scss';
 
 class RunnerDebugConsole extends React.Component {
   constructor(props) {
