@@ -8,8 +8,7 @@ import RunnerDebugConsole from './components/RunnerDebugConsole';
 import Menu from './components/Menu';
 import menuConfig from '../modules/menuConfig.js'
 
-import './app.css'
-
+import './app.scss'
 
 const APP_STATUS = {
   WAITING_FOR_SEARCH: 1,
