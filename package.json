@@ -63,11 +63,16 @@
   "dependencies": {
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
+    "babel-preset-mobx": "^2.0.0",
     "bootstrap": "^4.4.0",
     "electron-squirrel-startup": "^1.0.0",
+    "mobx": "^5.15.0",
+    "mobx-react": "^6.1.4",
     "node-powershell": "^4.0.0",
+    "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "sass-loader": "^8.0.0",
     "stateful-process-command-proxy": "^1.0.1"
   },
   "devDependencies": {
