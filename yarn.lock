@@ -3147,6 +3147,11 @@ electron-packager@^14.0.5:
     semver "^6.0.0"
     yargs-parser "^16.0.0"
 
+electron-react-devtools@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/electron-react-devtools/-/electron-react-devtools-0.5.3.tgz#c74edb1245dc1cfe1380b93016cd4eb588ed00b7"
+  integrity sha1-x07bEkXcHP4TgLkwFs1OtYjtALc=
+
 electron-rebuild@^1.8.6:
   version "1.8.6"
   resolved "https://registry.yarnpkg.com/electron-rebuild/-/electron-rebuild-1.8.6.tgz#4454ef5517c0588aef9bca0d923ff5633000b949"

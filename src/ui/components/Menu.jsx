@@ -1,5 +1,9 @@
 import React from 'react';
 import './Menu.scss';
+import { observer } from 'mobx-react'
+import store from '../../store/RootStore'
+
+@observer
 class Menu extends React.Component {
   constructor(props) {
     super(props);
@@ -86,6 +90,10 @@ class Menu extends React.Component {
     return (
       <div menu-panel-right>
         <div className="row">
+          <div className="col-sm-12">
+            <h3>Infos for {store.uiState.search.selectedResult.hostname}</h3>
+          </div>
+        </div>        <div className="row">
           <div className="col-sm-1">
             <button onClick={this.goBack} className="btn button " disabled={this.state.dataLHistory.length === 0}>Up</button>
           </div>
