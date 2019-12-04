@@ -1,4 +1,6 @@
 import React from 'react';
+import { observer } from 'mobx-react'
+import store from '../store/RootStore'
 
 import PowershellRunner from '../modules/runner';
 import SearchBox from './components/SearchBox';
@@ -17,6 +19,7 @@ const APP_STATUS = {
 };
 
 
+@observer
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -63,6 +66,7 @@ export default class App extends React.Component {
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
+        Current Search : {store.uiState.currentSearch};
         <SearchBox onSearchClick={this.handleOnSearchClick}/>
         </div>
 
