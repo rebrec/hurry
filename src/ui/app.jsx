@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react'
 import store from '../store/RootStore'
 
-import PowershellRunner from '../modules/runner';
 import SearchBox from './components/SearchBox';
 import HostList from './components/HostList';
 import CollapsiblePanel from './components/CollapsiblePanel';
@@ -28,7 +27,7 @@ export default class App extends React.Component {
       searchKeyword: '',
     };
 
-    this.runner = new PowershellRunner();
+
 
 
     // this.handleChange = this.handleChange.bind(this)
@@ -39,15 +38,6 @@ export default class App extends React.Component {
   handleOnSearchClick(keyword) {
     this.setState({ status: APP_STATUS.SEARCHING });
 
-    this.runner.run(`$dummy.search('${keyword}')`)
-      .then((res) => {
-        console.log('res = ', res);
-        this.setState({
-          status: APP_STATUS.DISPLAYING_RESULTS,
-          searchKeyword: keyword,
-          searchResults: res,
-        });
-      });
   }
 
   // handleChange(e) {
@@ -63,36 +53,41 @@ export default class App extends React.Component {
   }
 
   render() {
+    const {uiState} = store;
+    console.log('store',uiState);
+
     return (<div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
-        Current Search : {store.uiState.currentSearch};
-        <SearchBox onSearchClick={this.handleOnSearchClick}/>
+          <SearchBox />
         </div>
 
-        {/*{(this.state.status === APP_STATUS.SEARCHING) && (*/}
+        {/*{(store.uiState.app.status === APP_STATUS.SEARCHING) && (*/}
         {/*  <div>Searching for {this.state.searchKeyword} ...</div>)}*/}
       </div>
+
       <div className="row">
         <div className="col-sm-12">
-          <Menu data={menuConfig} main={true} />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12">
-          {(this.state.status === APP_STATUS.DISPLAYING_RESULTS) && (
+          {(uiState.app.status === APP_STATUS.DISPLAYING_RESULTS) && (
             <HostList
               onClick={this.handleSearchResultRowClick}
-              keyword={this.state.searchKeyword}
-              data={this.state.searchResults}
             />
           )}
 
         </div>
-        <CollapsiblePanel position="bottom">
-          <RunnerDebugConsole history={this.runner.ps.history} />
-        </CollapsiblePanel>
       </div>
+      {uiState.app.menu.visible && (
+      <div className="row">
+          <div className="col-sm-12">
+            <Menu data={menuConfig} main={true} />
+          </div>
+      </div>
+      )}
+
+
+        <CollapsiblePanel position="bottom">
+          {/*<RunnerDebugConsole history={this.runner.ps.history} />*/}
+        </CollapsiblePanel>
     </div>);
   }
 }

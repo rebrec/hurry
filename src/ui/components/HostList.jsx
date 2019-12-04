@@ -1,5 +1,8 @@
 import React from 'react';
+import { observer } from 'mobx-react'
+import store from '../../store/RootStore'
 
+@observer
 class HostList extends React.Component {
   constructor(props) {
     super(props);
@@ -23,22 +26,24 @@ class HostList extends React.Component {
   renderBody() {
     const tbodyElements = [];
     const columns = this.columns;
-    const data = this.props.data;
+    const results = store.uiState.search.results;
 
-    for (let i = 0; i < data.length; i++) {
-      const d = data[i];
-      tbodyElements.push(<HostListLine key={i} onClick={this.props.onClick} element={d} columns={columns} />);
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i];
+      console.log('rendering line with data', r);
+      tbodyElements.push(<HostListLine key={i} store={store} element={r} columns={columns} />);
     }
     return <tbody>{tbodyElements}</tbody>;
   }
 
   render() {
-    console.log(`data = ${JSON.stringify(this.props.data)}`);
+    console.log("blah")
+    const search = store.uiState.search;
     return (
       <div className="row">
         <div className="col-sm-1"/>
-        { (!this.props.data || !this.props.data.length || this.props.data.length === 0) ? (
-            <span>No result found for {this.props.keyword}.</span>
+        { (!search.results.length === 0) ? (
+            <span>No result found for {store.uiState.currentSearch}.</span>
          ) : (
           <table className="table col-sm-10">
             {this.renderHeader()}
@@ -51,11 +56,17 @@ class HostList extends React.Component {
   }
 }
 
+@observer
 class HostListLine extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick(){
+    const {uiState} = this.props.store;
+    uiState.selectHost(this.props.element);
+  }
   render() {
     const columns = this.props.columns;
     const trElements = [];
@@ -66,7 +77,7 @@ class HostListLine extends React.Component {
       trElements.push(<td key={colValue}>{colValue}</td>);
     }
     return (
-      <tr onClick={(e) => {this.props.onClick(e, this.props.element)}}>{trElements}</tr>
+      <tr onClick={this.handleClick}>{trElements}</tr>
     );
   }
 }

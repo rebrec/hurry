@@ -65,6 +65,7 @@
     "@types/react-dom": "^16.9.4",
     "babel-preset-mobx": "^2.0.0",
     "bootstrap": "^4.4.0",
+    "electron-react-devtools": "^0.5.3",
     "electron-squirrel-startup": "^1.0.0",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",

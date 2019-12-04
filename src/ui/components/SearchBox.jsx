@@ -22,6 +22,7 @@ export default class SearchBox extends React.Component {
   }
 
   render() {
+    const search = store.uiState.search;
     return (
       <div className="row">
           <form className="col-sm-12" onSubmit={this.handleSubmit}>
@@ -29,7 +30,7 @@ export default class SearchBox extends React.Component {
               <input
                 className="col-sm-10"
                 name="searchField"
-                value={ store.uiState.searchedText }
+                value={ search.text }
                 placeholder="Enter Keyword (Computer, User, etc.)"
                 onChange={ this.handleChange }
               />
