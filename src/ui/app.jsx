@@ -77,11 +77,8 @@ export default class App extends React.Component {
         </div>
       </div>
       {uiState.app.menu.visible && (
-      <div className="row">
-          <div className="col-sm-12">
-            <Menu data={menuConfig} main={true} />
-          </div>
-      </div>
+      <Menu data={menuConfig} main={true} />
+
       )}
 
 

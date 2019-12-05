@@ -16,6 +16,7 @@ class Menu extends React.Component {
     };
     this.handlePanelLeftClick = this.handlePanelLeftClick.bind(this);
     this.handlePanelRightClick = this.handlePanelRightClick.bind(this);
+    this.handleTabProviderClick = this.handleTabProviderClick.bind(this);
     this.goBack = this.goBack.bind(this);
   }
 
@@ -37,12 +38,7 @@ class Menu extends React.Component {
     if (this.state.dataLHistory.length === 0) return;
     const newHistory = [...this.state.dataLHistory];
     const historyElt = newHistory.pop();
-    console.log('goback, history will become : ',{
-      dataL: historyElt.dataL,
-      dataR: historyElt.dataR,
-      panelLeftSelection: historyElt.panelLeftSelection,
-      dataLHistory: newHistory,
-    });
+
     this.setState({
       dataL: historyElt.dataL,
       dataR: historyElt.dataR,
@@ -72,7 +68,6 @@ class Menu extends React.Component {
     switch (elt.type) {
       case 'CONTAINER':
         this.saveToHistory();
-        console.log('ELT=',elt);
         this.setState({
           dataL: this.state.dataR,
           dataR: elt.children,
@@ -86,36 +81,123 @@ class Menu extends React.Component {
     }
   }
 
+  handleTabProviderClick(e, element){
+    store.uiState.selectMenuTab(element.caption);
+  }
+
   render() {
+    const tabs = [
+      {
+        caption: "Action",
+        content: (
+          <div className="col-sm-12 ">
+            <div className="row">
+              <div className="col-sm-1">
+                <button onClick={this.goBack} className="btn button "
+                        disabled={this.state.dataLHistory.length === 0}>Up
+                </button>
+              </div>
+
+            </div>
+            <div className="row menu-container">
+              <CommandPanelLeft data={this.state.dataL} selected={this.state.panelLeftSelection}
+                                onClick={this.handlePanelLeftClick}/>
+              <CommandPanelRight data={this.state.dataR} selected={this.state.panelRightSelection}
+                                 onClick={this.handlePanelRightClick}/>
+            </div>
+          </div>
+        )
+      },
+      {
+        caption: "Infos",
+        content: (
+          <div className="col-sm-12 ">Rien n'est encore défini
+          </div>
+        )
+      }
+    ];
     return (
-      <div menu-panel-right>
-        <div className="row">
-          <div className="col-sm-12">
-            <h3>Infos for {store.uiState.search.selectedResult.hostname}</h3>
+      <div className="menu row">
+        <button onClick={store.uiState.hideMenu} className="menu-close-button">X</button>
+
+        <div className="col-sm-12">
+          <div className="row ">
+            <div className="col-sm-12">
+              <h3>{store.uiState.search.selectedResult.hostname.toUpperCase()}</h3>
+            </div>
           </div>
-        </div>        <div className="row">
-          <div className="col-sm-1">
-            <button onClick={this.goBack} className="btn button " disabled={this.state.dataLHistory.length === 0}>Up</button>
+
+          <div className="row ">
+            <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.menu.selectedTab}/>
           </div>
+
         </div>
-        <div className="menu-container row">
-          <PanelLeft data={this.state.dataL} selected={this.state.panelLeftSelection} onClick={this.handlePanelLeftClick}/>
-          <PanelRight data={this.state.dataR} selected={this.state.panelRightSelection} onClick={this.handlePanelRightClick}/>
-        </div>
+
       </div>
     );
   }
 }
 
-class PanelLeft extends React.Component {
+
+class TabProvider extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {tabs, selected}= this.props;
+    let selectedTab;
+    const elts = [];
+    for (let i=0;i<tabs.length;i++){
+      const tab = tabs[i];
+      elts.push(
+        <TabElement key={i} onClick={this.props.onClick} element={tab} selected={tab.caption === selected}/>
+      );
+      if (tab.caption === selected){ selectedTab = tab }
+    }
+    return (
+      <div className="col-sm-12">
+        <div className="row">
+          <ul className="col-sm-12 nav nav-tabs">
+            {elts}
+          </ul>
+        </div>
+        <div className="row">
+          {selectedTab.content}
+        </div>
+
+      </div>
+    );
+  }
+}
+
+class TabElement extends React.Component {
+  constructor(props){
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+
+  }
+  handleClick = (e)=>{
+    this.props.onClick(e, this.props.element);
+  }
+  render(){
+    const {selected, element} = this.props;
+    return (
+      <li className="nav-item">
+        <a className={"nav-link" + (selected ? " active" : "")} href="#"
+           onClick={this.handleClick}>{element.caption}</a>
+      </li>
+    )
+  }
+}
+
+class CommandPanelLeft extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     const {data, selected}= this.props;
-    console.log('data=',data);
-    console.log('selected=',selected);
     let elts = [];
     for (let i=0;i<data.length;i++){
       const elt = data[i];
@@ -127,14 +209,14 @@ class PanelLeft extends React.Component {
         selected={selected != null ? (selected.caption === elt.caption) : false } />);
     }
     return (
-      <div className="col-sm-6 menu-panel-left">
+      <div className="col-sm-6 menu-command-panel-left">
         {elts}
       </div>
     );
   }
 }
 
-class PanelRight extends React.Component {
+class CommandPanelRight extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -146,7 +228,7 @@ class PanelRight extends React.Component {
       elts.push(<MenuElement key={i} data={data[i]} onClick={this.props.onClick} handlerOn="onClick" />);
     }
     return (
-      <div className="col-sm-6 menu-panel-right">
+      <div className="col-sm-6 menu-command-panel-right">
         {elts.length > 0 ? elts : "Nothing here."}
       </div>
     );
