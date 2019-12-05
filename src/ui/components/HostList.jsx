@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react'
 import store from '../../store/RootStore'
+import './HostList.scss'
 
 @observer
 class HostList extends React.Component {
@@ -30,14 +31,13 @@ class HostList extends React.Component {
 
     for (let i = 0; i < results.length; i++) {
       const r = results[i];
-      console.log('rendering line with data', r);
-      tbodyElements.push(<HostListLine key={i} store={store} element={r} columns={columns} />);
+      // tbodyElements.push(<HostListLine key={i}  element={r} columns={columns} />);
+      tbodyElements.push(<HostListLine key={i} selected={r === store.uiState.search.selectedResult} element={r} columns={columns} />);
     }
     return <tbody>{tbodyElements}</tbody>;
   }
 
   render() {
-    console.log("blah")
     const search = store.uiState.search;
     return (
       <div className="row">
@@ -64,20 +64,19 @@ class HostListLine extends React.Component {
   }
 
   handleClick(){
-    const {uiState} = this.props.store;
-    uiState.selectHost(this.props.element);
+    store.uiState.selectHost(this.props.element);
   }
   render() {
-    const columns = this.props.columns;
     const trElements = [];
-    const elt = this.props.element;
+    const {columns, element, selected}= this.props;
     for (let j = 0; j < columns.length; j++) {
       const col = columns[j];
-      const colValue = elt[col.property];
+      const colValue = element[col.property];
       trElements.push(<td key={colValue}>{colValue}</td>);
     }
     return (
-      <tr onClick={this.handleClick}>{trElements}</tr>
+
+      <tr onClick={this.handleClick} className={selected ? "hostlistline-selected":""}>{trElements}</tr>
     );
   }
 }

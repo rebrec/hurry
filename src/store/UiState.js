@@ -11,7 +11,8 @@ class UiState {
     @observable app = {
         status: APP_STATUS.WAITING_FOR_SEARCH,
         menu: {
-            visible: false
+            visible: false,
+            selectedTab: "Action"
         }
     };
     @observable search = {
@@ -38,6 +39,9 @@ class UiState {
         this.search.selectedResult = hostElement;
         this.showMenu();
     }
+    @computed get currentSearch(){
+        return this.search.history[this.search.history.length-1] || '';
+    }
 
     @action.bound startSearch() {
         this.setAppStatus(APP_STATUS.SEARCHING);
@@ -58,9 +62,10 @@ class UiState {
 
     }
 
-    @computed get currentSearch(){
-        return this.search.history[this.search.history.length-1] || '';
-    }
+
+    @action.bound selectMenuTab(caption){ this.app.menu.selectedTab = caption; }
+
+
 }
 
 

@@ -1,16 +1,39 @@
 @import "variables.scss";
+.menu{
+    /*centered on screen*/
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 80vw;
+    height: 80vh;
+
+    background: #ffffff;
+    border-width: 5px;
+    border-style: solid;
+}
+.menu-close-button{
+    position:absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 100;
+    //background: transparent;
+    //border-style: none;
+}
 
 .menu-container{
     border: 3px solid $borderColor;
     border-radius: 5px;
     color: $textColor;
 }
-.menu-panel-left{
+
+.menu-command-panel-left{
     z-index:1;
     background: $color3;
     border-right: 3px solid $borderColor;
 }
-.menu-panel-right{
+.menu-command-panel-right{
     background: $color1;
 }
 .menu-item-selected {
