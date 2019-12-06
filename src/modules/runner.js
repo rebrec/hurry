@@ -20,6 +20,21 @@ export default class PowershellRunner {
     // this.ready = this.ps.invoke();
   }
 
+  runTemplate(command, variables){
+    console.log('Trying to generate command from template ', command);
+    console.log('list of variables :');
+    // for (let varName in ["hostname"]){//Object.keys(variables)){
+    Object.keys(variables).forEach((varName, i)=>{
+      let varValue = variables[varName];
+
+      console.log('Processing template "' + command + '"');
+      console.log('    replacing ' + varName + ' with ' + varValue);
+      command = command.replace(new RegExp('#\{' + varName + '\}', 'g'), varValue)
+      console.log('    ===> RESULT: "' + command + '"');
+    })
+    return this.run(command);
+  }
+
   run(command) {
     this.ps.addCommand(`${command} | ConvertTo-Json`);
     return this.ps.invoke()

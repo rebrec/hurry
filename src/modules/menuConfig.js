@@ -55,9 +55,16 @@ const menu = {
             {
               type: "COMMAND",
               shell: "powershell",
-              caption: "ping",
+              caption: "ping (linux)",
               description: "Some descriptive explanation",
-              commands: ["Write-Host \"blah\""]
+              commands: ["Start-Process -FilePath \"xterm\" -ArgumentList '-e bash -c \"ping #{hostname}\""]
+            },
+            {
+              type: "COMMAND",
+              shell: "powershell",
+              caption: "ping (win)",
+              description: "Some descriptive explanation",
+              commands: ["Start-Process -FilePath \"cmd\" -ArgumentList ' -c \"ping #{hostname}\"'"]
             },
 
           ]
