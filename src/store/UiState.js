@@ -53,11 +53,17 @@ class UiState {
         }
 
         const runner = this.rootStore.runners.powershell;
-        return runner.run(`$dummy.search('${this.currentSearch}')`)
+        return runner.run(`$dummy.search('${this.currentSearch}')`, {}, 'json')
           .then((res) => {
+              if (res.success) {
+                this.setSearchResults(res.data);
+                this.setAppStatus(APP_STATUS.DISPLAYING_RESULTS);
+              } else {
+                  console.error('Error received : ', res.errorMessage);
+                  this.setAppStatus(APP_STATUS.WAITING_FOR_SEARCH);
+
+              }
               console.log("res = ", res);
-              this.setSearchResults(res);
-              this.setAppStatus(APP_STATUS.DISPLAYING_RESULTS);
           });
 
     }
