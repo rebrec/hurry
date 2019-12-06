@@ -20,36 +20,82 @@ export default class PowershellRunner {
     // this.ready = this.ps.invoke();
   }
 
-  runTemplate(command, variables){
+  _genCommand(command, context){
     console.log('Trying to generate command from template ', command);
     console.log('list of variables :');
-    // for (let varName in ["hostname"]){//Object.keys(variables)){
-    Object.keys(variables).forEach((varName, i)=>{
-      let varValue = variables[varName];
-
+    // for (let varName in ["hostname"]){//Object.keys(context)){
+    Object.keys(context).forEach((varName, i)=>{
+      let varValue = context[varName];
       console.log('Processing template "' + command + '"');
       console.log('    replacing ' + varName + ' with ' + varValue);
       command = command.replace(new RegExp('#\{' + varName + '\}', 'g'), varValue)
       console.log('    ===> RESULT: "' + command + '"');
     })
-    return this.run(command);
+    return command;
   }
 
-  run(command) {
-    this.ps.addCommand(`${command} | ConvertTo-Json`);
-    return this.ps.invoke()
+  
+  run(command, context={}, output="json") {
+    output = output.toLowerCase();
+    const processJSON = (output === 'json');
+    command = this._genCommand(command, context);
+    switch (output){
+      case 'json':
+          command = `${command} | ConvertTo-Json`
+        break;
+      case 'none':
+
+      break;
+      default:
+        throw `Invalid command output ${output}`
+    }
+    return this._run(command, context)
       .then((res) => {
+        let obj;
         console.log(`received res : ${res}`);
-        this.ps.streams
-        const obj = JSON.parse(res);
-        if (obj === null) { return []; }
-        if (!obj.length) { return [obj]; }
-        return obj;
+        // this.ps.streams
+        if (processJSON){
+          let res1 = {success: false, data: {}};
+          try {
+            obj = JSON.parse(res);
+            if (obj === null) { return []; }
+            if (!obj.length) { return [obj]; }
+            res1.success = true;
+          }
+          catch (err){
+            obj = {}
+            res1.success = false;
+            res1.errorMessage = err;
+          }
+          res1.data = obj;
+          return res1;
+        }
+        return res;
       })
       .catch((err) => {
         console.error(`Runner ERROR while trying to run command ${command}`);
         console.error(err);
+        if (processJSON){
+          let res1 = {success: false, errorMessage: err};
+          return res1;
+        }
+        return err;
       });
   }
+
+  
+  _run(command, context={}) {
+    
+    this.ps.addCommand(command);
+    return this.ps.invoke();
+  }
+
+  /*
+  Run cmd with JSON output
+  Run cmd with no output
+  Run cmd with template data with and without output.
+
+  run(cmd, output, variables={},) outpout in {'JSON','none'}
+  */
 }
 

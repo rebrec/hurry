@@ -56,6 +56,7 @@ const menu = {
               type: "COMMAND",
               shell: "powershell",
               caption: "ping (linux)",
+              output: "none",
               description: "Some descriptive explanation",
               commands: ["Start-Process -FilePath \"xterm\" -ArgumentList '-e bash -c \"ping #{hostname}\""]
             },
@@ -63,8 +64,9 @@ const menu = {
               type: "COMMAND",
               shell: "powershell",
               caption: "ping (win)",
+              output: "none",
               description: "Some descriptive explanation",
-              commands: ["Start-Process -FilePath \"cmd\" -ArgumentList ' -c \"ping #{hostname}\"'"]
+              commands: ["Start-Process -FilePath \"cmd\" -ArgumentList ' /c \"ping #{hostname}\"'"]
             },
 
           ]
