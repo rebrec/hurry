@@ -76,6 +76,8 @@ class Menu extends React.Component {
         break;
       case 'COMMAND':
         console.log('running command : ', elt.commands);
+        store.runners.powershell.runTemplate(elt.commands[0], store.uiState.search.selectedResult);
+
         break;
       default:
     }

@@ -83,7 +83,7 @@ export default class App extends React.Component {
 
 
         <CollapsiblePanel position="bottom">
-          {/*<RunnerDebugConsole history={this.runner.ps.history} />*/}
+          <RunnerDebugConsole history={store.runners.powershell.ps.history} />
         </CollapsiblePanel>
     </div>);
   }
