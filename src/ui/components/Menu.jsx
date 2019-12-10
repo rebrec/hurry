@@ -49,6 +49,7 @@ class Menu extends React.Component {
   }
 
   handlePanelLeftClick(e, elt){
+    // debugger;
     switch (elt.type) {
       case 'CONTAINER':
         this.setState({
@@ -76,7 +77,7 @@ class Menu extends React.Component {
         break;
       case 'COMMAND':
         console.log('running command : ', elt.commands);
-        store.runners.powershell.runTemplate(elt.commands[0], store.uiState.search.selectedResult);
+        store.runners.powershell.run(elt.commands[0], store.uiState.search.selectedResult, elt.output || 'none');
 
         break;
       default:
@@ -203,6 +204,7 @@ class CommandPanelLeft extends React.Component {
     let elts = [];
     for (let i=0;i<data.length;i++){
       const elt = data[i];
+      if (elt.hasOwnProperty('platform') && elt.platform != store.platform) continue;
       elts.push(<MenuElement
         key={i}
         data={elt}
@@ -227,6 +229,8 @@ class CommandPanelRight extends React.Component {
     const {data}= this.props;
     let elts = [];
     for (let i=0;i<data.length;i++){
+      const elt = data[i];
+      if (elt.hasOwnProperty('platform') && elt.platform != store.platform) continue;
       elts.push(<MenuElement key={i} data={data[i]} onClick={this.props.onClick} handlerOn="onClick" />);
     }
     return (

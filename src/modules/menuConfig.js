@@ -55,15 +55,17 @@ const menu = {
             {
               type: "COMMAND",
               shell: "powershell",
+              platform: "linux",
               caption: "ping (linux)",
               output: "none",
               description: "Some descriptive explanation",
-              commands: ["Start-Process -FilePath \"xterm\" -ArgumentList '-e bash -c \"ping #{hostname}\""]
+              commands: ["Start-Process -FilePath \"xterm\" -ArgumentList '-e bash -c \"ping #{hostname}\"'"]
             },
             {
               type: "COMMAND",
               shell: "powershell",
               caption: "ping (win)",
+              platform: "win32",
               output: "none",
               description: "Some descriptive explanation",
               commands: ["Start-Process -FilePath \"cmd\" -ArgumentList ' /c \"ping #{hostname}\"'"]
@@ -74,6 +76,7 @@ const menu = {
         {
           type: "CONTAINER",
           caption: "WPKG",
+          platform: "win32",
           description: "Some descriptive explaination",
           tags: ["SOME_TAG", "SOME_OTHERTAG"],
           children: [

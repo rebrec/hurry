@@ -1,11 +1,20 @@
+@import "variables.scss";
+
+
+
+.console-row{
+    border-style: solid;
+}
+
+
 .command-input {
-    background-color: darkblue;
+    background-color: $console-background;
     color: cyan;
     font-style: italic;
     font-weight: bold;
 }
 .command-output {
-    background-color: darkblue;
+    background-color: $console-background;
     color: #8cff20;
     font-style: normal;
     font-size: smaller;

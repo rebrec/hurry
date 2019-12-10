@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx'
+import { observable, computed, action, extendObservable } from 'mobx'
 
 const APP_STATUS = {
     WAITING_FOR_SEARCH: 1,
@@ -13,6 +13,12 @@ class UiState {
         menu: {
             visible: false,
             selectedTab: "Action"
+        },
+        runnerConsole: {
+            settings: {
+                height: "100px",
+                resizeSensibility: "10"
+            }
         }
     };
     @observable search = {
