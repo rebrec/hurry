@@ -60,7 +60,7 @@ export default class App extends React.Component {
     return (<div>
 
       {/*<RunnerDebugConsole history={store.runners.powershell.ps.history} />*/}
-      <SplitPane split="horizontal" minSize={200} defaultSize={600}>
+      <SplitPane split="horizontal" minSize={200} defaultSize={600} primary="second">
 
         <div className="container-fluid">
           <div className="row">

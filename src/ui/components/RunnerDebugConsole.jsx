@@ -14,7 +14,8 @@ class RunnerDebugConsole extends React.Component {
     const history = this.props.history;
     console.log('history=', history);
     const lines = [];
-    for (let i = 0; i < history.length; i++) {
+    // for (let i = 0; i < history.length; i++) {
+    for (let i = history.length - 1; i >=0 ; i--) { // iterate from end to first
       const item = history[i];
       lines.push(<CommandHistory key={i} item={item} />);
     }
