@@ -16,7 +16,7 @@ class RunnerDebugConsole extends React.Component {
     const lines = [];
     for (let i = 0; i < history.length; i++) {
       const item = history[i];
-      lines.push(<CommandHistory item={item} />);
+      lines.push(<CommandHistory key={i} item={item} />);
     }
     return (
       <div>
@@ -36,17 +36,21 @@ class CommandHistory extends React.Component {
     const { commands, hadErrors, results } = this.props.item;
     const commandOutput = results.toString();
     return (
-      <div>
-        <div className="row">
-          <div className={`col-lg-12 command-input${hadErrors ? '-error' : ''}`} >
-            <span className="shell-prompt">></span>
-            {commands}
+
+        <div className="row console-row">
+          <div className="col-lg-12" >
+            <div className="row">
+              <div className={`col-lg-12 command-input${hadErrors ? '-error' : ''}`} >
+                <span className="shell-prompt">></span>
+                {commands}
+              </div>
+            </div>
+            <div className="row">
+              <div className={`col-lg-12 command-output${hadErrors ? '-error' : ''}`} >{commandOutput}</div>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className={`col-lg-12 command-output${hadErrors ? '-error' : ''}`} >{commandOutput}</div>
-        </div>
-      </div>
+
     );
   }
 }

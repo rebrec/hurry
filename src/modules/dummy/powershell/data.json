@@ -18,5 +18,15 @@
     "hostname": "ovh",
     "username": "user4",
     "something": "else4"
-  }
+  },
+  {
+    "hostname": "ovh1",
+    "username": "user4",
+    "something": "else4"
+  },
+  {
+    "hostname": "ovh1",
+    "username": "user4",
+    "something": "else4"
+  },
 ]

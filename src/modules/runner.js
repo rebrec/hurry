@@ -2,6 +2,7 @@ import Powershell from 'node-powershell';
 import Path from 'path';
 import { remote } from 'electron';
 
+
 /* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
 
 export default class PowershellRunner {
@@ -34,7 +35,7 @@ export default class PowershellRunner {
     return command;
   }
 
-  
+
   run(command, context={}, output="json") {
     output = output.toLowerCase();
     const processJSON = (output === 'json');
@@ -83,9 +84,9 @@ export default class PowershellRunner {
       });
   }
 
-  
+
   _run(command, context={}) {
-    
+
     this.ps.addCommand(command);
     return this.ps.invoke();
   }

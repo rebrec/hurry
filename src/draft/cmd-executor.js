@@ -17,7 +17,7 @@ switch (platform ()){
     processArgs = ['-NoProfile', '-ExecutionPolicy bypass','-Command', '-']
     break;
   default:
-    throw "This tool is only made for Linux and Win32 Platforms currently !"
+    throw "This tool is only made for Linux and Win32 Platforms !"
 
 }
 
