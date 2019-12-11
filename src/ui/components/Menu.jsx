@@ -120,22 +120,24 @@ class Menu extends React.Component {
       }
     ];
     return (
-      <div className="menu row">
-        <button onClick={store.uiState.hideMenu} className="menu-close-button">X</button>
+      <div className="menu-background-parent" onClick={(e)=>{console.log('click',e.target);store.uiState.hideMenu()}}>
+        <div className="menu row">
+          <button onClick={store.uiState.hideMenu} className="menu-close-button">X</button>
 
-        <div className="col-sm-12">
-          <div className="row ">
-            <div className="col-sm-12">
-              <h3>{store.uiState.search.selectedResult.hostname.toUpperCase()}</h3>
+          <div className="col-sm-12">
+            <div className="row ">
+              <div className="col-sm-12">
+                <h3>{store.uiState.search.selectedResult.hostname.toUpperCase()}</h3>
+              </div>
             </div>
-          </div>
 
-          <div className="row ">
-            <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.menu.selectedTab}/>
+            <div className="row ">
+              <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.menu.selectedTab}/>
+            </div>
+
           </div>
 
         </div>
-
       </div>
     );
   }

@@ -60,7 +60,7 @@ export default class PowershellRunner {
           try {
             obj = JSON.parse(res);
             if (obj === null) { return []; }
-            if (!obj.length) { return [obj]; }
+            if (!obj.length) { obj = [obj]; }
             res1.success = true;
           }
           catch (err){
