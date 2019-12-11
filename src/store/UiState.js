@@ -62,7 +62,8 @@ class UiState {
         return runner.run(`$dummy.search('${this.currentSearch}')`, {}, 'json')
           .then((res) => {
               if (res.success) {
-                this.setSearchResults(res.data);
+                const r = res.data.length ? res.data : [res.data];
+                this.setSearchResults(r);
                 this.setAppStatus(APP_STATUS.DISPLAYING_RESULTS);
               } else {
                   console.error('Error received : ', res.errorMessage);

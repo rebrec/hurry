@@ -16,17 +16,22 @@
   },
   {
     "hostname": "ovh",
-    "username": "user4",
+    "username": "user5",
     "something": "else4"
   },
   {
     "hostname": "ovh1",
-    "username": "user4",
+    "username": "user6",
     "something": "else4"
   },
   {
     "hostname": "ovh1",
-    "username": "user4",
+    "username": "user7",
     "something": "else4"
   },
+  {
+    "hostname": "srv-sup01",
+    "username": "user8",
+    "something": "else6"
+  }
 ]
