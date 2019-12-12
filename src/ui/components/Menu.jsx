@@ -120,11 +120,11 @@ class Menu extends React.Component {
       }
     ];
     return (
-      <div className="menu-background-parent" onClick={(e)=>{console.log('click',e.target);store.uiState.hideMenu()}}>
+      <div className="menu-background-parent" onClick={store.uiState.hideMenu}>
         <div className="menu row">
           <button onClick={store.uiState.hideMenu} className="menu-close-button">X</button>
 
-          <div className="col-sm-12">
+          <div className="col-sm-12" onClick={(e)=>{e.stopPropagation();}}>
             <div className="row ">
               <div className="col-sm-12">
                 <h3>{store.uiState.search.selectedResult.hostname.toUpperCase()}</h3>
