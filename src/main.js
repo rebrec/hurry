@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, globalShortcut } = require("electron");
 
 import "./main-process/ipcMain";
 
@@ -16,8 +16,13 @@ let mainWindow;
 
 const createWindow = () => {
   // Create the browser window.
+
+  // fullscreen: true,
+  // width: 800,
+  // height: 600,
   mainWindow = new BrowserWindow({
     fullscreen: true,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + "/preload.js"
@@ -45,7 +50,22 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", createWindow);
+app.on('ready', registerShortcut);
 
+function registerShortcut() {
+  // Enregistrer un écouteur de raccourci 'CommandOrControl+X'.
+  const ret = globalShortcut.register('CommandOrControl+Shift+Capslock', () => {
+    console.log('CommandOrControl+X is pressed')
+    mainWindow.show();
+  })
+
+  if (!ret) {
+    console.log('enregistrement échoué')
+  }
+
+  // Check si le raccourci est enregistré.
+  console.log(globalShortcut.isRegistered('CommandOrControl+X'))
+}
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
   // On OS X it is common for applications and their menu bar

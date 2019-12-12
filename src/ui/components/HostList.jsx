@@ -41,16 +41,16 @@ class HostList extends React.Component {
     const search = store.uiState.search;
     return (
       <div className="row">
-        <div className="col-sm-1"/>
+
         { (!search.results.length === 0) ? (
             <span>No result found for {store.uiState.currentSearch}.</span>
          ) : (
-          <table className="table col-sm-10">
+          <table className="table col-10 offset-1">
             {this.renderHeader()}
             {this.renderBody()}
           </table>
         )}
-        <div className="col-sm-1"/>
+
       </div>
     );
   }
