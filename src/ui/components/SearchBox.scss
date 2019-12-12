@@ -1,0 +1,87 @@
+@import "variables.scss";
+
+
+.search-bar {
+  border: 1px solid #dfe1e5;
+  box-shadow: none;
+  border-radius: 24px;
+  height: 44px;
+  display: flex;
+}
+.search-field {
+  border: none;
+}
+.search-spacer{
+  width: 150px;
+}
+.search-bar:hover {
+  box-shadow:0 1px 6px 0 rgba(32,33,36,0.28);
+  border-color:rgba(223,225,229,0)
+}
+
+.search-button:focus {outline:0;}
+
+$component-background: #452ece;
+$component-background-hover: #5136f5;
+$component-width: 100%;
+$component-height: 42px;
+$component-radius: 24px;
+
+.aaa:hover {
+  background: $component-background-hover;
+}
+.aaa {
+  position: relative;
+  background: $component-background;
+  //border: 0px solid $borderColor;
+
+  width: $component-width;
+}
+.aaa:hover::after, .aaa:hover::before {
+  background: $component-background-hover;
+}
+.aaa::after, .aaa::before {
+  position: absolute;
+  content:"";
+  background: $component-background;
+  height:$component-height;
+  width: $component-radius;
+
+}
+.aaa::after{
+  left: $component-width;
+  top: 0;
+  border-radius: 0 $component-radius $component-radius  0 ;
+}
+.aaa::before {
+  left: 0;
+  top: 0;
+  //border-radius: $component-radius 0 0 $component-radius;
+  border-radius: 0 $component-radius $component-radius  0 ;
+  background: #ffffff;
+}
+.aaa > * {
+  background: $component-background;
+  left: $component-width;
+  height: 100%;
+  border: none;
+}
+
+//.aaa:after, .aaa:before {
+//  left: 100%;
+//  top: 50%;
+//  content: "sssssss";
+//  height: 0;
+//  width: 0;
+//  position: absolute;
+//  pointer-events: none;
+//  background: #319128;
+//}
+//
+//.aaa:after {
+//  border-color: rgba(0, 0, 0, 0);
+//  border-left-color: $color1;
+//  border-width: 12px;
+//  margin-top: -12px;
+//  background: #319128;
+//}

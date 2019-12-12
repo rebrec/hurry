@@ -8,7 +8,7 @@ import CollapsiblePanel from './components/CollapsiblePanel';
 import RunnerDebugConsole from './components/RunnerDebugConsole';
 import Menu from './components/Menu';
 import menuConfig from '../modules/menuConfig.js'
-
+import $ from "jquery";
 import './app.scss'
 
 
@@ -60,7 +60,7 @@ export default class App extends React.Component {
     return (<div>
 
       {/*<RunnerDebugConsole history={store.runners.powershell.ps.history} />*/}
-      <SplitPane split="horizontal" minSize={200} defaultSize={600} primary="second">
+      <SplitPane split="horizontal" minSize={5} defaultSize={600} primary="second">
 
         <div className="container-fluid">
           <div className="row">
