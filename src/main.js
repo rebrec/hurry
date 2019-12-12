@@ -21,8 +21,9 @@ const createWindow = () => {
   // width: 800,
   // height: 600,
   mainWindow = new BrowserWindow({
-    fullscreen: true,
-    show: false,
+  width: 800,
+  height: 600,
+  show: false,
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + "/preload.js"

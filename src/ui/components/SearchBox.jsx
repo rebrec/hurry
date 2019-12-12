@@ -30,24 +30,13 @@ export default class SearchBox extends React.Component {
           <div className="col-8 offset-2 align-self-center ">
             <div className="form-row">
               <input
-                className="form-control col-9 "
+                className="form-control col-5 "
                 name="searchField"
                 value={search.text}
                 placeholder="Enter Keyword (Computer, User, etc.)"
                 onChange={this.handleChange}
               />
-              <button type="button"
-                      class="btn btn-primary col mx-3 dropdown-toggle"
-                      id="dropdownDatasourceButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-              >Search</button>
-              <div class="dropdown-menu" aria-labelledby="dropdownDatasourceButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+              <DatasourceButton />
             </div>
           </div>
         </div>
@@ -58,3 +47,31 @@ export default class SearchBox extends React.Component {
 
 }
 
+class DatasourceButton extends React.Component{
+  constructor(props) {
+    super(props);    
+  }
+
+  renderDropDown(id){
+    return (
+      <div class="dropdown-menu" aria-labelledby={id}>
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    );
+
+  }
+
+  render(){
+    return (
+      <div class="btn-group ml-3 col-3">
+        <button type="button" className="btn btn-primary">Action</button>
+        <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        {this.renderDropDown("dropdownDatasourceButton")}
+      </div>
+    )
+  }
+}
