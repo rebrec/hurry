@@ -9,23 +9,16 @@ export default class SearchBox extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
     store.uiState.setSearchedText(e.target.value);
   }
 
-  handleSubmit(event) {
-    //this.props.onSearchClick(this.state.searchedText);
-    store.uiState.startSearch();
-    event.preventDefault();
-  }
-
   render() {
     const search = store.uiState.search;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form>
         <div className="row form-group" style={{height: "160px"}}>
           <div className="col-8 offset-2 align-self-center ">
             <div className="form-row">
@@ -47,26 +40,40 @@ export default class SearchBox extends React.Component {
 
 }
 
+@observer
 class DatasourceButton extends React.Component{
   constructor(props) {
     super(props);    
   }
 
+  onButtonClick(e){
+    store.uiState.startSearch();
+    e.preventDefault();
+  }
+
+  onDropDownClick(datasource){
+    store.uiState.setDatasource(datasource);
+  }
+
   renderDropDown(id){
+    const { datasources } = store.settings;
+    const items = [];
+    for (const [i, datasource] of datasources.entries()) {
+      items.push(<a className="dropdown-item" key={i} onClick={this.onDropDownClick.bind(this, datasource)} href="#">{datasource.caption}</a>);
+    }
     return (
       <div class="dropdown-menu" aria-labelledby={id}>
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
+        {items}
       </div>
     );
 
   }
 
   render(){
+    const { datasource } = store.uiState.app;
     return (
       <div class="btn-group ml-3 col-3">
-        <button type="button" className="btn btn-primary">Action</button>
+        <button type="button" className="btn btn-primary" onClick={this.onButtonClick}>{ datasource.caption }</button>
         <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="sr-only">Toggle Dropdown</span>
         </button>

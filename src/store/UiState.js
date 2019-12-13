@@ -9,6 +9,7 @@ const APP_STATUS = {
 
 class UiState {
     @observable app = {
+        datasource: { caption: "N / A" },
         status: APP_STATUS.WAITING_FOR_SEARCH,
         menu: {
             visible: false,
@@ -31,9 +32,20 @@ class UiState {
     constructor(rootStore) {
         this.rootStore = rootStore;
         this.setSearchedText("host");
+        const ds = rootStore.settings.datasources[0];
+        console.log(ds.caption, ds);
+        this.setDatasource(ds);
         setTimeout(_=>this.startSearch(),2000);
     }
 
+    @action.bound setDatasource(ds){
+        this.app.datasource = ds;
+        this.clearSearch();
+    }
+    @action.bound clearSearch(){
+        this.setSearchResults();
+        this.setAppStatus(APP_STATUS.SEARCHING);
+    }
     @action.bound setAppStatus(status){ this.app.status = status; }
     @action.bound toggleMenu(){ this.app.menu.visible = !this.app.menu.visible; }
     @action.bound showMenu(){ this.app.menu.visible = true; }
@@ -50,16 +62,20 @@ class UiState {
     }
 
     @action.bound startSearch() {
+        const { datasource } = this.app;
+        const { text } = this.search;
+        const runner = this.rootStore.runners.powershell;
+        
         this.setAppStatus(APP_STATUS.SEARCHING);
-        const text = this.search.text;
+        
         if (text.length >= 3) {
             this.search.history.push(text);
         } else {
             return console.log("Not enough chars");
         }
 
-        const runner = this.rootStore.runners.powershell;
-        return runner.run(`$dummy.search('${this.currentSearch}')`, {}, 'json')
+        return datasource.search(this.currentSearch)
+        // return runner.run(`$dummy.search('${this.currentSearch}')`, {}, 'json')
           .then((res) => {
               if (res.success) {
                 const r = res.data.length ? res.data : [res.data];
