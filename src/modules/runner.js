@@ -12,25 +12,25 @@ export default class PowershellRunner {
       noProfile: true,
     });
 
-    const scriptPath = Path.join(__dirname, 'dummy', 'powershell', 'init.ps1');
+    // const scriptPath = Path.join(__dirname, 'dummy', 'powershell', 'init.ps1');
     // adding this line will  make webpack copy the data.json file at the same location as init.ps1
     const dataFile = Path.join(__dirname, 'dummy', 'powershell', 'data.json'); // basic workaround until i find correct way to let webpack  copy this file
 
 
-    this.ps.addCommand(`. ${scriptPath}`, []);
+    // this.ps.addCommand(`. ${scriptPath}`, []);
     // this.ready = this.ps.invoke();
   }
 
   _genCommand(command, context){
-    console.log('Trying to generate command from template ', command);
-    console.log('list of variables :');
+    // console.log('Trying to generate command from template ', command);
+    // console.log('list of variables :');
     // for (let varName in ["hostname"]){//Object.keys(context)){
     Object.keys(context).forEach((varName, i)=>{
       let varValue = context[varName];
-      console.log('Processing template "' + command + '"');
-      console.log('    replacing ' + varName + ' with ' + varValue);
+      // console.log('Processing template "' + command + '"');
+      // console.log('    replacing ' + varName + ' with ' + varValue);
       command = command.replace(new RegExp('#\{' + varName + '\}', 'g'), varValue)
-      console.log('    ===> RESULT: "' + command + '"');
+      // console.log('    ===> RESULT: "' + command + '"');
     })
     return command;
   }
