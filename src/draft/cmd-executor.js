@@ -4,22 +4,8 @@ const path = require('path');
 const Promise = require('promise');
 const StatefulProcessCommandProxy = require("stateful-process-command-proxy");
 
-let processCommand;
-let processArgs;
-switch (platform ()){
-  case 'linux':
-    processCommand = 'pwsh';
-    processArgs = ['-Command','-'];
-
-    break;
-  case 'win32':
-    processCommand = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
-    processArgs = ['-NoProfile', '-ExecutionPolicy bypass','-Command', '-']
-    break;
-  default:
-    throw "This tool is only made for Linux and Win32 Platforms !"
-
-}
+const processCommand = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
+const processArgs = ['-NoProfile -ExecutionPolicy bypass']
 
 
 const statefulProcessCommandProxy = new StatefulProcessCommandProxy(
