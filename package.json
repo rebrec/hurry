@@ -61,8 +61,10 @@
     }
   },
   "dependencies": {
+    "@babel/node": "^7.7.7",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-mobx": "^2.0.0",
     "bluebird": "^3.7.2",
     "bootstrap": "^4.4.0",
@@ -79,11 +81,11 @@
     "react-dom": "^16.12.0",
     "react-split-pane": "^0.1.89",
     "sass-loader": "^8.0.0",
-    "stateful-process-command-proxy": "^1.0.1"
+    "stateful-process-command-proxy": "https://github.com/rebrec/stateful-process-command-proxy.git"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@electron-forge/cli": "6.0.0-beta.45",
     "@electron-forge/maker-deb": "6.0.0-beta.45",
