@@ -3,8 +3,7 @@ const assert = require('assert');
 
 import ShellManager from '../src/core/ShellManager';
 const s = new ShellManager();
-s.start();
-
+console.log('started');
 
 // describe('Array', function() {
 //   describe('#indexOf()', function() {
