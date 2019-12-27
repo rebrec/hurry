@@ -31,5 +31,3 @@ export default class ShellManager{
         }
     }
 }
-const s = new ShellManager();
-s.start();
