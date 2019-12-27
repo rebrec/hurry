@@ -46,6 +46,14 @@ export default class Shell{
 
       this.runner = new StatefulProcessCommandProxy(this.config);
     }
+
+    addFeature(feature){
+      const { name, shell, initCommands, preDestroyCommands } = feature;
+      if (this.name !== shell) { throw `Error trying to add feature ${name} shell mismatch (${this.name} != ${shell})`}
+      this.registerInitCommands(initCommands);
+      this.registerPreDestroyCommands(preDestroyCommands);
+    }
+
     registerInitCommands(commands = []){
       Array.prototype.push.apply(this.initCommands, commands);
     }
