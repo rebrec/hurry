@@ -6,4 +6,6 @@ export default {
     shellsPath: Path.join(modulesRoot, "shells"),
     shellFeaturesPath: Path.join(modulesRoot, "shellfeatures"),
     datasourcesPath: Path.join(modulesRoot, "datasources"),
+
+    defaultDataSource: "glpi"
 }
