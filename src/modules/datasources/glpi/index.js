@@ -1,6 +1,6 @@
 module.exports = {
-    name: "dummy",
-    caption: "Dummy",
+    name: "glpi",
+    caption: "Glpi",
     shell: "powershell",
     initCommands: [". #{modulePath}init.ps1"],
     searchFunc: keyword => {

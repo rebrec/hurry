@@ -32,8 +32,8 @@ class UiState {
     constructor(rootStore) {
         this.rootStore = rootStore;
         this.setSearchedText("host");
-        const ds = rootStore.settings.datasources[0];
-        console.log(ds.caption, ds);
+        const ds = rootStore.datasourceManager.getDefaultDatasource();
+        console.log("++++++++++++++++++", ds);
         this.setDatasource(ds);
         setTimeout(_=>{
             console.log('STARTSEARCH !!!!!!!!!!!!!');
