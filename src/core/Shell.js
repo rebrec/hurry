@@ -1,11 +1,12 @@
 const { platform } = require('os');
+const { parseTemplate } = require('./helpers');
 const StatefulProcessCommandProxy = require("stateful-process-command-proxy");
 const Promise = require('promise');
 const path = require('path');
 
 const defaultConfig = {
-    min: 3,
-    max: 3,
+    min: 2,
+    max: 2,
     idleTimeoutMS: 10000,    
     processCommand: null,
     processArgs:  null,
@@ -19,7 +20,7 @@ const defaultConfig = {
     processEnvMap : null,
     processUid : null,
     processGid : null,
-    validateFunction: (processProxy) => {processProxy.isValid()},
+    validateFunction: (processProxy) => { return processProxy.isValid()},
     initCommands: null,
     preDestroyCommands: null
 };
@@ -60,22 +61,59 @@ export default class Shell{
     registerPreDestroyCommands(commands = []){
       Array.prototype.push.apply(this.preDestroyCommands, commands);
     }
-    runcommand(command) {
-        let result = {
-          success: false,
-          command: command,
-          stdOut: cmdResult.stdOut,
-          stdErr: cmdResult.stderr,
-          dataResult: JSON.parse()
-        };
-        return this.runner.executeCommand(command)
-          .then(function(cmdResult) {
-            console.log("testEnvVar value: Stdout: " + cmdResult.stdout);
-          })
-          .catch(function(error) {
-            console.log("testEnvVar Error: " + error);
-          });
-      }
+    _run(command) {
+        return this.runner.executeCommand(command);
+    }
+  
+    run(command, context={}, output="json") {
+      output = output.toLowerCase();
+      const processJSON = (output === 'json');
+      command = parseTemplate(command, context);
+      // switch (output){
+      //   case 'json':
+      //       command = `${command} | ConvertTo-Json`
+      //     break;
+      //   case 'none':
+  
+      //   break;
+      //   default:
+      //     throw `Invalid command output ${output}`
+      // }
+      return this._run(command)
+        .then((res) => {
+          let obj;
+          console.log(`received res : `, res);
+          // this.ps.streams
+          if (processJSON){
+            let res1 = {success: false, data: {}};
+            try {
+              obj = JSON.parse(res.stdout);
+              if (obj === null) { return []; }
+              if (!obj.length) { obj = [obj]; }
+              res1.success = true;
+            }
+            catch (err){
+              obj = {}
+              res1.success = false;
+              res1.errorMessage = err;
+              res1.res = res;
+            }
+            res1.data = obj;
+            return res1;
+          }
+          return res;
+        })
+        .catch((err) => {
+          console.error(`Runner ERROR while trying to run command ${command}`);
+          console.error(err);
+          if (processJSON){
+            let res1 = {success: false, errorMessage: err};
+            return res1;
+          }
+          return err;
+        });
+    }
+  
 }
     
     

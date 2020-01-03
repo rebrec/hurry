@@ -10,7 +10,7 @@ switch (platform ()){
     break;
   case 'win32':
     processCommand = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
-    processArgs = ['-NoProfile -ExecutionPolicy bypass']//,'-Command', '-']//['-NoProfile', '-ExecutionPolicy bypass','-Command', '-']
+    processArgs = ['-NoProfile -ExecutionPolicy bypass', "-NoExit", "-Command", "-"]//,'-Command', '-']//['-NoProfile', '-ExecutionPolicy bypass','-Command', '-']
     break;
   default:
     throw "This tool is only made for Linux and Win32 Platforms !"

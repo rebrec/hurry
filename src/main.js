@@ -23,7 +23,7 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
   width: 800,
   height: 600,
-  show: false,
+  show: true,
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + "/preload.js"

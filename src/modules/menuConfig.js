@@ -1,5 +1,4 @@
-
-const menu = {
+export default {
   caption: "TITRE",
   children: [
     {
@@ -64,11 +63,20 @@ const menu = {
             {
               type: "COMMAND",
               shell: "powershell",
-              caption: "ping (win)",
+              caption: "ping (win, posh)",
               platform: "win32",
               output: "none",
               description: "Some descriptive explanation",
               commands: ["Start-Process -FilePath \"cmd\" -ArgumentList ' /c \"ping #{hostname}\"'"]
+            },
+            {
+              type: "COMMAND",
+              shell: "cmd",
+              caption: "ping (win, cmd)",
+              platform: "win32",
+              output: "none",
+              description: "Some descriptive explanation",
+              commands: ["start \"\" ping #{hostname}"]
             },
 
           ]
@@ -123,4 +131,3 @@ const menu = {
 };
 
 
-export default menu;

@@ -9,16 +9,24 @@ export default class SearchBox extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   handleChange(e) {
     store.uiState.setSearchedText(e.target.value);
   }
 
+  onKeyPress(e) {
+    if (e.key === 'Enter') {
+      store.uiState.startSearch();
+      e.preventDefault();
+    }
+  }
+
   render() {
     const search = store.uiState.search;
     return (
-      <form>
+      <form onSubmit={ _=> {return false}}>
         <div className="row form-group" style={{height: "160px"}}>
           <div className="col-8 offset-2 align-self-center ">
             <div className="form-row">
@@ -28,6 +36,8 @@ export default class SearchBox extends React.Component {
                 value={search.text}
                 placeholder="Enter Keyword (Computer, User, etc.)"
                 onChange={this.handleChange}
+                onKeyPress={ this.onKeyPress }
+
               />
               <DatasourceButton />
             </div>

@@ -77,8 +77,13 @@ class Menu extends React.Component {
         break;
       case 'COMMAND':
         console.log('running command : ', elt.commands);
-        store.runners.powershell.run(elt.commands[0], store.uiState.search.selectedResult, elt.output || 'none');
-
+        const shellName = elt.shell || 'cmd';
+        const shellObj = store.shellManager.getShell(shellName);
+        const output = elt.output || 'none';
+        for (const command of elt.commands){
+          console.log('Running command : ', command);
+          shellObj.run(command, store.uiState.search.selectedResult, output);
+        }
         break;
       default:
     }
