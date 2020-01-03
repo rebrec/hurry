@@ -35,7 +35,10 @@ class UiState {
         const ds = rootStore.settings.datasources[0];
         console.log(ds.caption, ds);
         this.setDatasource(ds);
-        setTimeout(_=>this.startSearch(),2000);
+        setTimeout(_=>{
+            console.log('STARTSEARCH !!!!!!!!!!!!!');
+            this.startSearch()
+        },15000);
     }
 
     @action.bound setDatasource(ds){
@@ -64,7 +67,6 @@ class UiState {
     @action.bound startSearch() {
         const { datasource } = this.app;
         const { text } = this.search;
-        const runner = this.rootStore.runners.powershell;
         
         this.setAppStatus(APP_STATUS.SEARCHING);
         

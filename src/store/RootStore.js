@@ -2,8 +2,10 @@ import { configure } from "mobx"
 import { observable, action } from 'mobx'
 import UiState from './UiState'
 import Settings from './Settings'
-import DataStore from './DataStore'
-import PowershellRunner from '../modules/runner';
+import ShellManager from '../core/ShellManager';
+import DatasourceManager from '../core/DatasourceManager';
+import settings from '../settings'
+// import PowershellRunner from '../modules/runner';
 const {platform} = require('os');
 
 
@@ -15,18 +17,17 @@ class RootStore {
     };
        
     constructor() {
-        this.setupRunner();
+        this.shellManager = new ShellManager(settings);
+        this.datasourceManager = new DatasourceManager(this.shellManager, settings);
+
         this.settings = new Settings(this);
         this.uiState = new UiState(this);
-        this.dataStore = new DataStore(this);
+        
         
         this.platform = platform();
+        this.shellManager.start();
     }
 
-
-    @action setupRunner(){
-        this.runners.powershell = new PowershellRunner();
-    }
 }
 
 

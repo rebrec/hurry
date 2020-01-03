@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
       {
         "name": "Debug Main Process",
         "type": "node",
@@ -12,6 +13,22 @@
         },
         "args" : ["."],
         "outputCapture": "std"
-      }
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug File (es6)",
+        "program": "${file}",
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
+       
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug shellManager (es6)",
+        "program": "${workspaceFolder}/src/store/RootStore.js",
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
+       
+      },
     ]
   }

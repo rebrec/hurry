@@ -2,32 +2,36 @@ import  Path from  'path'
 import  Shell from './Shell';
 import { getDirectories } from './helpers'
 
+
+
+
+
 // const shellPath = [
 //     'powershell.js'
 // ];
-const moduleRoot = Path.join(__dirname, '..', 'modules');
-const shellRoot = Path.join(moduleRoot, 'shells');
-const shellPaths = getDirectories(shellRoot);
-const featureRoot = Path.join(moduleRoot, 'shellfeatures');
-const featurePaths = getDirectories(featureRoot);
+// const moduleRoot = Path.join(__dirname, '..', 'modules');
 
 export default class ShellManager{
-    constructor(){
+    constructor(settings){
+        const { shellsPath, shellFeaturesPath } = settings;
+        
+        const shellsPaths = getDirectories(shellsPath);
+        const featuresPaths = getDirectories(shellFeaturesPath);
+        
         this._shells = {};
         this._shellFeatures = {};
-        for (const path of shellPaths){
+        for (const path of shellsPaths){
             console.log('Processing file :', path);
-            const config = require(Path.join(shellRoot, path));
+            const config = __non_webpack_require__(path);
             const shell = new Shell(config);
             this._shells[shell.name] = shell;
         }
-        for (const path of featurePaths){ 
+        for (const path of featuresPaths){ 
             console.log('Processing file :', path);
-            const config = require(Path.join(featureRoot, path));
+            const config = __non_webpack_require__(path);
             console.log('Feature for file ' + config.shell);
             this.addFeature(config.shell, config);
         }
-        this.start();
     }
 
     getShell(shellName){
@@ -35,7 +39,12 @@ export default class ShellManager{
     }
 
     addFeature(shellName, shellFeature){
+        if (!this._shells.hasOwnProperty(shellName)) {
+            console.log(`Skipping feature ${shellFeature.name} for shell ${shellName} which is not available.`)
+            return;
+        }
         const shell = this.getShell(shellName);
+
         shell.addFeature(shellFeature);
     }
     
