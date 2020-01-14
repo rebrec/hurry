@@ -12,7 +12,7 @@ class TabProvider extends React.Component {
 
   render() {
     const {tabs, selected}= this.props;
-    let selectedTab;
+    let selectedTab = {content:(<div></div>)};
     const elts = [];
     for (let i=0;i<tabs.length;i++){
       const tab = tabs[i];

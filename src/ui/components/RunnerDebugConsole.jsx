@@ -88,7 +88,6 @@ class CommandHistory extends React.Component {
       _stderr: stderr
     } = this.props.item;
     const hadErrors = (stderr !== "")
-    const commandOutput = stdout.toString();
     return (
 
         <div className="row console-row">
@@ -100,7 +99,10 @@ class CommandHistory extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className={`col-lg-12 command-output${hadErrors ? '-error' : ''}`} >{commandOutput}</div>
+              <div className={`col-lg-12 command-output${hadErrors ? '-error' : ''}`} >{stdout}</div>
+            </div>
+            <div className="row">
+              <div className={`col-lg-12 command-output${hadErrors ? '-error' : ''}`} >{stderr}</div>
             </div>
           </div>
         </div>
