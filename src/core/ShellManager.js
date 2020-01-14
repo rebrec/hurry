@@ -2,7 +2,7 @@ import  Path from  'path'
 import  Shell from './Shell';
 import { getDirectories } from './helpers'
 import { observable, computed, action, extendObservable } from 'mobx'
-
+const { platform } = require('os');
 
 
 
@@ -25,6 +25,10 @@ export default class ShellManager{
         for (const path of shellsPaths){
             console.log('Processing file :', path);
             const config = __non_webpack_require__(path);
+            if (config.platform.indexOf(platform())<0) {
+                console.log('Skipping incompatible Shell ', config.name);
+                continue;
+            }
             const shell = new Shell(config);
             this.addShell(shell);
         }
