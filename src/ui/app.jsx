@@ -88,7 +88,7 @@ export default class App extends React.Component {
           )}
         </div>
         <div className="console-panel">
-          {/* <RunnerDebugConsole history={store.runners.powershell.ps.history} /> */}
+          <RunnerDebugConsole shellManager={store.shellManager} />
         </div>
       </SplitPane>
     </div>);

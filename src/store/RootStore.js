@@ -12,9 +12,7 @@ const {platform} = require('os');
 configure({ enforceActions: "always" });
 
 class RootStore {
-    @observable runners = {
-        powershell: null
-    };
+
        
     constructor() {
         this.shellManager = new ShellManager(settings);
@@ -26,6 +24,7 @@ class RootStore {
         
         this.platform = platform();
         this.shellManager.start();
+        
     }
 
 }
