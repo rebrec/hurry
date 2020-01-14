@@ -16,6 +16,7 @@ class UiState {
             selectedTab: "Action"
         },
         runnerConsole: {
+            selectedTab: "no process",
             settings: {
                 height: "100px",
                 resizeSensibility: "10"
@@ -93,9 +94,13 @@ class UiState {
 
     }
 
-
+    
     @action.bound selectMenuTab(caption){ this.app.menu.selectedTab = caption; }
-
+    @action.bound selectRunnerConsoleTab(caption){ 
+        console.log("Changing selected Tab to", caption);
+        this.app.runnerConsole.selectedTab = caption; 
+    }
+    
 
 }
 

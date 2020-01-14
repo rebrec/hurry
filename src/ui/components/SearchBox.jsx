@@ -72,7 +72,7 @@ class DatasourceButton extends React.Component{
       items.push(<a className="dropdown-item" key={i} onClick={this.onDropDownClick.bind(this, datasource)} href="#">{datasource.caption}</a>);
     }
     return (
-      <div class="dropdown-menu" aria-labelledby={id}>
+      <div className="dropdown-menu" aria-labelledby={id}>
         {items}
       </div>
     );
@@ -82,10 +82,10 @@ class DatasourceButton extends React.Component{
   render(){
     const { datasource } = store.uiState.app;
     return (
-      <div class="btn-group ml-3 col-3">
+      <div className="btn-group ml-3 col-3">
         <button type="button" className="btn btn-primary" onClick={this.onButtonClick}>{ datasource.caption }</button>
         <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="sr-only">Toggle Dropdown</span>
+          <span className="sr-only">Toggle Dropdown</span>
         </button>
         {this.renderDropDown("dropdownDatasourceButton")}
       </div>
