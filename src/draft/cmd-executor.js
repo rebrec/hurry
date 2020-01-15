@@ -2,7 +2,7 @@ const { platform } = require('os');
 const path = require('path');
 
 const Promise = require('promise');
-const StatefulProcessCommandProxy = require("stateful-process-command-proxy");
+const StatefulProcessCommandProxy = require("stateful-process-command-proxy-");
 
 const processCommand = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe'
 const processArgs = ['-NoProfile -ExecutionPolicy bypass']

@@ -4,6 +4,7 @@ import UiState from './UiState'
 import Settings from './Settings'
 import ShellManager from '../core/ShellManager';
 import DatasourceManager from '../core/DatasourceManager';
+import HistoryStore from './HistoryStore'
 import settings from '../settings'
 // import PowershellRunner from '../modules/runner';
 const {platform} = require('os');
@@ -15,8 +16,10 @@ class RootStore {
 
        
     constructor() {
-        this.shellManager = new ShellManager(settings);
-        this.datasourceManager = new DatasourceManager(this.shellManager, settings);
+        this.historyStore = new HistoryStore();
+        this.shellManager = new ShellManager(settings, this.historyStore);
+        this.datasourceManager = new DatasourceManager(this.shellManager, settings, this.historyStore);
+        
 
         this.settings = new Settings(this);
         this.uiState = new UiState(this);

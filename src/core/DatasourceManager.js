@@ -5,18 +5,18 @@ import Datasource from './Datasource'
 
 
 
-
 // const shellPath = [
 //     'powershell.js'
 // ];
 // const moduleRoot = Path.join(__dirname, '..', 'modules');
 
 export default class DatasourceManager{
-    constructor(shellManager, settings){
+    constructor(shellManager, settings, historyStore){
         const { datasourcesPath, defaultDataSource } = settings;
         const datasourcesPaths = getDirectories(datasourcesPath);
 
         this.shellManager = shellManager;
+        this.historyStore = historyStore;
         this._datasources = {};
         this._defaultDataSource = defaultDataSource;
         for (const path of datasourcesPaths){
