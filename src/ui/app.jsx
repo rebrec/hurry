@@ -6,6 +6,7 @@ import HostList from './components/HostList';
 import SplitPane from 'react-split-pane';
 import CollapsiblePanel from './components/CollapsiblePanel';
 import RunnerDebugConsole from './components/RunnerDebugConsole';
+import HistoryViewer from './components/HistoryViewer';
 import Menu from './components/Menu';
 import menuConfig from '../modules/menuConfig.js'
 import $ from "jquery";
@@ -60,35 +61,42 @@ export default class App extends React.Component {
     return (<div>
 
       {/*<RunnerDebugConsole history={store.runners.powershell.ps.history} />*/}
-      <SplitPane split="horizontal" minSize={5} defaultSize={600} primary="second">
+      
+      <SplitPane split="vertical" primary="second" minSize={200} >
 
+        <SplitPane split="horizontal" minSize={5} defaultSize={600} primary="second">
+
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-sm-12">
+                <SearchBox />
+              </div>
+
+              {/*{(store.uiState.app.status === APP_STATUS.SEARCHING) && (*/}
+              {/*  <div>Searching for {this.state.searchKeyword} ...</div>)}*/}
+            </div>
+
+            <div className="row">
+              <div className="col-sm-12">
+                {(uiState.app.status === APP_STATUS.DISPLAYING_RESULTS) && (
+                  <HostList
+                    onClick={this.handleSearchResultRowClick}
+                  />
+                )}
+
+              </div>
+            </div>
+            {uiState.app.menu.visible && (
+              <Menu data={menuConfig} />
+
+            )}
+          </div>
+          <div className="container-fluid console-panel">
+            <RunnerDebugConsole shellManager={store.shellManager} />
+          </div>
+        </SplitPane>
         <div className="container-fluid">
-          <div className="row">
-            <div className="col-sm-12">
-              <SearchBox />
-            </div>
-
-            {/*{(store.uiState.app.status === APP_STATUS.SEARCHING) && (*/}
-            {/*  <div>Searching for {this.state.searchKeyword} ...</div>)}*/}
-          </div>
-
-          <div className="row">
-            <div className="col-sm-12">
-              {(uiState.app.status === APP_STATUS.DISPLAYING_RESULTS) && (
-                <HostList
-                  onClick={this.handleSearchResultRowClick}
-                />
-              )}
-
-            </div>
-          </div>
-          {uiState.app.menu.visible && (
-            <Menu data={menuConfig} />
-
-          )}
-        </div>
-        <div className="console-panel">
-          <RunnerDebugConsole shellManager={store.shellManager} />
+            <HistoryViewer />
         </div>
       </SplitPane>
     </div>);

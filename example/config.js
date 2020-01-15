@@ -1,3 +1,3 @@
 module.exports = {
-    projectRoot: "/home/rebrec/projets/dev/js/hurry/src"
+    projectRoot: "/path/to/your/project/dir/containing/module/folder"
 }

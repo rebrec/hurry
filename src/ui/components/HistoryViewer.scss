@@ -1,0 +1,23 @@
+@import "variables.scss";
+
+// .hostlistline-selected{
+//   background: $hostlistline-selected-background;
+// }
+
+.history-row{
+    background-color: #656565;
+}
+
+.history-row:hover{
+    background-color: #424141;
+}
+
+.history-view-context{
+    color: #00ffdd;
+    font-weight: bold;
+}
+
+.history-view-command-caption{
+    color: #d9ff00;
+}
+

@@ -60,7 +60,7 @@ class ProcessConsole extends React.Component {
     // for (let i = 0; i < history.length; i++) {
     for (let i = history.length - 1; i >=0 ; i--) { // iterate from end to first
       const item = history[i];
-      lines.push(<CommandHistory key={i} item={item} />);
+      lines.push(<ConsoleCommandHistory key={i} item={item} />);
     }
     
     return (
@@ -73,7 +73,7 @@ class ProcessConsole extends React.Component {
 }
 
 @observer
-class CommandHistory extends React.Component {
+class ConsoleCommandHistory extends React.Component {
   constructor(props) {
     super(props);
     console.log('item=', this.props.item);

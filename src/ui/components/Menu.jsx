@@ -77,14 +77,7 @@ class Menu extends React.Component {
         });
         break;
       case 'COMMAND':
-        console.log('running command : ', elt.commands);
-        const shellName = elt.shell || 'cmd';
-        const shellObj = store.shellManager.getShell(shellName);
-        const output = elt.output || 'none';
-        for (const command of elt.commands){
-          console.log('Running command : ', command);
-          shellObj.run(command, store.uiState.search.selectedResult, output);
-        }
+        store.shellManager.runCommand(elt, store.uiState.search.selectedResult);
         break;
       default:
     }

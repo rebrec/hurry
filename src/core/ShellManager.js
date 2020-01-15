@@ -15,9 +15,9 @@ export default class ShellManager{
 
     @observable _shells = {};
 
-    constructor(settings){
+    constructor(settings, historyStore){
         const { shellsPath, shellFeaturesPath } = settings;
-        
+        this.historyStore = historyStore;
         const shellsPaths = getDirectories(shellsPath);
         const featuresPaths = getDirectories(shellFeaturesPath);
         
@@ -64,6 +64,19 @@ export default class ShellManager{
         shell.addFeature(shellFeature);
     }
     
+    runCommand(commandElement, context){
+        this.historyStore.addCommand(commandElement, context);
+        console.log('running command : ', commandElement.commands);
+        const shellName = commandElement.shell || 'cmd';
+        const shellObj = this.getShell(shellName);
+        const output = commandElement.output || 'none';
+        for (const command of commandElement.commands){
+          console.log('Running command : ', command);
+          shellObj.run(command, context, output);
+        }
+
+    }
+
     start(){
         for (let [shellName, shell] of Object.entries(this._shells)){
             console.log('Starting shell : ', shellName);
