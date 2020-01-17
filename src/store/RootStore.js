@@ -5,7 +5,7 @@ import Settings from './Settings'
 import ShellManager from '../core/ShellManager';
 import DatasourceManager from '../core/DatasourceManager';
 import HistoryStore from './HistoryStore'
-import settings from '../settings'
+import config from '../config'
 // import PowershellRunner from '../modules/runner';
 const {platform} = require('os');
 
@@ -17,8 +17,8 @@ class RootStore {
        
     constructor() {
         this.historyStore = new HistoryStore();
-        this.shellManager = new ShellManager(settings, this.historyStore);
-        this.datasourceManager = new DatasourceManager(this.shellManager, settings, this.historyStore);
+        this.shellManager = new ShellManager(config, this.historyStore);
+        this.datasourceManager = new DatasourceManager(this.shellManager, config, this.historyStore);
         
 
         this.settings = new Settings(this);

@@ -3,6 +3,7 @@ import  Shell from './Shell';
 import { getDirectories } from './helpers'
 import Datasource from './Datasource'
 import { observable } from 'mobx';
+import { cpus } from 'os';
 
 
 
@@ -14,10 +15,10 @@ import { observable } from 'mobx';
 export default class DatasourceManager{
     @observable _datasources = {};
 
-    constructor(shellManager, settings, historyStore){
-        const { datasourcesPath, defaultDataSource } = settings;
+    constructor(shellManager, config, historyStore){
+        const { datasourcesPath, defaultDataSource } = config;
         const datasourcesPaths = getDirectories(datasourcesPath);
-
+        this.config = config.datasources || {};
         this.shellManager = shellManager;
         this.historyStore = historyStore;
         
@@ -30,10 +31,11 @@ export default class DatasourceManager{
 
     addDatasource(path){
         console.log('Processing file :', path);
-        const config = __non_webpack_require__(path);
-        const shell = this.shellManager.getShell(config.shell);
-        if (!shell) { return console.log(`Skipping datasource ${config.name} because shell ${config.shell} is unavailable`)}
-        const datasource = new Datasource(config, shell, path);
+        const datasourceDefinition = __non_webpack_require__(path);
+        const shell = this.shellManager.getShell(datasourceDefinition.shell);
+        if (!shell) { return console.log(`Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
+        const config = this.config.hasOwnProperty(datasourceDefinition.name) ? this.config[datasourceDefinition.name] : {};
+        const datasource = new Datasource(datasourceDefinition, config, shell, path);
         this._datasources[datasource.name] = datasource;
     }
 
