@@ -1,5 +1,7 @@
 @import "variables.scss";
-
+.hostlistline:hover  {
+  background: $hostlistline-selected-background;
+}
 .hostlistline-selected{
   background: $hostlistline-selected-background;
 }

@@ -18,9 +18,14 @@ export default class HistoryViewer extends React.Component {
       lines.push(<HistoryCommand key={i} item={item} />);
     }
     return (
-      <div>
+      <>
+        <div className="row">
+          <div className="col-lg-12 history-header">
+            History
+          </div>
+        </div>
         {lines}
-      </div>
+      </>
     )
       ;
   }

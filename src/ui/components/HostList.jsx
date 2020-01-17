@@ -7,16 +7,12 @@ import './HostList.scss'
 class HostList extends React.Component {
   constructor(props) {
     super(props);
-    this.columns = [
-      { columnName: 'Hostname', property: 'hostname' },
-      { columnName: 'Username', property: 'username' },
-      { columnName: 'Something', property: 'something' },
-    ];
   }
 
   renderHeader() {
     const elts = [];
-    const columns = this.columns;
+    const { datasource } = store.uiState.app;
+    const columns = datasource.columns;
     for (let i = 0; i < columns.length; i++) {
       const col = columns[i];
       elts.push(<th key={col.columnName}>{col.columnName}</th>);
@@ -26,7 +22,8 @@ class HostList extends React.Component {
 
   renderBody() {
     const tbodyElements = [];
-    const columns = this.columns;
+    const { datasource } = store.uiState.app;
+    const columns = datasource.columns;
     const results = store.uiState.search.results;
 
     for (let i = 0; i < results.length; i++) {
@@ -76,7 +73,7 @@ class HostListLine extends React.Component {
     }
     return (
 
-      <tr onClick={this.handleClick} className={selected ? "hostlistline-selected":""}>{trElements}</tr>
+      <tr onClick={this.handleClick} className={"hostlistline" + (selected ? " hostlistline-selected":"")}>{trElements}</tr>
     );
   }
 }
