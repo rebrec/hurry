@@ -6,6 +6,7 @@ export default class Datasource {
         const { moduleRoot } = settings;
         this.name = settings.name;
         this.caption = settings.caption;
+        this.columns = settings.columns;
         this.shell = shell;
         this.modulePath =  `${modulePath}${Path.sep}`;
         this.templateContext = {modulePath: this.modulePath};

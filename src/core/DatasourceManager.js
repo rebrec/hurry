@@ -2,6 +2,7 @@ import  Path from  'path'
 import  Shell from './Shell';
 import { getDirectories } from './helpers'
 import Datasource from './Datasource'
+import { observable } from 'mobx';
 
 
 
@@ -11,13 +12,15 @@ import Datasource from './Datasource'
 // const moduleRoot = Path.join(__dirname, '..', 'modules');
 
 export default class DatasourceManager{
+    @observable _datasources = {};
+
     constructor(shellManager, settings, historyStore){
         const { datasourcesPath, defaultDataSource } = settings;
         const datasourcesPaths = getDirectories(datasourcesPath);
 
         this.shellManager = shellManager;
         this.historyStore = historyStore;
-        this._datasources = {};
+        
         this._defaultDataSource = defaultDataSource;
         for (const path of datasourcesPaths){
             this.addDatasource(path);
@@ -40,5 +43,8 @@ export default class DatasourceManager{
 
     getDatasource(name){
         return this._datasources[name];
+    }
+    getDatasources(){
+        return this._datasources;
     }
 }

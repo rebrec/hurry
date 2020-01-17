@@ -1,31 +1,43 @@
-
-class DummySearcher
+class GLPISearcher
 {
     hidden [String] $ClassFilePath
     hidden [Array] $DummyData
 
     # Constructor
-    DummySearcher(){
+    GLPISearcher(){
         $this.ClassFilePath = $PSScriptRoot
-
-        $DataFilePath = Join-Path -Path "$($this.ClassFilePath)" -ChildPath "data.json"
-        $this.DummyData = Get-Content $DataFilePath | ConvertFrom-JSON
+        
     }
 
     [Array] Search([String] $Keyword){
         [Array] $res = @()
-        $this.DummyData | % {
-            if ($_.username -match $Keyword){
-                $res += , $_
-            } elseif ($_.hostname -match $Keyword){
-                $res += , $_
-            }
-        }
+        
+        [System.Array]$hosts = @()
+        
+        #Field obtained from Get-GlpiToolsListSearchOptions Computer | ? {$_.Field -like "*name*"}
+        $tmp = Search-GlpiToolsItems -SearchFor Computer -SearchType contains -SearchField 1 -SearchValue "${keyword}"
+        if ($tmp -ne $null) { $hosts += $tmp }
+        
+        #Search for User Owner Field obtained from Get-GlpiToolsListSearchOptions Computer | ? {$_.Name -like "*util*"}
+        $tmp = Search-GlpiToolsItems -SearchFor Computer -SearchType contains -SearchField 70 -SearchValue "${keyword}"
+        if ($tmp -ne $null) { $hosts += $tmp }
+        
+        #Search for Screen user (obtained from Get-GlpiToolsListSearchOptions Monitor | ? {$_.Name -like "*util*"} )
+        #Search-GlpiToolsItems -SearchFor Monitor -SearchType contains -SearchField 70 -SearchValue "${keyword}"
+        
+        $res = $hosts | Select @{N='hostname'; E={$_.Nom}},@{N='username'; E={$_.Utilisateur}}
+        # $res = $hosts
+
+        # $this.DummyData | % {
+        #     if ($_.username -match $Keyword){
+        #         $res += , $_
+        #     } elseif ($_.hostname -match $Keyword){
+        #         $res += , $_
+        #     }
+        # }
         return $res
     }
 
-
-
 }
-$dummy = [DummySearcher]::new()
+$glpiSearcher = [GLPISearcher]::new()
 
