@@ -87,7 +87,7 @@ export default class App extends React.Component {
               </div>
             </div>
             {uiState.app.menu.visible && (
-              <Menu data={menuConfig} />
+              <Menu data={menuConfig} context={ store.uiState.search.selectedResult } />
 
             )}
           </div>

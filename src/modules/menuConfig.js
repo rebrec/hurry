@@ -27,6 +27,7 @@ export default {
       type: "CONTAINER",
       caption: "Opérationnel",
       description: "Some descriptive explaination",
+      datasource: "host-file",
       tags: ["SOME_TAG", "SOME_OTHERTAG"],
       children: [
         {
@@ -179,6 +180,7 @@ export default {
       type: "CONTAINER",
       caption: "Administratif",
       description: "Some descriptive explaination",
+      datasource: "glpi",
       tags: ["SOME_TAG", "SOME_OTHERTAG"],
       children: [
         {

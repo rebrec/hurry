@@ -77,7 +77,7 @@ class Menu extends React.Component {
         });
         break;
       case 'COMMAND':
-        store.shellManager.runCommand(elt, store.uiState.search.selectedResult);
+        store.shellManager.runCommand(elt, this.props.context);
         break;
       default:
     }
@@ -88,6 +88,7 @@ class Menu extends React.Component {
   }
 
   render() {
+    const selectedResult = this.props.context;
     const tabs = [
       {
         caption: "Action",
@@ -102,9 +103,9 @@ class Menu extends React.Component {
 
             </div>
             <div className="row menu-container">
-              <CommandPanelLeft data={this.state.dataL} selected={this.state.panelLeftSelection}
+              <CommandPanelLeft data={this.state.dataL} context={this.props.context} selected={this.state.panelLeftSelection}
                                 onClick={this.handlePanelLeftClick}/>
-              <CommandPanelRight data={this.state.dataR} selected={this.state.panelRightSelection}
+              <CommandPanelRight data={this.state.dataR} context={this.props.context}  selected={this.state.panelRightSelection}
                                  onClick={this.handlePanelRightClick}/>
             </div>
           </div>
@@ -126,7 +127,7 @@ class Menu extends React.Component {
           <div className="col-sm-12" onClick={(e)=>{e.stopPropagation();}}>
             <div className="row ">
               <div className="col-sm-12">
-                <h3>{store.uiState.search.selectedResult.hostname.toUpperCase()}</h3>
+                <h3>{ selectedResult[selectedResult._datasource.mainColumnProperty].toUpperCase()}</h3>
               </div>
             </div>
 
@@ -153,7 +154,9 @@ class CommandPanelLeft extends React.Component {
     let elts = [];
     for (let i=0;i<data.length;i++){
       const elt = data[i];
-      if (elt.hasOwnProperty('platform') && elt.platform != store.platform) continue;
+      if (elt.hasOwnProperty('platform') && elt.platform !== store.platform) continue;
+      if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context._datasource.name) continue;
+      
       elts.push(<MenuElement
         key={i}
         data={elt}
@@ -180,6 +183,8 @@ class CommandPanelRight extends React.Component {
     for (let i=0;i<data.length;i++){
       const elt = data[i];
       if (elt.hasOwnProperty('platform') && elt.platform != store.platform) continue;
+      if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context._datasource.name) continue;
+
       elts.push(<MenuElement key={i} data={data[i]} onClick={this.props.onClick} handlerOn="onClick" />);
     }
     return (

@@ -8,6 +8,7 @@ module.exports = {
         { columnName: 'Username', property: 'username' },
         { columnName: 'Something', property: 'something' },
     ],
+    mainColumnProperty: 'hostname',
     searchFunc: keyword => {
         return '$dummy.search("' + keyword + '") | ConvertTo-Json -Compress';
     },

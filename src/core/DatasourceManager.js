@@ -4,7 +4,7 @@ import { getDirectories } from './helpers'
 import Datasource from './Datasource'
 import { observable } from 'mobx';
 import { cpus } from 'os';
-
+const { platform } = require('os');
 
 
 // const shellPath = [
@@ -32,6 +32,10 @@ export default class DatasourceManager{
     addDatasource(path){
         console.log('Processing file :', path);
         const datasourceDefinition = __non_webpack_require__(path);
+        if (datasourceDefinition.hasOwnProperty('platform') && datasourceDefinition.platform.indexOf(platform())<0){
+            console.log('Skipping incompatible Datasource', datasourceDefinition.name);
+            return;
+        }
         const shell = this.shellManager.getShell(datasourceDefinition.shell);
         if (!shell) { return console.log(`Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
         const config = this.config.hasOwnProperty(datasourceDefinition.name) ? this.config[datasourceDefinition.name] : {};
