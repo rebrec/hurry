@@ -8,10 +8,10 @@ module.exports = {
         `. #{modulePath}init.ps1`
     ],
     columns: [  
-        { columnName: 'Hostname', property: 'hostname' },
-        { columnName: 'Username', property: 'username' },
-        { columnName: 'Something', property: 'something' },
+        { columnName: 'Hostname', property: 'Nom' },
+        { columnName: 'Username', property: 'Utilisateur' },
     ],
+    mainColumnProperty: 'Nom',
     searchFunc: keyword => {
         return '$glpiSearcher.search("' + keyword + '") | ConvertTo-Json -Compress';
     },

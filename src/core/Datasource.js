@@ -7,6 +7,7 @@ export default class Datasource {
         this.name = definition.name;
         this.caption = definition.caption;
         this.columns = definition.columns;
+        this.mainColumnProperty = definition.mainColumnProperty;
         this.config = config;
         this.shell = shell;
         this.modulePath =  `${modulePath}${Path.sep}`;
@@ -19,6 +20,15 @@ export default class Datasource {
         this.searchFunc = definition.searchFunc;
     }
     search(keyword){
-        return this.shell.run(this.searchFunc(keyword), {}, 'json')        
+        return this.shell.run(this.searchFunc(keyword), {}, 'json')
+        .then(searchResults =>{
+            if (searchResults.success){
+                for (const result of searchResults.data){
+                    result._datasource = this;
+                }
+            }
+            return searchResults;
+        });
+        
     }
 }

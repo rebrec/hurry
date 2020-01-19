@@ -32,14 +32,14 @@ class UiState {
 
     constructor(rootStore) {
         this.rootStore = rootStore;
-        this.setSearchedText("host");
+        this.setSearchedText("vva");
         const ds = rootStore.datasourceManager.getDefaultDatasource();
         console.log("++++++++++++++++++", ds);
         this.setDatasource(ds);
         setTimeout(_=>{
             console.log('STARTSEARCH !!!!!!!!!!!!!');
             this.startSearch()
-        },15000);
+        },2000);
     }
 
     @action.bound setDatasource(ds){

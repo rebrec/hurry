@@ -25,7 +25,7 @@ class GLPISearcher
         #Search for Screen user (obtained from Get-GlpiToolsListSearchOptions Monitor | ? {$_.Name -like "*util*"} )
         #Search-GlpiToolsItems -SearchFor Monitor -SearchType contains -SearchField 70 -SearchValue "${keyword}"
         
-        $res = $hosts | Select @{N='hostname'; E={$_.Nom}},@{N='username'; E={$_.Utilisateur}}
+        $res = $hosts
         # $res = $hosts
 
         # $this.DummyData | % {
