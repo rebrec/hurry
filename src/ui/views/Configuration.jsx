@@ -26,9 +26,10 @@ export default class Configuration extends React.Component {
 
             <div className="row">
                 <div className="col-sm-12">
+                  <button onClick={_=>{store.uiState.setCurrentView('Main')}}>Main</button>
                     configuration
-                </div>);
-            </div>);
+                </div>
+            </div>
         </div>);
   }
 }
