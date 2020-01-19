@@ -8,7 +8,19 @@ const APP_STATUS = {
 
 
 class UiState {
+    @observable currentView = null;
+
+    @action.bound setCurrentView(view) { this.app.views.current = view; };
+    
+    @action.bound addView(name, View) {
+        console.log('add view', name, View);
+        this.app.views.available.set(name, View);
+    };
     @observable app = {
+        views: {
+            current: null,
+            available: null,
+        },
         datasource: { caption: "N / A" },
         status: APP_STATUS.WAITING_FOR_SEARCH,
         menu: {
@@ -32,6 +44,7 @@ class UiState {
 
     constructor(rootStore) {
         this.rootStore = rootStore;
+        this.initViews();
         this.setSearchedText("vva");
         const ds = rootStore.datasourceManager.getDefaultDatasource();
         console.log("++++++++++++++++++", ds);
@@ -42,6 +55,10 @@ class UiState {
         },2000);
     }
 
+    @action.bound initViews(){
+        this.app.views.available = new Map();
+        this.clearSearch();
+    }
     @action.bound setDatasource(ds){
         this.app.datasource = ds;
         this.clearSearch();

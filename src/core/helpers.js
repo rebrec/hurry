@@ -7,6 +7,13 @@ export const getDirectories = source =>
     .filter(dirent => dirent.isDirectory())
     .map(dirent => Path.join(source, dirent.name))
 
+
+export const getFiles = source =>
+  readdirSync(source, { withFileTypes: true })
+    .filter(ent => ent.isFile())
+    .map(ent => Path.join(source, ent.name))
+  
+
 export const parseTemplate = (text, context) => {
   // console.log('Trying to generate command from template ', command);
   // console.log('list of variables :');

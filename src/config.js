@@ -24,6 +24,7 @@ Object.assign(config, {
     shellsPath: Path.join(modulesRoot, "shells"),
     shellFeaturesPath: Path.join(modulesRoot, "shellfeatures"),
     datasourcesPath: Path.join(modulesRoot, "datasources"),
+    viewsPath:  Path.join(config.projectRoot, "ui", "views"),
 
     defaultDataSource: "glpi"
 });
