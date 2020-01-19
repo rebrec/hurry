@@ -60,6 +60,7 @@ export default class Main extends React.Component {
     return (<div>
 
       {/*<RunnerDebugConsole history={store.runners.powershell.ps.history} />*/}
+      <button onClick={_=>{store.uiState.setCurrentView('Configuration')}}>Configuration</button>
       
       <SplitPane split="vertical" primary="second" minSize={200} >
 
