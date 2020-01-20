@@ -6,5 +6,6 @@ module.exports = {
             glpiAppToken: "<APP_TOKEN>",
             glpiUserToken: "<USER_TOKEN>"
         }
-    }
+    },
+    defaultDataSource: "dummy",
 }
