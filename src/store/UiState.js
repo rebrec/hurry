@@ -45,7 +45,7 @@ class UiState {
     constructor(rootStore) {
         this.rootStore = rootStore;
         this.initViews();
-        this.setSearchedText("vva");
+        this.setSearchedText("170");
         const ds = rootStore.datasourceManager.getDefaultDatasource();
         console.log("++++++++++++++++++", ds);
         this.setDatasource(ds);

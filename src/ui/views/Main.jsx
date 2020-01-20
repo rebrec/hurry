@@ -64,9 +64,9 @@ export default class Main extends React.Component {
       
       <SplitPane split="vertical" primary="second" minSize={200} >
 
-        <SplitPane split="horizontal" minSize={5} defaultSize={600} primary="second">
+        <SplitPane split="horizontal" minSize={5} defaultSize={600} >
 
-          <div className="container-fluid">
+          <div className="container-fluid main-hostlist-area">
             <div className="row">
               <div className="col-sm-12">
                 <SearchBox />
