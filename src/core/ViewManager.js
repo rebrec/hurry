@@ -14,7 +14,7 @@ export default new class ViewManager{
         const viewsPaths = getFiles(viewsPath);
         
         for (const path of viewsPaths){
-            console.log('Processing file :', path);
+            console.log('ViewManager : Processing file :', path);
             const filename = basename(path);
             const filenameBase = filename.split('.').slice(0, -1).join('.');
             // const View = __non_webpack_require__(path);

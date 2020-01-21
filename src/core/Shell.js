@@ -85,7 +85,7 @@ export default class Shell{
     return this._run(command)
       .then((res) => {
         let obj;
-        console.log(`received res : `, res);
+        // console.log(`received res : `, res);
         // this.ps.streams
         if (processJSON){
           let res1 = {success: false, data: {}};

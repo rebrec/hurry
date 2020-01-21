@@ -9,7 +9,7 @@ let config = {};
 const configPath = Path.join(homedir, '.hurry', 'config.js');
 // const configPath = Path.join(__dirname,"config.js");
 
-console.log('dirnaSme',configPath);
+
 if (existsSync(configPath)){
     console.log('Importing custom configuration');
     customSettings = __non_webpack_require__(configPath);

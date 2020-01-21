@@ -13,7 +13,6 @@ class UiState {
     @action.bound setCurrentView(view) { this.app.views.current = view; };
     
     @action.bound addView(name, View) {
-        console.log('add view', name, View);
         this.app.views.available.set(name, View);
     };
     @observable app = {
@@ -47,10 +46,8 @@ class UiState {
         this.initViews();
         this.setSearchedText("170");
         const ds = rootStore.datasourceManager.getDefaultDatasource();
-        console.log("++++++++++++++++++", ds);
         this.setDatasource(ds);
         setTimeout(_=>{
-            console.log('STARTSEARCH !!!!!!!!!!!!!');
             this.startSearch()
         },2000);
     }
@@ -106,7 +103,6 @@ class UiState {
                   this.setAppStatus(APP_STATUS.WAITING_FOR_SEARCH);
 
               }
-              console.log("res = ", res);
           });
 
     }
@@ -114,7 +110,6 @@ class UiState {
     
     @action.bound selectMenuTab(caption){ this.app.menu.selectedTab = caption; }
     @action.bound selectRunnerConsoleTab(caption){ 
-        console.log("Changing selected Tab to", caption);
         this.app.runnerConsole.selectedTab = caption; 
     }
     

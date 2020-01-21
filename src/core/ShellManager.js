@@ -23,25 +23,21 @@ export default class ShellManager{
         
         this._shellFeatures = {};
         for (const path of shellsPaths){
-            console.log('Processing file :', path);
             const config = __non_webpack_require__(path);
             if (config.platform.indexOf(platform())<0) {
-                console.log('Skipping incompatible Shell ', config.name);
+                console.log('ShellManager : Skipping incompatible Shell ', config.name);
                 continue;
             }
             const shell = new Shell(config);
             this.addShell(shell);
         }
         for (const path of featuresPaths){ 
-            console.log('Processing file :', path);
             const config = __non_webpack_require__(path);
-            console.log('Feature for file ' + config.shell);
             this.addFeature(config.shell, config);
         }
     }
 
     @action.bound addShell(shell){
-        console.log('ADDING SHELL', shell);
         this._shells[shell.name] = shell; 
     }
 
@@ -66,7 +62,6 @@ export default class ShellManager{
     
     runCommand(commandElement, context){
         this.historyStore.addCommand(commandElement, context);
-        console.log('running command : ', commandElement.commands);
         const shellName = commandElement.shell || 'cmd';
         const shellObj = this.getShell(shellName);
         const output = commandElement.output || 'none';
