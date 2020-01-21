@@ -8,6 +8,7 @@ import store from '../../store/RootStore'
 class RunnerDebugConsole extends React.Component {
   constructor(props) {
     super(props);
+    setInterval(_=>{this.forceUpdate()},1000)
   }
 
   handleTabProviderClick(e, element){
@@ -16,15 +17,16 @@ class RunnerDebugConsole extends React.Component {
 
   render() {
     const shells = this.props.shellManager.getShells();
-    const tabs = [{
-      caption: "no process", content: (<div>No Processes are running yet !</div>)
-    }];
-    console.log("!!! SHELLS ", Object.keys(shells));
-    console.log("!!! SHELLS ", Object.entries(shells))
+    const tabs = [];
+    if (shells.length === 0) {
+      shells.push({
+        caption: "no process", content: (<div>No Processes are running yet !</div>)
+      });
+    }
+    console.log("Shell Entries ", Object.entries(shells))
     for (const [shellName, shellObj] of Object.entries(shells)){
       const { runner } = shellObj;
       const pids = runner._pid2processMap
-      console.log("!!! SHELLS ", shellName, Object.keys(pids));
       for (const [pid, processProxy] of Object.entries(pids)){
         tabs.push({
           caption: `${shellName} (${pid})`,
@@ -40,7 +42,6 @@ class RunnerDebugConsole extends React.Component {
         });
       }
     }
-    console.log("!!! SHELLS ", tabs);
     return (
       <div className="row ">
       <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.runnerConsole.selectedTab}/>
@@ -51,7 +52,7 @@ class RunnerDebugConsole extends React.Component {
 @observer
 class ProcessConsole extends React.Component {
   constructor(props) {
-    super(props);
+    super(props);setInterval(_=>{this.forceUpdate()},1000);
   }
   render(){
     const { shellName, pid, processProxy } = this.props;
@@ -76,7 +77,7 @@ class ProcessConsole extends React.Component {
 class ConsoleCommandHistory extends React.Component {
   constructor(props) {
     super(props);
-    console.log('item=', this.props.item);
+    setInterval(_=>{this.forceUpdate()},1000)
   }
   render() {
     const { 

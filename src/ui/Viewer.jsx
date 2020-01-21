@@ -9,7 +9,6 @@ export default class Viewer extends React.Component {
     const views = store.uiState.app.views;
     const view = views.available.get(views.current);
     
-    console.log('view = ', view);
     return React.createElement(view);
   }
 }

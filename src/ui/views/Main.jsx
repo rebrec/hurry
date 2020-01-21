@@ -9,7 +9,7 @@ import HistoryViewer from '../components/HistoryViewer';
 import Menu from '../components/Menu';
 import menuConfig from '../../modules/menuConfig.js'
 
-import './app.scss'
+import './Main.scss'
 
 
 const APP_STATUS = {
