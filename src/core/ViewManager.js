@@ -1,5 +1,5 @@
 import  Path from  'path'
-import { getFiles } from './helpers'
+import { getFiles } from './helpers/helpers'
 import { observable, computed, action, extendObservable } from 'mobx'
 import { basename } from 'path'
 import config from '../config'

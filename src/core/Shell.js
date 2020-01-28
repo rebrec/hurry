@@ -1,5 +1,5 @@
 const { platform } = require('os');
-const { parseTemplate } = require('./helpers');
+const { parseTemplate } = require('./helpers/helpers');
 const StatefulProcessCommandProxy = require("stateful-process-command-proxy");
 import { observable, computed, action, extendObservable } from 'mobx'
 const Promise = require('promise');

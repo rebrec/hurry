@@ -1,5 +1,5 @@
-import Path from 'path' 
-const { parseTemplate, parseTemplateArray } = require('./helpers');
+import Path from 'path'
+import { parseTemplate, parseTemplateArray } from './helpers/helpers';
 
 export default class Datasource {
     constructor(definition, config, shell, modulePath){
