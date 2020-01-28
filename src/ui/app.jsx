@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react'
 import store from '../store/RootStore'
 import config from '../config'
-import { getFiles } from '../core/helpers'
+import { getFiles } from '../core/helpers/helpers'
 import { basename } from 'path'
 import $ from "jquery";
 // import ViewManager from '../core/ViewManager'
