@@ -125,7 +125,7 @@ class Menu extends React.Component {
     return (
       <div className="menu-background-parent" onClick={store.uiState.hideMenu}>
         <div className="menu row">
-          <button onClick={store.uiState.hideMenu} className="menu-close-button">X</button>
+          <button onClick={store.uiState.hideMenu} className="menu-close-button"><FontAwesomeIcon icon="times" /></button>
 
           <div className="col-sm-12" onClick={(e)=>{e.stopPropagation();}}>
             <div className="row ">
