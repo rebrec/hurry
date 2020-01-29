@@ -1,4 +1,4 @@
-import Path from 'path'
+import Path from 'path' 
 import { parseTemplate, parseTemplateArray } from './helpers/helpers';
 
 export default class Datasource {

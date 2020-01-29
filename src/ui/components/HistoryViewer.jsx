@@ -53,13 +53,13 @@ class HistoryCommand extends React.Component {
     console.log('HISTORY', this.props.item);
     const { command, context } = this.props.item;
     const { caption: commandCaption, description} = command;
-    const { hostname} = context;
+    const mainColumnProperty = context[context._datasource.mainColumnProperty];
 
     return (
 
         <div className="row history-row">
            <div className="col-lg-12" >
-              <span className="history-view-context" onClick={this.handleContextClick}>{ hostname }</span>
+              <span className="history-view-context" onClick={this.handleContextClick}>{ mainColumnProperty }</span>
               {" "}
               <span className="history-view-command-caption" onClick={this.handleCommandClick}>{ commandCaption }</span>
             </div>

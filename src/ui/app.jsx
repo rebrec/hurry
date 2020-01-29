@@ -5,6 +5,12 @@ import config from '../config'
 import { getFiles } from '../core/helpers/helpers'
 import { basename } from 'path'
 import $ from "jquery";
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faFolder, faFolderOpen, faTerminal, faChevronLeft} from '@fortawesome/free-solid-svg-icons'
+
+library.add(fab, faFolder, faFolderOpen, faTerminal, faChevronLeft)
 // import ViewManager from '../core/ViewManager'
 
 import Viewer from './Viewer'

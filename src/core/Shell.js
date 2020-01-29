@@ -11,11 +11,11 @@ const defaultConfig = {
     idleTimeoutMS: 10000,    
     processCommand: null,
     processArgs:  null,
-    processInvalidateOnRegex : {
+    /*processInvalidateOnRegex : {
       'any':[{regex:'.*error.*',flags:'ig'}],
       'stdout':[{regex:'.*error.*',flags:'ig'}],
       'stderr':[{regex:'.*error.*',flags:'ig'}]
-    },
+    },*/
     processRetainMaxCmdHistory : 50,
     processCwd : path.join('.', '.'),
     processEnvMap : null,
