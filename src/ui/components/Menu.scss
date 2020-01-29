@@ -29,8 +29,11 @@
     top: 0px;
     right: 0px;
     z-index: 100;
-    //background: transparent;
-    //border-style: none;
+    background: transparent;
+    border-style: none;
+}
+.menu-close-button:hover{
+    color:grey;
 }
 
 .menu-container{
@@ -50,6 +53,15 @@
 .menu-item-selected {
     background-color: cornflowerblue;
 }
+
+.menu-item-command .menu-item-container {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
+    user-select:none;
+    -o-user-select:none;
+}
+
 .arrow_box {
     position: relative;
     background: $color1;
