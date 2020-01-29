@@ -42,10 +42,10 @@ class UiState {
     };
     @action.bound setDebuggerConsoleHeight(height){ this.app.runnerConsole.settings.height = height; }
 
-    constructor(rootStore) {
+    constructor(rootStore, config) {
         this.rootStore = rootStore;
         this.initViews();
-        this.setSearchedText("1706-01");
+        this.setSearchedText(config.defaultSearch);
         const ds = rootStore.datasourceManager.getDefaultDatasource();
         this.setDatasource(ds);
         setTimeout(_=>{

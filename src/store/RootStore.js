@@ -22,7 +22,7 @@ class RootStore {
         
 
         this.settings = new Settings(this);
-        this.uiState = new UiState(this);
+        this.uiState = new UiState(this, config);
         
         
         this.platform = platform();
