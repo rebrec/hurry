@@ -389,7 +389,17 @@ export default {
             "type": "COMMAND",
             "platform": "win32",
             "commands": [
-              "ping -t #{hostname}"
+              "start \"ping -t #{hostname}\" ping -t #{hostname}"
+            ]
+          },
+          {
+            "description": "Effectue un PING de la machine",
+            "caption": "Ping",
+            "shell": "bash",
+            "type": "COMMAND",
+            "platform": "linux",
+            "commands": [
+              "xterm -e \"ping #{hostname}\""
             ]
           },
           {

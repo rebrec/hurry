@@ -6,4 +6,5 @@ module.exports = {
     platform: ['linux'],
     processCommand: processCommand,
     processArgs:  processArgs,
+    initCommands: ['echo "salut from BASH"']
 }
