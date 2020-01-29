@@ -4,6 +4,7 @@ import './RunnerDebugConsole.scss';
 import TabProvider from './TabProvider'
 import store from '../../store/RootStore'
 
+
 @observer
 class RunnerDebugConsole extends React.Component {
   constructor(props) {
@@ -31,19 +32,15 @@ class RunnerDebugConsole extends React.Component {
         tabs.push({
           caption: `${shellName} (${pid})`,
           content: (
-            <div className="col-sm-12 ">
-              <div className="row">
-                <div className="col-sm-12 ">
-                  <ProcessConsole shellName={shellName} pid={pid} processProxy={processProxy} />
-                </div>    
-              </div>
-            </div>
+            <>
+              <ProcessConsole shellName={shellName} pid={pid} processProxy={processProxy} />
+            </>
           )
         });
       }
     }
     return (
-      <div className="row ">
+      <div className="row runner-debugger-console" style={ {height: store.uiState.app.runnerConsole.settings.height} }>
       <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.runnerConsole.selectedTab}/>
     </div>
     );
@@ -65,7 +62,7 @@ class ProcessConsole extends React.Component {
     }
     
     return (
-      <div className="row ">
+      <div className="process-console">
         { lines }
       </div>
     );
@@ -91,7 +88,7 @@ class ConsoleCommandHistory extends React.Component {
     const hadErrors = (stderr !== "")
     return (
 
-        <div className="row console-row">
+        <div className="row  console-command-history console-row">
           <div className="col-lg-12" >
             <div className="row">
               <div className={`col-lg-12 command-input${hadErrors ? '-error' : ''}`} >

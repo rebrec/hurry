@@ -3,6 +3,8 @@ import './Menu.scss';
 import { observer } from 'mobx-react'
 import TabProvider from './TabProvider'
 import store from '../../store/RootStore'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 @observer
 class Menu extends React.Component {
@@ -97,7 +99,8 @@ class Menu extends React.Component {
             <div className="row">
               <div className="col-sm-1">
                 <button onClick={this.goBack} className="btn button "
-                        disabled={this.state.dataLHistory.length === 0}>Up
+                        disabled={this.state.dataLHistory.length === 0}>
+                          <FontAwesomeIcon icon="chevron-left" />
                 </button>
               </div>
 
@@ -154,6 +157,7 @@ class CommandPanelLeft extends React.Component {
     let elts = [];
     for (let i=0;i<data.length;i++){
       const elt = data[i];
+      if (elt.type === 'COMMAND') continue;
       if (elt.hasOwnProperty('platform') && elt.platform !== store.platform) continue;
       if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context._datasource.name) continue;
       
@@ -202,11 +206,20 @@ class MenuElement extends React.Component {
   }
 
   render() {
-    const selected = this.props.selected ? 'arrow_box' : '';
+    const {data, selected} = this.props;
+    let icons = {
+      'CONTAINER':          (<FontAwesomeIcon icon="folder" />),
+      'CONTAINER-SELECTED': (<FontAwesomeIcon icon="folder-open" />),
+      'COMMAND':            (<FontAwesomeIcon icon="terminal" />),
+      'COMMAND-SELECTED':   (<FontAwesomeIcon icon="terminal" />),
+    };
+    
+
+    const selectedClass = selected ? 'arrow_box' : '';
     return (
       <div className="row">
-        <div className={`col-sm-12 menu-item-${this.props.data.type.toLowerCase()} ${selected}` } {...{[this.props.handlerOn]: this.handleClick}}>
-          {this.props.data.type.toLowerCase()} : {this.props.data.caption}
+        <div className={`col-sm-12 menu-item-${this.props.data.type.toLowerCase()} ${selectedClass}` } {...{[this.props.handlerOn]: this.handleClick}}>
+          {icons[data.type + (selected ? "-SELECTED": "")]} {data.caption}
         </div>
       </div>
     );

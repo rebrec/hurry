@@ -60,11 +60,12 @@ export default class Main extends React.Component {
     return (<div>
 
       {/*<RunnerDebugConsole history={store.runners.powershell.ps.history} />*/}
-      <button onClick={_=>{store.uiState.setCurrentView('Configuration')}}>Configuration</button>
       
+      {/* <button onClick={_=>{store.uiState.setCurrentView('Configuration')}}>Configuration</button>
+       */}
       <SplitPane split="vertical" primary="second" minSize={200} >
 
-        <SplitPane split="horizontal" minSize={5} defaultSize={600} >
+        <SplitPane split="horizontal" minSize={5} defaultSize={600} onChange={ size => { store.uiState.setDebuggerConsoleHeight(window.innerHeight - size)}}>
 
           <div className="container-fluid main-hostlist-area">
             <div className="row">
@@ -92,7 +93,11 @@ export default class Main extends React.Component {
             )}
           </div>
           <div className="container-fluid console-panel">
-            <RunnerDebugConsole shellManager={store.shellManager} />
+            <div className = "row">
+              <div className="col-sm-12">
+                <RunnerDebugConsole shellManager={store.shellManager} />
+              </div>
+            </div>
           </div>
         </SplitPane>
         <div className="container-fluid">

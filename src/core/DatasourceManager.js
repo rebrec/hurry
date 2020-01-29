@@ -1,6 +1,6 @@
 import  Path from  'path'
 import  Shell from './Shell';
-import { getDirectories } from './helpers'
+import { getDirectories } from './helpers/helpers'
 import Datasource from './Datasource'
 import { observable } from 'mobx';
 import { cpus } from 'os';
