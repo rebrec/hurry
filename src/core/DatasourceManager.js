@@ -36,8 +36,14 @@ export default class DatasourceManager{
             console.log('DatasourceManager.addDatasource : Skipping incompatible Datasource', datasourceDefinition.name);
             return;
         }
-        const shell = this.shellManager.getShell(datasourceDefinition.shell);
-        if (!shell) { return console.log(`'DatasourceManager.addDatasource : Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
+        let shell;
+        if (datasourceDefinition.shell === null) { // Native JS DS
+            shell = null;
+        } else {
+            shell = this.shellManager.getShell(datasourceDefinition.shell);
+            if (!shell) { return console.log(`'DatasourceManager.addDatasource : Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
+        }
+        
         const config = this.config.hasOwnProperty(datasourceDefinition.name) ? this.config[datasourceDefinition.name] : {};
         const datasource = new Datasource(datasourceDefinition, config, shell, path);
         this._datasources[datasource.name] = datasource;
