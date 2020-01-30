@@ -1,14 +1,46 @@
-import fs from 'fs'
-const readFile = fs.promises.readFile;
 
 function parseHostData(data){
-    return [
-        {hostname: 'pcta-xxx-72', ipaddress: "1.1.1.1"},
-        {hostname: 'pcta-1-72', ipaddress: "1.1.1.2"},
-        {hostname: 'pcta-2-72', ipaddress: "1.1.1.3"},
-        {hostname: 'pcta-3-72', ipaddress: "1.1.1.4"},
-        {hostname: 'pcta-4-72', ipaddress: "1.1.1.5"},
-    ];
+    const res = [];
+    data = (data || '').split('\n');
+    data.forEach(function (line) {
+      var hashIndex, matched, ip, hostnames;
+      hashIndex = line.indexOf('#');
+      if (hashIndex > -1) {
+        line = line.slice(0, hashIndex);
+      }
+  
+      matched = line.trim().split(/\s+/);
+  
+      if (matched.length < 2) {
+        return;
+      }
+  
+      ip = matched[0];
+      hostnames = matched.slice(1);
+  
+      hostnames.forEach(function (hostname) {
+        res.push({
+          ipaddress: ip,
+          hostname: hostname
+        });
+      });
+      
+    });
+    return res;
+    // var _ref = data.replace(/#.*/g, '').split(/[\r\n]/);
+    // var _hosts = [];
+    // for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    //     line = _ref[_i];
+    //     md = /(\d+\.\d+\.\d+\.\d+)\s+(.+)/.exec(line);
+    //     if (md) {
+    //         //obj[md[1]] = _.union(obj[md[1]] || [], md[2].trim().split(/\s+/));
+    //         _hosts.push({
+    //             'ipaddress': md[1],
+    //             'hostname': md[2]
+    //         });
+    //     }
+    // }
+    // return _hosts;
 }
 
 function searchData(data, keyword){ // COULD BE IMPROVED USING Array.filter ?
@@ -26,27 +58,33 @@ function searchData(data, keyword){ // COULD BE IMPROVED USING Array.filter ?
 }
 
 module.exports = {
-    name: "js-hosts-file",
+    name: "jsHostsFile",
     caption: "Host (js)",
-    shell: null,
-    init: (config) =>{
+    shell: 'js',
+    init: (globalObjects, config) =>{
         this.config = config;
-        return readFile(config.hostfile)
+        return globalObjects.fs.promises.readFile(config.hostfile)
         .then(data=> {
-            this.data = parseHostData(data);
+            this.data = parseHostData(data.toString());
             return true;
         });
     },
+    initCommands : [],
     columns: [  
         { columnName: 'Hostname', property: 'hostname' },
         { columnName: 'IP Address', property: 'ipaddress' }
     ],
     mainColumnProperty: 'hostname',
     searchFunc: keyword => {
-        return Promise.resolve()
-        .then(_=>{
-            return searchData(this.data, keyword);
-        });
+        console.log('hhhaaaaa');
+        return function (kw) {
+            console.log('hhhooooo');
+            return Promise.resolve()
+            .then(_=>{
+                return JSON.stringify(searchData(this.data, keyword));
+            });
+    
+        }.bind(this, keyword);
             
     }
 };

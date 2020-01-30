@@ -4,6 +4,7 @@ import { getDirectories } from './helpers/helpers'
 import Datasource from './Datasource'
 import { observable } from 'mobx';
 import { cpus } from 'os';
+
 const { platform } = require('os');
 
 
@@ -25,7 +26,6 @@ export default class DatasourceManager{
         this._defaultDataSource = defaultDataSource;
         for (const path of datasourcesPaths){
             this.addDatasource(path);
-            
         }
     }
 
@@ -36,13 +36,8 @@ export default class DatasourceManager{
             console.log('DatasourceManager.addDatasource : Skipping incompatible Datasource', datasourceDefinition.name);
             return;
         }
-        let shell;
-        if (datasourceDefinition.shell === null) { // Native JS DS
-            shell = null;
-        } else {
-            shell = this.shellManager.getShell(datasourceDefinition.shell);
-            if (!shell) { return console.log(`'DatasourceManager.addDatasource : Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
-        }
+        const shell = this.shellManager.getShell(datasourceDefinition.shell);
+        if (!shell) { return console.log(`'DatasourceManager.addDatasource : Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
         
         const config = this.config.hasOwnProperty(datasourceDefinition.name) ? this.config[datasourceDefinition.name] : {};
         const datasource = new Datasource(datasourceDefinition, config, shell, path);
