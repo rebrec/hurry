@@ -39,15 +39,14 @@ export default class Shell{
     this.registerPreDestroyCommands(preDestroyCommands);
     this.config = {};
     Object.assign(this.config, defaultConfig, config);
+    this.config.logFunction = (severity,origin,msg) => {
+      console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
+    };
   }
   
   @action.bound start(){
     this.config.initCommands = this.initCommands;
     this.config.preDestroyCommands = this.preDestroyCommands;
-    this.config.logFunction = (severity,origin,msg) => {
-      console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
-    };
-
     this.runner = new StatefulProcessCommandProxy(this.config);
   }
 
