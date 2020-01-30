@@ -2,7 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react'
 import store from '../../store/RootStore'
 import './Configuration.scss'
-
+import Form from "react-jsonschema-form";
+import schema from "../../modules/config-schema"
+import config from "../../config"
 
 const APP_STATUS = {
   WAITING_FOR_SEARCH: 1,
@@ -21,15 +23,26 @@ export default class Configuration extends React.Component {
 
   render() {
 
+    const log = (type) => console.log.bind(console, type);
+
     return (
         <div className="container-fluid">
-
-            <div className="row">
-                <div className="col-sm-12">
-                  <button onClick={_=>{store.uiState.setCurrentView('Main')}}>Main</button>
-                    configuration
-                </div>
+          <div className="row">
+              <div className="col-sm-12">
+                <button onClick={_=>{store.uiState.setCurrentView('Main')}}>Main</button>
+              </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12">
+              <Form 
+                schema={schema}
+                formData={config}
+                onChange={log("changed")}
+                onSubmit={log("submitted")}
+                onError={log("errors")} 
+              />
             </div>
+          </div>
         </div>);
   }
 }
