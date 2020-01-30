@@ -2,6 +2,7 @@ import  Path from  'path'
 import  Shell from './Shell';
 import { getDirectories } from './helpers/helpers'
 import { observable, computed, action, extendObservable } from 'mobx'
+import ShellJS from './ShellJS';
 const { platform } = require('os');
 
 
@@ -22,6 +23,7 @@ export default class ShellManager{
         const featuresPaths = getDirectories(shellFeaturesPath);
         
         this._shellFeatures = {};
+        this.addShell(new ShellJS());
         for (const path of shellsPaths){
             const config = __non_webpack_require__(path);
             if (config.platform.indexOf(platform())<0) {

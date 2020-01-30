@@ -5,6 +5,9 @@ module.exports = {
             glpiApiEndpoint: "http://hostname/apirest.php",
             glpiAppToken: "<APP_TOKEN>",
             glpiUserToken: "<USER_TOKEN>"
+        },
+        jsHostsFile: {
+            hostfile: '/some/path'
         }
     },
     defaultDataSource: "dummy",

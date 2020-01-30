@@ -1,5 +1,11 @@
 import Path from 'path' 
 import { parseTemplate, parseTemplateArray } from './helpers/helpers';
+import Fs from 'fs'
+
+let globalObjects = {
+    fs : Fs
+};
+
 
 export default class Datasource {
     constructor(definition, config, shell, modulePath){
@@ -9,6 +15,9 @@ export default class Datasource {
         this.columns = definition.columns;
         this.mainColumnProperty = definition.mainColumnProperty;
         this.config = config;
+        if (definition.hasOwnProperty('init')){
+            definition.init(globalObjects, config);
+        }
         this.shell = shell;
         this.modulePath =  `${modulePath}${Path.sep}`;
         this.templateContext = {modulePath: this.modulePath};

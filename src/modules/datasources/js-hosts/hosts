@@ -1,0 +1,14 @@
+127.0.0.1	localhost
+127.0.1.1	rebrec-cin
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters 
+            #
+               
+192.168.1.2    host1 host1.domain.local some-host1-alias
+192.168.2.2         h2
+192.168.5.5        h3 h3.dom.loc    somh3.something.else
