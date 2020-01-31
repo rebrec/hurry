@@ -1,13 +1,21 @@
 import Path from 'path'
-import { readdirSync } from 'fs';
+import { readdirSync, writeFileSync } from 'fs';
 
 
-export const getDirectories = source =>
-  readdirSync(source, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => Path.join(source, dirent.name))
+export const saveConfig = data => {
+  const homedir = require('os').homedir();
+  const configPath = Path.join(homedir, '.hurry', 'config.js');
+  writeFileSync(configPath, "module.exports = " + JSON.stringify(data));
+}
 
 
+
+    export const getDirectories = source =>
+    readdirSync(source, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => Path.join(source, dirent.name))
+  
+  
 export const getFiles = source =>
   readdirSync(source, { withFileTypes: true })
     .filter(ent => ent.isFile())
