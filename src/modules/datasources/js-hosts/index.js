@@ -48,9 +48,9 @@ function searchData(data, keyword){ // COULD BE IMPROVED USING Array.filter ?
     for (let i = 0; i<data.length;i++){
         const elt = data[i];
         const {hostname, ipaddress} = elt;
-        if (hostname.indexOf(keyword) > -1){
+        if (hostname.toLowerCase().indexOf(keyword.toLowerCase()) > -1){
             res.push(elt);
-        } else if (ipaddress.indexOf(keyword) > -1){
+        } else if (ipaddress.toLowerCase().indexOf(keyword.toLowerCase()) > -1){
             res.push(elt);
         }
     }

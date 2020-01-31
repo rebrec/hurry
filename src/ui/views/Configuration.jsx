@@ -5,6 +5,7 @@ import './Configuration.scss'
 import Form from "react-jsonschema-form";
 import schema from "../../modules/config-schema"
 import config from "../../config"
+import { saveConfig } from "../../core/helpers/helpers"
 
 const APP_STATUS = {
   WAITING_FOR_SEARCH: 1,
@@ -19,6 +20,10 @@ export default class Configuration extends React.Component {
     super(props);
     this.state = {
     };
+  }
+
+  onSubmitted(data){
+    saveConfig(data.formData);
   }
 
   render() {
@@ -37,8 +42,7 @@ export default class Configuration extends React.Component {
               <Form 
                 schema={schema}
                 formData={config}
-                onChange={log("changed")}
-                onSubmit={log("submitted")}
+                onSubmit={this.onSubmitted}
                 onError={log("errors")} 
               />
             </div>

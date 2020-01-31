@@ -25,18 +25,20 @@ module.exports = {
                             title: "API User Token",
                             type: "string",
                         },
-                    },
-                    jsHostsFile: {
-                        title: "JS Hosts File",
-                        type: "object",
-                        properties: {
-                            hostfile: {
-                                title: "File Path",
-                                type: "string",
-                            },
-                        }
-                    },
-                }
+                    }
+                },
+                jsHostsFile: {
+                    title: "JS Hosts File",
+                    type: "object",
+                    properties: {
+                        hostfile: {
+                            title: "File Path",
+                            type: "string",
+                            default: "/path/to/hosts"
+                        },
+                    }
+                },
+                
             },
         },
         defaultDataSource: {
@@ -46,6 +48,7 @@ module.exports = {
         defaultSearch: {
             title: "Default Search",
             type: "string",
+            default: ""
         },
     }
 }
