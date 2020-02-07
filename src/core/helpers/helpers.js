@@ -1,6 +1,59 @@
 import Path from 'path'
 import { readdirSync, writeFileSync } from 'fs';
+import  ping from "net-ping";
+import dns from 'dns';
+const dnsPromise = dns.promises;
+import net from 'net';
 
+
+
+const pingSession = ping.createSession ({
+    retries: 1,
+    timeout: 1000,
+    ttl: 200
+});
+
+
+export const pingHost = (target, options) => {
+  options = Object.assign({family:4, all:false }, options);
+
+  let result = {success: false};
+  result.target = target;
+  return new Promise((resolve, reject)=>{
+    if (net.isIP(target)){
+      resolve({address: target});
+    } else {
+      return dnsPromise.lookup(target, options)     
+    }
+  })
+  .then(ipObj=>{
+    return new Promise((resolve, reject)=>{
+      pingSession.pingHost (target, function (error, target) {
+        if (error){
+          if (error instanceof ping.RequestTimedOutError){
+            result.success = true;
+            result.online = false;
+          } else {
+            result.success = false;
+            result.error = error.toString()
+          }
+        } else {
+          result.success = true;
+          result.online = true;
+        }
+        return resolve(result);
+      });
+    });
+  })
+  .catch(err=>{
+    result.success = false;
+    result.error = error.toString()
+    return resolve(result);
+  });
+
+ 
+  
+}
 
 export const saveConfig = data => {
   const homedir = require('os').homedir();

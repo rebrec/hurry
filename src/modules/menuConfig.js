@@ -1,24 +1,3 @@
-/*
-        // EXAMPLE COMMAND
-        {
-          type: "COMMAND",
-          shell: "powershell",
-          platform: "linux",
-          caption: "ping (linux)",
-          output: "none",
-          description: "Some descriptive explanation",
-          commands: ["Start-Process -FilePath \"xterm\" -ArgumentList '-e bash -c \"ping #{hostname}\"'"]
-        },
-
-        // EXAMPLE CONTAINER
-        {
-          type: "CONTAINER",
-          caption: "Opérationnel",
-          description: "Some descriptive explaination",
-          tags: ["SOME_TAG", "SOME_OTHERTAG"],
-          children: []
-        }
-*/
 
 export default {
   caption: "RACINE",
@@ -105,7 +84,7 @@ export default {
             "type": "COMMAND",
             "platform": "win32",
             "commands": [
-              "psexec \\\\#{hostname} schtasks /query"
+              "start \"\" psexec \\\\#{hostname} schtasks /query"
             ]
           },
           {
@@ -115,7 +94,7 @@ export default {
             "type": "COMMAND",
             "platform": "win32",
             "commands": [
-              "Psexec \\\\#{hostname} -u #{hostname}\\Administrateur -p Sdis72 cmd"
+              "start \"\" Psexec \\\\#{hostname} -u #{hostname}\\Administrateur -p Sdis72 cmd"
             ]
           },
           {
@@ -125,7 +104,7 @@ export default {
             "type": "COMMAND",
             "platform": "win32",
             "commands": [
-              "Psexec -s -i \\\\#{hostname} -u #{hostname}\\Administrateur -p Sdis72 cmd"
+              "start \"\" Psexec -s -i \\\\#{hostname} -u #{hostname}\\Administrateur -p Sdis72 cmd"
             ]
           },
           {
@@ -135,7 +114,7 @@ export default {
             "type": "COMMAND",
             "platform": "win32",
             "commands": [
-              "Psexec \\\\#{hostname} -i -u #{hostname}\\Administrateur -p Sdis72 procexp.exe"
+              "start \"\" Psexec \\\\#{hostname} -i -u #{hostname}\\Administrateur -p Sdis72 procexp.exe"
             ]
           },
           {
@@ -145,7 +124,7 @@ export default {
             "type": "COMMAND",
             "platform": "win32",
             "commands": [
-              "wmic /user:#{hostname}\\administrateur /password:Sdis72 /node:#{hostname} bios get serialnumber"
+              "start \"\" wmic /user:#{hostname}\\administrateur /password:Sdis72 /node:#{hostname} bios get serialnumber"
             ]
           },
           {
@@ -224,7 +203,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "Psexec \\\\#{hostname} -i -u #{hostname}\\Administrateur -p Sdis72 procexp.exe"
+                      "start \"\" Psexec \\\\#{hostname} -i -u #{hostname}\\Administrateur -p Sdis72 procexp.exe"
                     ]
                   },
                   {
@@ -234,7 +213,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "Psexec -s -i \\\\#{hostname} -u #{hostname}\\Administrateur -p Sdis72 cmd"
+                      "start \"\" Psexec -s -i \\\\#{hostname} -u #{hostname}\\Administrateur -p Sdis72 cmd"
                     ]
                   }
                 ]
@@ -250,7 +229,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "Psexec \\\\#{hostname} -u #{hostname}\\Administrateur -p Sdis72 cmd"
+                      "start \"\" Psexec \\\\#{hostname} -u #{hostname}\\Administrateur -p Sdis72 cmd"
                     ]
                   },
                   {
@@ -276,7 +255,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "wmic /user:#{hostname}\\administrateur /password:Sdis72 /node:#{hostname} bios get serialnumber"
+                      "start \"\" wmic /user:#{hostname}\\administrateur /password:Sdis72 /node:#{hostname} bios get serialnumber"
                     ]
                   },
                   {
@@ -287,7 +266,7 @@ export default {
                     "platform": "win32",
                     "commands": [
                       "net use \\\\#{hostname} /user:#{hostname}\\Administrateur Sdis72",
-                      "psexec \\\\#{hostname} schtasks /query"
+                      "start \"\" psexec \\\\#{hostname} schtasks /query"
                     ]
                   }
                 ]
@@ -409,7 +388,7 @@ export default {
             "type": "COMMAND",
             "platform": "win32",
             "commands": [
-              "nslookup #{hostname}"
+              "start \"\" nslookup #{hostname}"
             ]
           },
           {
@@ -419,7 +398,7 @@ export default {
             "type": "COMMAND",
             "platform": "win32",
             "commands": [
-              "tracert -4 -d #{hostname}"
+              "start \"\" tracert -4 -d #{hostname}"
             ]
           }
         ]
@@ -495,7 +474,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "Psexec \\\\#{hostname} cmd"
+                  "start \"\" Psexec \\\\#{hostname} cmd"
                 ]
               },
               {
@@ -505,7 +484,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "PSSHUTDOWN -m \"Dépannage Service Informatique\" -f -t 0 -r  \\\\#{hostname}"
+                  "start \"\" PSSHUTDOWN -m \"Dépannage Service Informatique\" -f -t 0 -r  \\\\#{hostname}"
                 ]
               },
               {
@@ -515,7 +494,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "Psexec -s -i \\\\#{hostname} cmd"
+                  "start \"\" Psexec -s -i \\\\#{hostname} cmd"
                 ]
               },
               {
@@ -525,7 +504,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "psexec -s \\\\#{hostname} -i procexp.exe"
+                  "start \"\" psexec -s \\\\#{hostname} -i procexp.exe"
                 ]
               },
               {
@@ -535,7 +514,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -file \"t:\\12- Administration Systemes Reseaux\\Outils\\CSharp\\GlpiSearch\\GlpiSearch\\Addons\\Liste_Imprimantes_Distantes.ps1\" #{hostname}"
+                  "start \"\" C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -file \"t:\\12- Administration Systemes Reseaux\\Outils\\CSharp\\GlpiSearch\\GlpiSearch\\Addons\\Liste_Imprimantes_Distantes.ps1\" #{hostname}"
                 ]
               },
               {
@@ -545,7 +524,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -file \"t:\\12- Administration Systemes Reseaux\\Outils\\CSharp\\GlpiSearch\\GlpiSearch\\Addons\\Historique_Reboot.ps1\" #{hostname}"
+                  "start \"\" C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -file \"t:\\12- Administration Systemes Reseaux\\Outils\\CSharp\\GlpiSearch\\GlpiSearch\\Addons\\Historique_Reboot.ps1\" #{hostname}"
                 ]
               },
               {
@@ -555,7 +534,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "xcopy /y \"T:\\12- Administration Systemes Reseaux\\Outils\\Scripts\\PowerShell\\Reporting\\WindowsUpdate_Repport.ps1\" \"\\\\#{hostname}\\c$\\windows\\\""
+                  "start \"\" xcopy /y \"T:\\12- Administration Systemes Reseaux\\Outils\\Scripts\\PowerShell\\Reporting\\WindowsUpdate_Repport.ps1\" \"\\\\#{hostname}\\c$\\windows\\\""
                 ]
               },
               {
@@ -565,7 +544,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -file \"T:\\12- Administration Systemes Reseaux\\Outils\\Scripts\\PowerShell\\Reporting\\WindowsUpdate_Repport.ps1\"  #{hostname}"
+                  "start \"\" C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -file \"T:\\12- Administration Systemes Reseaux\\Outils\\Scripts\\PowerShell\\Reporting\\WindowsUpdate_Repport.ps1\"  #{hostname}"
                 ]
               },
               {
@@ -657,7 +636,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "cscript \"\\\\srv-fic04\\e$\\Service Informatique\\4221_Informatique\\12- Administration Systemes Reseaux\\Outils\\Scripts\\VncBypass\\VNC_Bypass2.vbs\" #{hostname}"
+                  "start \"\" cscript \"\\\\srv-fic04\\e$\\Service Informatique\\4221_Informatique\\12- Administration Systemes Reseaux\\Outils\\Scripts\\VncBypass\\VNC_Bypass2.vbs\" #{hostname}"
                 ]
               },
               {
@@ -667,7 +646,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "start \"\" \"\\\\srv-fic04\\e$\\Service Informatique\\4221_Informatique\\12- Administration Systemes Reseaux\\Outils\\Scripts\\VncBypass\\vncviewer.exe\" #{hostname}"
+                  "start \"\" start \"\" \"\\\\srv-fic04\\e$\\Service Informatique\\4221_Informatique\\12- Administration Systemes Reseaux\\Outils\\Scripts\\VncBypass\\vncviewer.exe\" #{hostname}"
                 ]
               }
             ]
@@ -683,8 +662,8 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "del /q \\\\#{hostname}\\c$\\windows\\conf-wpkg-3-*.txt",
-                  "Psexec \\\\#{hostname} schtasks /run /tn lancement_wpkg"
+                  "start \"\" del /q \\\\#{hostname}\\c$\\windows\\conf-wpkg-3-*.txt",
+                  "start \"\" Psexec \\\\#{hostname} schtasks /run /tn lancement_wpkg"
                 ]
               },
               {
@@ -694,8 +673,8 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "del /q \\\\#{hostname}\\c$\\windows\\conf-wpkg-3-*.txt",
-                  "Psexec \\\\#{hostname} schtasks /run /tn lancement_wpkg"
+                  "start \"\" del /q \\\\#{hostname}\\c$\\windows\\conf-wpkg-3-*.txt",
+                  "start \"\" Psexec \\\\#{hostname} schtasks /run /tn lancement_wpkg"
                 ]
               },
               {
@@ -705,7 +684,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "del /q \\\\#{hostname}\\c$\\windows\\conf-wpkg-3-*.txt"
+                  "start \"\" del /q \\\\#{hostname}\\c$\\windows\\conf-wpkg-3-*.txt"
                 ]
               },
               {
@@ -715,7 +694,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "Psexec \\\\#{hostname} schtasks /run /tn lancement_wpkg"
+                  "start \"\" Psexec \\\\#{hostname} schtasks /run /tn lancement_wpkg"
                 ]
               },
               {
@@ -725,7 +704,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "start \\\\#{hostname}\\c$\\windows\\temp\\#{hostname}.log"
+                  "start \"\" start \\\\#{hostname}\\c$\\windows\\temp\\#{hostname}.log"
                 ]
               },
               {
@@ -739,7 +718,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "del \\\\#{hostname}\\c$\\windows\\system32\\wpkg.xml"
+                      "start \"\" del \\\\#{hostname}\\c$\\windows\\system32\\wpkg.xml"
                     ]
                   },
                   {
@@ -749,7 +728,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec -s \\\\#{hostname} cscript.exe \\\\srv-wds01\\wpkg\\branche\\stable\\wpkg.js /install:ultravnc"
+                      "start \"\" psexec -s \\\\#{hostname} cscript.exe \\\\srv-wds01\\wpkg\\branche\\stable\\wpkg.js /install:ultravnc"
                     ]
                   },
                   {
@@ -759,7 +738,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec -s \\\\#{hostname} cscript.exe \\\\srv-wds01\\wpkg\\branche\\stable\\wpkg.js /remove:ultravnc"
+                      "start \"\" psexec -s \\\\#{hostname} cscript.exe \\\\srv-wds01\\wpkg\\branche\\stable\\wpkg.js /remove:ultravnc"
                     ]
                   },
                   {
@@ -769,8 +748,8 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec -s \\\\#{hostname} cscript.exe \\\\srv-wds01\\wpkg\\branche\\stable\\wpkg.js /remove:ultravnc",
-                      "psexec -s \\\\#{hostname} cscript.exe \\\\srv-wds01\\wpkg\\branche\\stable\\wpkg.js /install:ultravnc"
+                      "start \"\" psexec -s \\\\#{hostname} cscript.exe \\\\srv-wds01\\wpkg\\branche\\stable\\wpkg.js /remove:ultravnc",
+                      "start \"\" psexec -s \\\\#{hostname} cscript.exe \\\\srv-wds01\\wpkg\\branche\\stable\\wpkg.js /install:ultravnc"
                     ]
                   }
                 ]
@@ -788,7 +767,7 @@ export default {
                 "type": "COMMAND",
                 "platform": "win32",
                 "commands": [
-                  "psexec -s \\\\#{hostname} \"\\\\srv-wds01\\wpkg\\packages\\Fix\\ie11\\IE11.cmd\""
+                  "start \"\" psexec -s \\\\#{hostname} \"\\\\srv-wds01\\wpkg\\packages\\Fix\\ie11\\IE11.cmd\""
                 ]
               },
               {
@@ -802,7 +781,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec -s \\\\#{hostname} \"\\\\srv-wds01\\wpkg\\packages\\client-ica\\reinstall-old-client.cmd\""
+                      "start \"\" psexec -s \\\\#{hostname} \"\\\\srv-wds01\\wpkg\\packages\\client-ica\\reinstall-old-client.cmd\""
                     ]
                   },
                   {
@@ -812,7 +791,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec -i -s \\\\#{hostname} \"\\\\srv-wds01\\wpkg\\packages\\client-ica\\reinstall-new-client.cmd\""
+                      "start \"\" psexec -i -s \\\\#{hostname} \"\\\\srv-wds01\\wpkg\\packages\\client-ica\\reinstall-new-client.cmd\""
                     ]
                   },
                   {
@@ -822,7 +801,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -file \"t:\\12- Administration Systemes Reseaux\\Outils\\CSharp\\GlpiSearch\\GlpiSearch\\Addons\\Pb_Citrix_Receiver_Icones_Blancs.ps1\" #{hostname}"
+                      "start \"\" C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -file \"t:\\12- Administration Systemes Reseaux\\Outils\\CSharp\\GlpiSearch\\GlpiSearch\\Addons\\Pb_Citrix_Receiver_Icones_Blancs.ps1\" #{hostname}"
                     ]
                   }
                 ]
@@ -838,7 +817,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec \\\\#{hostname} gpupdate /force"
+                      "start \"\" psexec \\\\#{hostname} gpupdate /force"
                     ]
                   },
                   {
@@ -848,7 +827,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec \\\\#{hostname} \"net statistics workstation\""
+                      "start \"\" psexec \\\\#{hostname} \"net statistics workstation\""
                     ]
                   },
                   {
@@ -858,7 +837,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec \\\\#{hostname} runfromprocess-x64 nomsg explorer.exe  \\\\sdis72.fr\\NETLOGON\\Script_GPOs\\GPO_Imprimantes_IMP-XXX_SRV-IMP03\\revert.cmd"
+                      "start \"\" psexec \\\\#{hostname} runfromprocess-x64 nomsg explorer.exe  \\\\sdis72.fr\\NETLOGON\\Script_GPOs\\GPO_Imprimantes_IMP-XXX_SRV-IMP03\\revert.cmd"
                     ]
                   },
                   {
@@ -868,7 +847,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec \\\\#{hostname} runfromprocess-x64 nomsg explorer.exe  \\\\sdis72.fr\\NETLOGON\\Script_GPOs\\GPO_Imprimantes_IMP-XXX_SRV-IMP03\\revert.cmd"
+                      "start \"\" psexec \\\\#{hostname} runfromprocess-x64 nomsg explorer.exe  \\\\sdis72.fr\\NETLOGON\\Script_GPOs\\GPO_Imprimantes_IMP-XXX_SRV-IMP03\\revert.cmd"
                     ]
                   }
                 ]
@@ -884,7 +863,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec -s \\\\#{hostname} \\\\srv-wds01\\wpkg\\fix\\FullRepairOFFICE2016-Standard.cmd"
+                      "start \"\" psexec -s \\\\#{hostname} \\\\srv-wds01\\wpkg\\fix\\FullRepairOFFICE2016-Standard.cmd"
                     ]
                   },
                   {
@@ -894,7 +873,7 @@ export default {
                     "type": "COMMAND",
                     "platform": "win32",
                     "commands": [
-                      "psexec -s \\\\#{hostname} \\\\srv-wds01\\wpkg\\fix\\FullRepairOFFICE2010-Standard.cmd"
+                      "start \"\" psexec -s \\\\#{hostname} \\\\srv-wds01\\wpkg\\fix\\FullRepairOFFICE2010-Standard.cmd"
                     ]
                   },
                   {

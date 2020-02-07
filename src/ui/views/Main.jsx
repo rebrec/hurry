@@ -53,6 +53,8 @@ export default class Main extends React.Component {
     console.log('displaying menu for ', data);
   }
 
+
+
   render() {
     const {uiState} = store;
     console.log('store',uiState);

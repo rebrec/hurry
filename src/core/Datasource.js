@@ -14,6 +14,7 @@ export default class Datasource {
         this.caption = definition.caption;
         this.columns = definition.columns;
         this.mainColumnProperty = definition.mainColumnProperty;
+        this.pingableProperty = definition.pingableProperty;
         this.config = config;
         if (definition.hasOwnProperty('init')){
             definition.init(globalObjects, config);
@@ -34,6 +35,7 @@ export default class Datasource {
             if (searchResults.success){
                 for (const result of searchResults.data){
                     result._datasource = this;
+                    result._pingableProperty = this.pingableProperty;
                 }
             }
             return searchResults;

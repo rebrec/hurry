@@ -1,4 +1,6 @@
 import { observable, computed, action, extendObservable } from 'mobx'
+// import ping from 'ping'
+import { pingHost } from '../core/helpers/helpers';
 
 const APP_STATUS = {
     WAITING_FOR_SEARCH: 1,
@@ -72,6 +74,31 @@ class UiState {
 
     @action.bound setSearchedText(text){ this.search.text = text; }
     @action.bound setSearchResults(results=[]){ this.search.results = results; }
+    // @action.bound updateSearchResultsRecord(recordIndex, newValue){ this.search.results[recordIndex] = newValue; }
+    @action.bound updateSearchResultsPingStatus(){
+        console.log('result length = ', this.search.results.length);
+        for (let i=0;i< this.search.results.length;i++){
+            const result = this.search.results[i];
+            
+            if (result._pingableProperty) {
+                const pingValue = result[result._pingableProperty];
+                console.log('PING => ', pingValue);
+                
+                pingHost(pingValue)
+                .then(action("onPingResult", res => {
+                    if (result.success) result._online = res.online;
+                    else {
+                        result._pingError = result.error;
+                    }
+                    console.log(i, 'Ping result for host ', pingValue, res);
+                }))
+                .catch(err=>{
+                    console.error(err);
+                });
+            }
+        }
+    }
+    
     @action.bound selectHost(hostElement) {
         this.search.selectedResult = hostElement;
         this.showMenu();
@@ -98,6 +125,7 @@ class UiState {
               if (res.success) {
                 const r = res.data.length ? res.data : [res.data];
                 this.setSearchResults(r);
+                this.updateSearchResultsPingStatus();
                 this.setAppStatus(APP_STATUS.DISPLAYING_RESULTS);
               } else {
                   console.error('Error received : ', res.errorMessage);
