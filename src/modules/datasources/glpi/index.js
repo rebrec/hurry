@@ -11,6 +11,7 @@ module.exports = {
         { columnName: 'Hostname', property: 'Nom' },
         { columnName: 'Username', property: 'Utilisateur' },
     ],
+    pingableProperty: 'Nom',
     mainColumnProperty: 'Nom',
     searchFunc: keyword => {
         return '$glpiSearcher.search("' + keyword + '") | ConvertTo-Json -Compress';

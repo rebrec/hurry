@@ -1,5 +1,10 @@
 [
   {
+    "hostname": "8.8.8.8",
+    "username": "google",
+    "something":"else"
+  },
+  {
     "hostname": "host1",
     "username": "user1",
     "something":"else"

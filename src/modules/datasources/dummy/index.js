@@ -9,6 +9,7 @@ module.exports = {
         { columnName: 'Something', property: 'something' },
     ],
     mainColumnProperty: 'hostname',
+    pingableProperty: 'hostname',
     searchFunc: keyword => {
         return '$dummy.search("' + keyword + '") | ConvertTo-Json -Compress';
     },

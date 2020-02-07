@@ -4871,6 +4871,13 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
+icmp@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/icmp/-/icmp-1.4.0.tgz#8ae2305be393b07e55ba4e0837af03bfc8dc4856"
+  integrity sha512-5V1e9D4v8YnOp1mUDZFHjbubip6J2bXvpk0u9KlxSc0up8Xn94CImRUvXOWvVmYxUvTMoVIRkSZhqzkl6fKcKA==
+  dependencies:
+    raw-socket "^1.7.0"
+
 iconv-lite@0.4.24, iconv-lite@^0.4.24:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -6409,7 +6416,7 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-nan@^2.12.1, nan@^2.13.2:
+nan@2.14.*, nan@^2.12.1, nan@^2.13.2:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
@@ -6450,6 +6457,13 @@ neo-async@^2.5.0, neo-async@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
+
+net-ping@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/net-ping/-/net-ping-1.2.3.tgz#c4dd248f6e3d8d73db6928002106bb71ceae4a40"
+  integrity sha512-ZKxj/kVPKL2RIsV9nR6I8nMT8Pi3k6ciTBKxD/6gd5lga9qcNmlyqNv+dbXqYGBvHsmG9yIpsfajr8X054x2fQ==
+  dependencies:
+    raw-socket "*"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -7139,6 +7153,14 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+ping@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/ping/-/ping-0.2.2.tgz#180fb7508c1dc74793849bce35c8073f9965bce2"
+  integrity sha1-GA+3UIwdx0eThJvONcgHP5llvOI=
+  dependencies:
+    q "1.x"
+    underscore "^1.8.3"
+
 pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
@@ -7432,6 +7454,11 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+q@1.x:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
+  integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
+
 qs@6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
@@ -7481,6 +7508,13 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+raw-socket@*, raw-socket@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/raw-socket/-/raw-socket-1.7.0.tgz#cd0bcc3da52450dcb6b9efe7a6d0890bf1aaf9db"
+  integrity sha512-mXqWihgwaFNmV5le0dWk5o+03M3A2zBIkC9BNaE6R0CJN9eYot++j2FIqgNSDq6/Vmu32PPI155SiiWNV2yyFQ==
+  dependencies:
+    nan "2.14.*"
 
 rcedit@^2.0.0:
   version "2.1.0"
@@ -9003,6 +9037,11 @@ uglify-js@3.4.x:
   dependencies:
     commander "~2.19.0"
     source-map "~0.6.1"
+
+underscore@^1.8.3:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.2.tgz#0c8d6f536d6f378a5af264a72f7bec50feb7cf2f"
+  integrity sha512-D39qtimx0c1fI3ya1Lnhk3E9nONswSKhnffBI0gME9C99fYOkNi04xs8K6pePLhvl1frbDemkaBQ5ikWllR2HQ==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

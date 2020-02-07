@@ -5,3 +5,9 @@
 .hostlistline-selected{
   background: $hostlistline-selected-background;
 }
+.hostlistline-online{
+  background: #6af19e;
+}
+.hostlistline-offline{
+  background: #cf7458;
+}

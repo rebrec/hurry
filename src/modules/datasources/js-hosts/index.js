@@ -74,6 +74,7 @@ module.exports = {
         { columnName: 'Hostname', property: 'hostname' },
         { columnName: 'IP Address', property: 'ipaddress' }
     ],
+    pingableProperty: 'ipaddress',
     mainColumnProperty: 'hostname',
     searchFunc: keyword => {
         console.log('hhhaaaaa');

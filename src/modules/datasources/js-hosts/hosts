@@ -12,3 +12,4 @@ ff02::2 ip6-allrouters
 192.168.1.2    host1 host1.domain.local some-host1-alias
 192.168.2.2         h2
 192.168.5.5        h3 h3.dom.loc    somh3.something.else
+8.8.8.8     google.com google google.fr www.google.com blah.google.com
