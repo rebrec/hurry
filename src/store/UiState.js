@@ -75,27 +75,26 @@ class UiState {
     @action.bound setSearchedText(text){ this.search.text = text; }
     @action.bound setSearchResults(results=[]){ this.search.results = results; }
     // @action.bound updateSearchResultsRecord(recordIndex, newValue){ this.search.results[recordIndex] = newValue; }
+    @action.bound updateSearchResultPingStatus(element){
+        if (element._pingableProperty) {
+            const pingValue = element[element._pingableProperty];
+            pingHost(pingValue)
+            .then(action("onPingResult", res => {
+                if (res.success) {
+                    element._online = res.online;
+                    element._pingError = element.error;
+                }
+            }))
+            .catch(err=>{
+                console.error(err);
+            });
+        }
+
+    }
     @action.bound updateSearchResultsPingStatus(){
-        console.log('result length = ', this.search.results.length);
         for (let i=0;i< this.search.results.length;i++){
             const result = this.search.results[i];
-            
-            if (result._pingableProperty) {
-                const pingValue = result[result._pingableProperty];
-                console.log('PING => ', pingValue);
-                
-                pingHost(pingValue)
-                .then(action("onPingResult", res => {
-                    if (result.success) result._online = res.online;
-                    else {
-                        result._pingError = result.error;
-                    }
-                    console.log(i, 'Ping result for host ', pingValue, res);
-                }))
-                .catch(err=>{
-                    console.error(err);
-                });
-            }
+            this.updateSearchResultPingStatus(result);
         }
     }
     

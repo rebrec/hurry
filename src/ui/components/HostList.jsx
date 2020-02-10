@@ -66,8 +66,12 @@ class HostListLine extends React.Component {
   render() {
     const trElements = [];
     const {columns, element, selected}= this.props;
-    let online = false;
-    if (element._online){ online = element._online};
+    let statusClass = 'hostlistline-status-unknown';
+    let online = element._online;
+    if (element.hasOwnProperty('_online')){ 
+      if (element._online === false){ statusClass = 'hostlistline-status-offline' }
+      else { statusClass = 'hostlistline-status-online' }
+    }
     for (let j = 0; j < columns.length; j++) {
       const col = columns[j];
       const colValue = element[col.property];
@@ -75,7 +79,7 @@ class HostListLine extends React.Component {
     }
     return (
 
-      <tr onClick={this.handleClick} className={"hostlistline" + (selected ? " hostlistline-selected":"") + (online ? " hostlistline-online":"hostlistline-offline")}>{trElements}</tr>
+      <tr onClick={this.handleClick} className={"hostlistline" + (selected ? " hostlistline-selected":"") + " " + statusClass}>{trElements}</tr>
     );
   }
 }
