@@ -77,9 +77,7 @@ module.exports = {
     pingableProperty: 'ipaddress',
     mainColumnProperty: 'hostname',
     searchFunc: keyword => {
-        console.log('hhhaaaaa');
         return function (kw) {
-            console.log('hhhooooo');
             return Promise.resolve()
             .then(_=>{
                 return JSON.stringify(searchData(this.data, keyword));
