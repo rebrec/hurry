@@ -5,6 +5,7 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
+    "startroot": "electron-forge start -- --no-sandbox",
     "start": "electron-forge start",
     "test": "mocha --require @babel/register --recursive",
     "package": "electron-forge package",

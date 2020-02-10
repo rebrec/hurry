@@ -1,0 +1,7 @@
+/usr/lib/x86_64-linux-gnu/libfakeroot
+# libc default configuration
+/usr/local/lib
+# Multiarch support
+/usr/local/lib/x86_64-linux-gnu
+/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu

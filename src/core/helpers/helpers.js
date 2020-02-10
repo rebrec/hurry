@@ -21,22 +21,21 @@ export const pingHost = (target, options) => {
   result.target = target;
   return new Promise((resolve, reject)=>{
     if (net.isIP(target)){
-      resolve({address: target});
+      return resolve({address: target});
     } else {
-      return dnsPromise.lookup(target, options)     
+      return resolve(dnsPromise.lookup(target, options));
     }
   })
+  // .catch(dnserr => {
+  //   return { error: dnserr.toString() };
+  // })     
   .then(ipObj=>{
     return new Promise((resolve, reject)=>{
-      pingSession.pingHost (target, function (error, target) {
+      pingSession.pingHost (ipObj.address, function (error, target) {
         if (error){
-          if (error instanceof ping.RequestTimedOutError){
-            result.success = true;
-            result.online = false;
-          } else {
-            result.success = false;
-            result.error = error.toString()
-          }
+          result.success = true;
+          result.online = false;
+          result.error = error.toString()
         } else {
           result.success = true;
           result.online = true;
@@ -45,14 +44,12 @@ export const pingHost = (target, options) => {
       });
     });
   })
-  .catch(err=>{
-    result.success = false;
+  .catch(error=>{
+    result.success = true;
+    result.online = false;
     result.error = error.toString()
-    return resolve(result);
+    return result;
   });
-
- 
-  
 }
 
 export const saveConfig = data => {

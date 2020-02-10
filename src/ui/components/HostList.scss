@@ -1,13 +1,17 @@
 @import "variables.scss";
 .hostlistline:hover  {
-  background: $hostlistline-selected-background;
+  // background: $hostlistline-selected-background;
+  filter: brightness(120%);
 }
 .hostlistline-selected{
   background: $hostlistline-selected-background;
 }
-.hostlistline-online{
+.hostlistline-status-unknown{
+  background: #e4ece7;
+}
+.hostlistline-status-online{
   background: #6af19e;
 }
-.hostlistline-offline{
+.hostlistline-status-offline{
   background: #cf7458;
 }

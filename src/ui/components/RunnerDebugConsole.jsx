@@ -9,7 +9,7 @@ import store from '../../store/RootStore'
 class RunnerDebugConsole extends React.Component {
   constructor(props) {
     super(props);
-    setInterval(_=>{this.forceUpdate()},1000)
+    // setInterval(_=>{this.forceUpdate()},1000)
   }
 
   handleTabProviderClick(e, element){
@@ -74,7 +74,7 @@ class ProcessConsole extends React.Component {
 class ConsoleCommandHistory extends React.Component {
   constructor(props) {
     super(props);
-    setInterval(_=>{this.forceUpdate()},1000)
+    // setInterval(_=>{this.forceUpdate()},1000)
   }
   render() {
     const { 

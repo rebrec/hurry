@@ -7,6 +7,7 @@ module.exports = {
         { columnName: 'IP', property: 'hostname' },
     ],
     mainColumnProperty: 'hostname',
+    pingableProperty: 'hostname',
     searchFunc: keyword => {
         return '@(@{hostname = "' + keyword + '"}) | ConvertTo-Json -Compress';
     },
