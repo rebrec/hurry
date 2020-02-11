@@ -8,7 +8,7 @@ const path = require('path');
 const defaultConfig = {
     min: 2,
     max: 2,
-    idleTimeoutMS: 10000,    
+    idleTimeoutMS: 20000,    
     processCommand: null,
     processArgs:  null,
     /*processInvalidateOnRegex : {
@@ -40,7 +40,7 @@ export default class Shell{
     this.config = {};
     Object.assign(this.config, defaultConfig, config);
     this.config.logFunction = (severity,origin,msg) => {
-      // console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
+      console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
     };
   }
   

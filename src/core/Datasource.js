@@ -36,6 +36,11 @@ export default class Datasource {
                 for (const result of searchResults.data){
                     result._datasource = this;
                     result._pingableProperty = this.pingableProperty;
+                    for (const column of this.columns){
+                        if (column.variableName !== null){
+                            result[column.variableName] = result[column.property];
+                        }
+                    }
                 }
             }
             return searchResults;
