@@ -8,8 +8,8 @@ module.exports = {
         `. #{modulePath}init.ps1`
     ],
     columns: [  
-        { columnName: 'Hostname', property: 'Nom' },
-        { columnName: 'Username', property: 'Utilisateur' },
+        { columnName: 'Hostname', property: 'Nom', variableName: 'hostname' },
+        { columnName: 'Username', property: 'Utilisateur', variableName: 'username' },
     ],
     pingableProperty: 'Nom',
     mainColumnProperty: 'Nom',
