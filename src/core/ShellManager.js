@@ -19,6 +19,9 @@ export default class ShellManager{
     constructor(settings, historyStore){
         const { shellsPath, shellFeaturesPath } = settings;
         this.historyStore = historyStore;
+        this._shellFeatures = {};
+        
+        if (!settings.isValid) return;
         const shellsPaths = getDirectories(shellsPath);
         const featuresPaths = getDirectories(shellFeaturesPath);
         
