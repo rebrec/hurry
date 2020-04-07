@@ -65,7 +65,7 @@ export default class Main extends React.Component {
       
       {/* <button onClick={_=>{store.uiState.setCurrentView('Configuration')}}>Configuration</button>
        */}
-      <SplitPane split="vertical" primary="second" minSize={200} >
+      <SplitPane split="vertical" primary="second" minSize={300} >
 
         <SplitPane split="horizontal" minSize={5} defaultSize={600} onChange={ size => { store.uiState.setDebuggerConsoleHeight(window.innerHeight - size)}}>
 
