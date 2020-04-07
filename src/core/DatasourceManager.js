@@ -18,12 +18,15 @@ export default class DatasourceManager{
 
     constructor(shellManager, config, historyStore){
         const { datasourcesPath, defaultDataSource } = config;
-        const datasourcesPaths = getDirectories(datasourcesPath);
         this.config = config.datasources || {};
         this.shellManager = shellManager;
         this.historyStore = historyStore;
-        
         this._defaultDataSource = defaultDataSource;
+
+
+        if (!config.isValid) return;
+        const datasourcesPaths = getDirectories(datasourcesPath);
+        
         for (const path of datasourcesPaths){
             this.addDatasource(path);
         }

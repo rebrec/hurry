@@ -4,6 +4,10 @@ module.exports = {
     title: "Settings",
     type: "object",
     properties: {
+        projectRoot: {
+            title: "Project Root Directory",
+            type: "string"
+        },
         datasources: {
             type: "object",
             title: "Datasources",
