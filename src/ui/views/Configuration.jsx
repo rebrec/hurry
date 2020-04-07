@@ -34,9 +34,16 @@ export default class Configuration extends React.Component {
         <div className="container-fluid">
           <div className="row">
               <div className="col-sm-12">
-                <button onClick={_=>{store.uiState.setCurrentView('Main')}}>Main</button>
+                { config.isValid ? 
+                  (
+                    <button onClick={_=>{store.uiState.setCurrentView('Main')}}>Main</button>
+                  ) : (
+                    <h1>First Run Configuration</h1>               
+                  )
+                }
               </div>
           </div>
+            
           <div className="row">
             <div className="col-sm-12">
               <Form 

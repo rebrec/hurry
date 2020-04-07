@@ -17,6 +17,7 @@ import Viewer from './Viewer'
 import Main from './views/Main'
 import Configuration from './views/Configuration'
 
+
 @observer
 export default class App extends React.Component {
   constructor(props) {
@@ -24,8 +25,11 @@ export default class App extends React.Component {
     this.state = { };
     store.uiState.addView('Main', Main);
     store.uiState.addView('Configuration', Configuration);
-    
-    store.uiState.setCurrentView('Main');
+    if (config.isValid) {
+      store.uiState.setCurrentView('Main');
+    } else {
+      store.uiState.setCurrentView('Configuration');
+    }
 
   }
 
