@@ -4,6 +4,17 @@ module.exports = {
     title: "Settings",
     type: "object",
     properties: {
+        debug: {
+            type: "object",
+            title: "Debug Settings",
+            properties:{
+                defaultView: {
+                    title: "Default view",
+                    type: "string",
+                    default: "Main"
+                }
+            }
+        },        
         projectRoot: {
             title: "Project Root Directory",
             type: "string"

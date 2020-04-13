@@ -26,7 +26,7 @@ export default class App extends React.Component {
     store.uiState.addView('Main', Main);
     store.uiState.addView('Configuration', Configuration);
     if (config.isValid) {
-      store.uiState.setCurrentView('Main');
+      store.uiState.setCurrentView(config.debug.defaultView);
     } else {
       store.uiState.setCurrentView('Configuration');
     }
