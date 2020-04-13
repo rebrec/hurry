@@ -2,6 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react'
 import store from '../../store/RootStore'
 import './Configuration.scss'
+import Api from "../../core/api"
+// import {remote} from "electron"
+// const Api = remote.require("./core/api");
 import Form from "react-jsonschema-form";
 import schema from "../../modules/config-schema"
 import config from "../../config"
@@ -24,6 +27,8 @@ export default class Configuration extends React.Component {
 
   onSubmitted(data){
     saveConfig(data.formData);
+    Api.reloadBrowserWindow();
+
   }
 
   render() {

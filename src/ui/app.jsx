@@ -8,9 +8,9 @@ import $ from "jquery";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faFolder, faFolderOpen, faTerminal, faChevronLeft, faTimes, faDesktop, faReply } from '@fortawesome/free-solid-svg-icons'
+import { faFolder, faFolderOpen, faTerminal, faChevronLeft, faChevronRight, faTimes, faDesktop, faReply } from '@fortawesome/free-solid-svg-icons'
 
-library.add(fab, faFolder, faFolderOpen, faTerminal, faChevronLeft, faTimes, faDesktop, faReply )
+library.add(fab, faFolder, faFolderOpen, faTerminal, faChevronLeft, faChevronRight, faTimes, faDesktop, faReply )
 // import ViewManager from '../core/ViewManager'
 
 import Viewer from './Viewer'
