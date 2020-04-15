@@ -12,7 +12,7 @@ init:
   - git config --global core.autocrlf input
 
 install:
-  - ps: Install-Product node 12.13.0 x86
+  - ps: Install-Product node 12.13.0
   - yarn
 
 build_script:
