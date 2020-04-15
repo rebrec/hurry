@@ -19,7 +19,7 @@ build_script:
   - yarn make
   - dir out
   - dir out\make
-  - dir out\make\zip
+  - dir out\make\squirrel.windows
 
 test: off
 
