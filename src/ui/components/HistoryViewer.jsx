@@ -1,6 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 import store from "../../store/RootStore";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./HistoryViewer.scss";
 
 @observer
@@ -37,16 +38,28 @@ export default class HistoryViewer extends React.Component {
 class HistoryCommand extends React.Component {
   constructor(props) {
     super(props);
-    this.handleCommandClick = this.handleCommandClick.bind(this);
-    this.handleContextClick = this.handleContextClick.bind(this);
+    this.handleRunAgainCommandClick = this.handleRunAgainCommandClick.bind(this);
+    this.handleRunSameCommandClick = this.handleRunSameCommandClick.bind(this);
+    this.handleSelectSameHostClick = this.handleSelectSameHostClick.bind(this);
   }
 
-  handleCommandClick(e){
+  handleRunAgainCommandClick(e){
     const {command, context} = this.props.item;
     store.shellManager.runCommand(command, context);
   }
-  handleContextClick(e){
-    const {command, context} = this.props.item;
+  handleRunSameCommandClick(e){
+    const {command} = this.props.item;
+    
+    if (store.uiState.app.menu.visible) {
+      const context = store.uiState.search.selectedResult;
+      store.shellManager.runCommand(command, context);
+    } else {
+      console.log('No host selected');
+    }
+    
+  }
+  handleSelectSameHostClick(e){
+    const {context} = this.props.item;
     store.uiState.selectHost(context);
   }
   render() {
@@ -57,11 +70,13 @@ class HistoryCommand extends React.Component {
 
     return (
 
-        <div className="row history-row">
-           <div className="col-lg-12" >
-              <span className="history-view-context" onClick={this.handleContextClick}>{ mainColumnProperty }</span>
-              {" "}
-              <span className="history-view-command-caption" onClick={this.handleCommandClick}>{ commandCaption }</span>
+        <div className="row h-100 history-row">
+            <div className="col-sm-4 my-auto history-view-context" title={ mainColumnProperty } onClick={this.handleContextClick}>{ mainColumnProperty }</div>
+            <div className="col-sm-4 my-auto history-view-command-caption" title={ commandCaption } onClick={this.handleCommandClick}>{ commandCaption }</div>
+            <div className="col-sm-4 my-auto text-right">
+              <span className="btn btn-outline-light history-view-btn" title={"Select " + mainColumnProperty + " to use another command"} onClick={this.handleSelectSameHostClick}><FontAwesomeIcon className="fa-fw" icon="desktop" /></span>
+              <span className="btn btn-outline-light history-view-btn" title="Run the same command on current host" onClick={this.handleRunSameCommandClick}><FontAwesomeIcon className="fa-fw" icon="terminal" /></span>
+              <span className="btn btn-outline-light history-view-btn" title="Run again (same host and same command)" onClick={this.handleRunAgainCommandClick}><FontAwesomeIcon className="fa-fw" icon="reply" /></span>
             </div>
         </div>
 

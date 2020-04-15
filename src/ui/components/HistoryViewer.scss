@@ -14,6 +14,8 @@
 
 .history-row{
     background-color: #656565;
+    user-select: none;
+    font-size: 0.85rem;
 }
 
 .history-row:hover{
@@ -23,9 +25,20 @@
 .history-view-context{
     color: #00ffdd;
     font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
 }
 
 .history-view-command-caption{
     color: #d9ff00;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
+}
+
+.history-view-btn{
+    font-size: 0.70rem !important;
+    padding: 0.2rem !important;
 }
 
