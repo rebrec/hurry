@@ -16,9 +16,9 @@ install:
   - yarn
 
 build_script:
-  - yarn make
   - set
   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - yarn make
   - dir out
   - dir out\make
   - dir out\make\squirrel.windows
