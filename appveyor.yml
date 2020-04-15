@@ -17,7 +17,9 @@ install:
 build_script:
   - dir
   - yarn make
-  - dir
+  - dir out
+  - dir out\make
+  - dir out\make\zip
 
 test: off
 
