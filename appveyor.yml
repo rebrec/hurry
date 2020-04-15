@@ -15,6 +15,12 @@ install:
   - yarn
 
 build_script:
+  - dir
   - yarn make
+  - dir
 
 test: off
+
+artifacts:
+  - path: 'out\make\zip\**\*.zip'
+    name: MyApp
