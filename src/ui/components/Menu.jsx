@@ -20,6 +20,8 @@ class Menu extends React.Component {
     this.handlePanelLeftClick = this.handlePanelLeftClick.bind(this);
     this.handlePanelRightClick = this.handlePanelRightClick.bind(this);
     this.handleTabProviderClick = this.handleTabProviderClick.bind(this);
+    this.handleMenuHistoryLinkClick = this.handleMenuHistoryLinkClick.bind(this);
+    
     this.goBack = this.goBack.bind(this);
   }
 
@@ -89,8 +91,33 @@ class Menu extends React.Component {
     store.uiState.selectMenuTab(element.caption);
   }
 
+  handleMenuHistoryLinkClick(e, element){
+    console.log('laaallll');
+    const {menustate, history} = element;
+    this.setState({
+      dataL: menustate.dataL,
+      dataR: menustate.dataR,
+      panelLeftSelection: menustate.panelLeftSelection,
+      dataLHistory: history,
+    });
+  }
+
+  genHistoryTree(){
+    if (this.state.dataLHistory.length === 0) return;
+    const history = this.state.dataLHistory;
+    const elts = [];
+    for (let i=0;i<history.length;i++){
+      const elt = history[i];
+      const newHistory = history.slice(0,i);
+      elts.push(<FontAwesomeIcon key={'f'+ i} icon="chevron-right" />)
+      elts.push(<MenuHistoryLink key={'l' + i} menustate={elt} history={newHistory} onClick={this.handleMenuHistoryLinkClick} />)
+    }
+    return elts
+  }
+
   render() {
     const selectedResult = this.props.context;
+    // const tree = this.genHistoryTree();
     const tabs = [
       {
         caption: "Action",
@@ -98,24 +125,42 @@ class Menu extends React.Component {
           <div className="col-sm-12 ">
             <div className="row">
               <div className="col-sm-1">
-                <button onClick={this.goBack} className="btn button "
+                {/* <button onClick={this.goBack} className="btn button "
                         disabled={this.state.dataLHistory.length === 0}>
                           <FontAwesomeIcon icon="chevron-left" />
-                </button>
+                </button> */}
+              </div>
+              <div className="col-sm-11">
+              
+                  <ul className="list-inline">
+                    <li className="list-inline-item">/</li>
+                    {this.genHistoryTree()}
+                  </ul>
+
               </div>
 
             </div>
             <div className="row menu-container">
-              <CommandPanelLeft data={this.state.dataL} context={this.props.context} selected={this.state.panelLeftSelection}
-                                onClick={this.handlePanelLeftClick}/>
-              <CommandPanelRight data={this.state.dataR} context={this.props.context}  selected={this.state.panelRightSelection}
-                                 onClick={this.handlePanelRightClick}/>
+              <CommandPanel data={this.state.dataL} 
+                            context={this.props.context}
+                            selected={this.state.panelLeftSelection}
+                            onClick={this.handlePanelLeftClick}
+                            extraclass="menu-command-panel-left"
+                            handlerType="onMouseOver"
+              />
+              <CommandPanel data={this.state.dataR}
+                            context={this.props.context}
+                            selected={this.state.panelRightSelection}
+                            onClick={this.handlePanelRightClick}
+                            extraclass="menu-command-panel-right"
+                            handlerType="onClick"
+              />
             </div>
           </div>
         )
       },
       {
-        caption: "Infos",
+        caption: "Favorites",
         content: (
           <div className="col-sm-12 ">Rien n'est encore défini
           </div>
@@ -134,7 +179,7 @@ class Menu extends React.Component {
               </div>
             </div>
 
-            <div className="row ">
+            <div className="row">
               <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.menu.selectedTab}/>
             </div>
 
@@ -147,57 +192,65 @@ class Menu extends React.Component {
 }
 
 
-class CommandPanelLeft extends React.Component {
+class MenuHistoryLink extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClick = (e) => {this.props.onClick(e, this.props)};
   }
 
   render() {
-    const {data, selected}= this.props;
-    let elts = [];
-    for (let i=0;i<data.length;i++){
-      const elt = data[i];
-      if (elt.type === 'COMMAND') continue;
-      if (elt.hasOwnProperty('platform') && elt.platform !== store.platform) continue;
-      if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context._datasource.name) continue;
-      
-      elts.push(<MenuElement
-        key={i}
-        data={elt}
-        onClick={this.props.onClick}
-        handlerOn="onMouseOver"
-        selected={selected != null ? (selected.caption === elt.caption) : false } />);
-    }
+    const state = this.props.menustate;
+    const selection = state.panelLeftSelection;
+
     return (
-      <div className="col-sm-6 menu-command-panel-left">
-        {elts}
-      </div>
+      <li className="list-inline-item" ><a href="#" onClick={this.handleClick}>{selection.caption}</a></li>
     );
   }
 }
+// elts.push(<MenuHistoryLink elelement={elt} />)
+//     this.setState({
+//       dataL: historyElt.dataL,
+//       dataR: historyElt.dataR,
+//       panelLeftSelection: historyElt.panelLeftSelection,
+//       dataLHistory: newHistory,
+//     });
 
-class CommandPanelRight extends React.Component {
+class CommandPanel extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const {data}= this.props;
+    const {data, extraclass, selected, handlerType}= this.props;
+    const handlerList = ['onClick', 'onMouseOver'];
+    if (handlerList.indexOf(handlerType)<=-1) {
+      return (
+        <div>
+          {"Valid Handler types are: " + JSON.stringify(handlerList)}
+        </div>
+      )
+    }
     let elts = [];
     for (let i=0;i<data.length;i++){
       const elt = data[i];
       if (elt.hasOwnProperty('platform') && elt.platform != store.platform) continue;
       if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context._datasource.name) continue;
 
-      elts.push(<MenuElement key={i} data={data[i]} onClick={this.props.onClick} handlerOn="onClick" />);
+      elts.push(<MenuElement 
+        key={i} 
+        data={data[i]} 
+        onClick={this.props.onClick}
+        handlerOn={handlerType}
+        selected={selected != null ? (selected.caption === elt.caption) : false } />);
     }
     return (
-      <div className="col-sm-6 menu-command-panel-right">
+      <div className={"col-sm-6 " + extraclass}>
         {elts.length > 0 ? elts : "Nothing here."}
       </div>
     );
   }
 }
+
 
 class MenuElement extends React.Component {
   constructor(props) {
