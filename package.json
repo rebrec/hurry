@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-typescript-boilerplate",
-  "productName": "electron-react-typescript-boilerplate",
+  "name": "hurry",
+  "productName": "hurry",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Daily Helpdesk / admin's tool",
   "main": ".webpack/main",
   "scripts": {
     "startroot": "electron-forge start -- --no-sandbox",
@@ -15,8 +15,8 @@
   },
   "keywords": [],
   "author": {
-    "name": "euZebe",
-    "github": "https://github.com/euzebe"
+    "name": "rebrec",
+    "github": "https://github.com/rebrec"
   },
   "license": "MIT",
   "config": {
@@ -26,13 +26,13 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Hello-world"
+            "name": "Hurry"
           }
         },
         {
           "name": "@electron-forge/maker-zip",
           "platforms": [
-            "darwin"
+            "darwin","linux", "win32"
           ]
         },
         {
