@@ -1,5 +1,7 @@
 # Hurry
 
+[![Build status](https://ci.appveyor.com/api/projects/status/s9ay0h06pwtw81rk?svg=true)](https://ci.appveyor.com/project/rebrec/hurry)
+
 The (cross platform) SysAdmin's tool to get repetitive things done Fast.
 
 # Download latest build
@@ -27,7 +29,7 @@ To start the project, run the following command :
 
 sudo $(which node) $(which yarn) startroot
 
-I was expecting to make it work without root privileged using network capabilities but it seems to not work properly with electron.
+I was expecting to make it work without root privileges using network capabilities but it seems to not work properly with electron.
 
 I have currently tried this (but it's not working) :
 
