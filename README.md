@@ -4,9 +4,9 @@
 
 The (cross platform) SysAdmin's tool to get repetitive things done Fast.
 
-# Download latest build
+# Download latest builds
 
-- [Windows Release](https://xxxxxxxxxxxxx)
+- [Windows Release](https://gitlab.com/rebrec/hurry/-/releases)
 - [Linux Release](https://xxxxxxxxxxxxx)
 
 # Manual Build
@@ -16,7 +16,7 @@ The (cross platform) SysAdmin's tool to get repetitive things done Fast.
 Clone this repository using common *git clone* command :
 
 ```
-git clone xxxxxxxxxxxxxx
+git clone https://gitlab.com/rebrec/hurry
 ```
 
 ## Linux
