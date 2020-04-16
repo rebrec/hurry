@@ -40,7 +40,7 @@ before_deploy:
               Write-Host ""
               Write-Host "****************************************"
               Write-Host "Artifact name  : $($artifact.Name)"
-              Write-Host "Artifact path : $($artifact.Fullname)"
+              Write-Host "Artifact path  : $($artifact.Fullname)"
               Write-Host "****************************************"
               
               $file = New-Object -TypeName psobject
@@ -50,7 +50,7 @@ before_deploy:
               $jRes = iwr https://gitlab.com/api/v4/projects/${$GITLAB_PROJECT_ID}/uploads `
                     -Method 'POST' `
                     -Headers @{"PRIVATE-TOKEN" = "${$GITLAB_API_TOKEN}"} `
-                    -InFile $file | ConvertTo-Json -Depth 10
+                    -InFile $file -MaximumRedirection 0| ConvertTo-Json -Depth 10
 
               Write-Host "Upload result : "
               $jRes
