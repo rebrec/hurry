@@ -17,18 +17,16 @@ install:
 build_script:
   - set
   - yarn make
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-  - dir out
-  - dir out\make
-  - dir out\make\squirrel.windows
-
-test: off
-
-artifacts:
-  - path: 'out\make\**\*.*'
-
-before_deploy:
   - ps: |
+          $BRANCH = $env:APPVEYOR_REPO_BRANCH
+          $IS_TAG_BUILD=$env:APPVEYOR_REPO_TAG -eq "true"
+          $TAG_NAME=$env:APPVEYOR_REPO_TAG_NAME
+
+          if (!$IS_TAG_BUILD) { 
+            Write-Host "Not a TAG BUILD. Skipping."
+            return
+          }
+
           $GITLAB_PROJECT_ID = $env:GITLAB_PROJECT_ID           
           $GITLAB_API_TOKEN = $env:GITLAB_API_TOKEN
           $url = "https://gitlab.com/api/v4/projects/$GITLAB_PROJECT_ID/uploads"
@@ -50,13 +48,13 @@ before_deploy:
               # $res = (curl --request POST --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}"  --form "file=@$($artifact.Fullname)" https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/uploads)
               #upload
 
-              $bytes = $WebClient.UploadFile($url, "POST", $Filename.fullname)
+              $bytes = $WebClient.UploadFile($url, "POST", $artifact.fullname)
               $text = [System.Text.Encoding]::ASCII.GetString($bytes) 
               $jRes = $text | ConvertFrom-json
 
 
               Write-Host "Upload result : "
-              $jRes
+              $jRes | fl
 
               $file | Add-Member -MemberType NoteProperty -Name "name" -Value "$($jRes.alt)"
               $file | Add-Member -MemberType NoteProperty -Name "url" -Value "https://gitlab.com$($jRes.url)"
@@ -66,7 +64,32 @@ before_deploy:
           }
           $files|ft
 
+          if (!$IS_TAG_BUILD) { return}
           Write-Host "[+] Generating Release"
 
+          $releaseURL = "https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/releases"
+          $params = @{
+            "name"          = "Hurry $TAG_NAME"
+            "tag_name"      = "$TAG_NAME"
+            "description"   = "Hurry (daily helpful admin tool) $TAG_NAME"
+            "assets" = @{ 
+              "links" =  $files
+            }
+          } | ConvertTo-Json -Depth 10
+     
+          $release = Invoke-RestMethod -Method Post `
+            -Headers @{"PRIVATE-TOKEN" = "$GITLAB_API_TOKEN" ; 'Content-Type'='application/json' } `
+            -Body $params `
+            -Uri $releaseURL
           
+          Write-Host "Release result : "
+          $release
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
+test: off
+
+artifacts:
+  - path: 'out\make\**\*.*'
+
+before_deploy:
+  - ps : Write-Host "nothing"
