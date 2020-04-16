@@ -15,7 +15,8 @@ install:
   - yarn
 
 build_script:
-  - set
+  # useful for debugging
+  # - set
   - yarn make
   - ps: |
           $BRANCH = $env:APPVEYOR_REPO_BRANCH
@@ -83,12 +84,10 @@ build_script:
           
           Write-Host "Release result : "
           $release
+  # useful for debugging
   #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 test: off
 
 artifacts:
   - path: 'out\make\**\*.*'
-
-before_deploy:
-  - ps : Write-Host "nothing"
