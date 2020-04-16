@@ -27,4 +27,35 @@ test: off
 
 artifacts:
   - path: 'out\make\**\*.*'
-    name: MyApp
+
+before_deploy:
+  - ps: |
+          [System.Collections.ArrayList]$files = @()
+          foreach ($k in $artifacts.keys) { 
+              $artifact = $artifacts[$k]
+              Write-Host ""
+              Write-Host "****************************************"
+              Write-Host "Artifact key  : $k"
+              Write-Host "Artifact name : $($artifact.name)"
+              Write-Host "Artifact url  : $($artifact.url)"
+              Write-Host "Artifact path : $($artifact.path)"
+              Write-Host "****************************************"
+              
+              $file = New-Object -TypeName psobject
+              Write-Host "[+] Uploading artifact $($artifact.name)"
+              $res = (curl --request POST --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}"  --form "file=@$($artifact.path)" https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/uploads)
+              # {"alt":"test.md","url":"/uploads/fc2bee7e084a6a379f791f1bc40204e8/test.md","markdown":"[test.md](/uploads/fc2bee7e084a6a379f791f1bc40204e8/test.md)"}'
+              $jRes = $res | ConvertTo-Json
+
+              $file | Add-Member -MemberType NoteProperty -Name "name" -Value "$($jRes.alt)"
+              $file | Add-Member -MemberType NoteProperty -Name "url" -Value "https://gitlab.com$($jRes.url)"
+
+              $files.Add($file)
+
+          }
+          $files|ft
+
+          Write-Host "[+] Generating Release"
+
+          
+
