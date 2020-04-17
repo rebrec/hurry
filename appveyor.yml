@@ -1,0 +1,93 @@
+image: Visual Studio 2017
+
+platform:
+  - x86
+
+cache:
+  - node_modules
+  - '%USERPROFILE%\.electron'
+
+init:
+  - git config --global core.autocrlf input
+
+install:
+  - ps: Install-Product node 12.13.0
+  - yarn
+
+build_script:
+  # useful for debugging
+  # - set
+  - yarn make
+  - ps: |
+          $BRANCH = $env:APPVEYOR_REPO_BRANCH
+          $IS_TAG_BUILD=$env:APPVEYOR_REPO_TAG -eq "true"
+          $TAG_NAME=$env:APPVEYOR_REPO_TAG_NAME
+
+          if (!$IS_TAG_BUILD) { 
+            Write-Host "Not a TAG BUILD. Skipping."
+            return
+          }
+
+          $GITLAB_PROJECT_ID = $env:GITLAB_PROJECT_ID           
+          $GITLAB_API_TOKEN = $env:GITLAB_API_TOKEN
+          $url = "https://gitlab.com/api/v4/projects/$GITLAB_PROJECT_ID/uploads"
+          $webClient = New-Object System.Net.webClient
+          $webClient.Headers.Add("PRIVATE-TOKEN", "$GITLAB_API_TOKEN") 
+
+
+          $artifacts = gci .\out\make -Recurse | ?{ $_.PSIsContainer -eq $false } 
+          [System.Collections.ArrayList]$files = @()
+          foreach ($artifact in $artifacts) { 
+              Write-Host ""
+              Write-Host "****************************************"
+              Write-Host "Artifact name  : $($artifact.Name)"
+              Write-Host "Artifact path  : $($artifact.Fullname)"
+              Write-Host "****************************************"
+              
+              $file = New-Object -TypeName psobject
+              Write-Host "[+] Uploading artifact $($artifact.name)"
+              
+              #upload
+              $bytes = $WebClient.UploadFile($url, "POST", $artifact.fullname)
+              $text = [System.Text.Encoding]::ASCII.GetString($bytes) 
+              $jRes = $text | ConvertFrom-json
+
+
+              Write-Host "Upload result : "
+              $jRes | fl
+
+              $file | Add-Member -MemberType NoteProperty -Name "name" -Value "$($jRes.alt)"
+              $file | Add-Member -MemberType NoteProperty -Name "url" -Value "https://gitlab.com$($jRes.full_path)"
+
+              $files.Add($file)
+
+          }
+          $files|ft
+
+          if (!$IS_TAG_BUILD) { return}
+          Write-Host "[+] Generating Release"
+
+          $releaseURL = "https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/releases"
+          $params = @{
+            "name"          = "Hurry $TAG_NAME"
+            "tag_name"      = "$TAG_NAME"
+            "description"   = "Hurry (daily helpful admin tool) $TAG_NAME"
+            "assets" = @{ 
+              "links" =  $files
+            }
+          } | ConvertTo-Json -Depth 10
+     
+          $release = Invoke-RestMethod -Method Post `
+            -Headers @{"PRIVATE-TOKEN" = "$GITLAB_API_TOKEN" ; 'Content-Type'='application/json' } `
+            -Body $params `
+            -Uri $releaseURL
+          
+          Write-Host "Release result : "
+          $release
+  # useful for debugging
+  #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+test: off
+
+artifacts:
+  - path: 'out\make\**\*.*'

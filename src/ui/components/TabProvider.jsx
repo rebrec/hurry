@@ -22,7 +22,7 @@ class TabProvider extends React.Component {
       if (tab.caption === selected){ selectedTab = tab }
     }
     return (
-      <div className="col-sm-12">
+      <>
         <div className="row">
           <ul className="col-sm-12 nav nav-tabs">
             {elts}
@@ -31,8 +31,7 @@ class TabProvider extends React.Component {
         <div className="row">
           {selectedTab.content}
         </div>
-
-      </div>
+      </>
     );
   }
 }

@@ -7,6 +7,7 @@ import SplitPane from 'react-split-pane';
 import RunnerDebugConsole from '../components/RunnerDebugConsole';
 import HistoryViewer from '../components/HistoryViewer';
 import Menu from '../components/Menu';
+import ModalDialog from '../components/ModalDialog';
 import menuConfig from '../../modules/menuConfig.js'
 
 import './Main.scss'
@@ -95,8 +96,9 @@ export default class Main extends React.Component {
               </div>
             </div>
             {uiState.app.menu.visible && (
-              <Menu data={menuConfig} context={ store.uiState.search.selectedResult } />
-
+              <ModalDialog onClose={uiState.hideMenu}>
+                  <Menu data={menuConfig} context={ store.uiState.search.selectedResult } />
+              </ModalDialog> 
             )}
             </div>
           <div className="container-fluid console-panel">
