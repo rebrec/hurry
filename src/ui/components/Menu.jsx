@@ -168,10 +168,8 @@ class Menu extends React.Component {
       }
     ];
     return (
-      <div className="menu-background-parent" onClick={store.uiState.hideMenu}>
-        <div className="menu row">
-          <button onClick={store.uiState.hideMenu} className="menu-close-button"><FontAwesomeIcon icon="times" /></button>
-
+      <>
+{/*  */}
           <div className="col-sm-12" onClick={(e)=>{e.stopPropagation();}}>
             <div className="row ">
               <div className="col-sm-12">
@@ -180,13 +178,16 @@ class Menu extends React.Component {
             </div>
 
             <div className="row">
-              <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.menu.selectedTab}/>
-            </div>
+              <div className="col-sm-12">
 
+                <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.menu.selectedTab}/>
+              </div>
+              
+            </div>
+{/*  */}
           </div>
 
-        </div>
-      </div>
+      </>
     );
   }
 }
