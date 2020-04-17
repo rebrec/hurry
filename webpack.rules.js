@@ -1,9 +1,11 @@
+
 module.exports = [
   // Add support for native node modules
-  {
-    test: /\.node$/,
-    use: 'node-loader',
-  },
+    // modification from https://github.com/electron-userland/electron-forge/issues/1029 to fix node.raw native module import problem when generating a build.
+    // {
+    //   test: /\.node$/,
+    //   use: 'node-loader',
+    // },
   {
     test: /\.(m?js|node)$/,
     parser: { amd: false },
