@@ -30,6 +30,11 @@ module.exports = {
   },
   plugins,
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx']
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.node']
+  },
+  target: 'electron-main', // or 'electron-main'
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'js/[name].js'
   },
 };
