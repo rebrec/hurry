@@ -6,6 +6,19 @@ module.exports = [
     //   test: /\.node$/,
     //   use: 'node-loader',
     // },
+    {
+      test: /\.node$/,
+      use: [
+        {
+          loader: 'native-addon-loader',
+          // options: {
+          //   name: 'relative/to/output/path/[name]-[contenthash:8].[ext]', // default: '[name].[ext]'
+          //   from: 'js' // default: '.'
+          // }
+        }
+      ]
+    },
+
   {
     test: /\.(m?js|node)$/,
     parser: { amd: false },
