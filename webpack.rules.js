@@ -13,6 +13,7 @@ module.exports = [
       loader: '@marshallofsound/webpack-asset-relocator-loader',
       options: {
         outputAssetBase: 'native_modules',
+        debugLog: true,
       },
     },
   },
