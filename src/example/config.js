@@ -1,5 +1,11 @@
+const path = require('path');
+const app = require('electron').remote.app
+const isProd = process.env.NODE_ENV === 'production';
+const basepath = isProd ? path.join(app.getAppPath(), '.webpack', 'renderer') : path.join(__dirname, '..');
+console.log('BASE PATH = ' + basepath);
+
 module.exports = {
-    projectRoot: "/path/to/your/project/dir/containing/module/folder",
+    projectRoot: basepath,
     datasources: {
         glpi: {
             glpiApiEndpoint: "http://hostname/apirest.php",
@@ -11,5 +17,8 @@ module.exports = {
         }
     },
     defaultDataSource: "dummy",
-    defaultSearch: ""
+    defaultSearch: "",
+    debug: {
+        defaultView: 'Main'
+    }
 }

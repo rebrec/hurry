@@ -1,5 +1,6 @@
+
 import Path from 'path'
-import { readdirSync, writeFileSync } from 'fs';
+import { readdirSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import  ping from "net-ping";
 import dns from 'dns';
 const dnsPromise = dns.promises;
@@ -54,7 +55,11 @@ export const pingHost = (target, options) => {
 
 export const saveConfig = data => {
   const homedir = require('os').homedir();
-  const configPath = Path.join(homedir, '.hurry', 'config.js');
+  const configDir = Path.join(homedir, '.hurry');
+  if (!existsSync(configDir)){
+      mkdirSync(configDir);
+  }
+  const configPath = Path.join(configDir, 'config.js');
   writeFileSync(configPath, "module.exports = " + JSON.stringify(data));
 }
 
