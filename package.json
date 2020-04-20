@@ -8,8 +8,8 @@
     "startroot": "electron-forge start -- --no-sandbox",
     "start": "electron-forge start",
     "test": "mocha --require @babel/register --recursive",
-    "package": "NODE_ENV=production electron-forge package",
-    "make": "NODE_ENV=production electron-forge make",
+    "package": "env NODE_ENV=production electron-forge package",
+    "make": "env NODE_ENV=production electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
