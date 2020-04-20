@@ -20,71 +20,120 @@ build_script:
   - yarn electron-rebuild -f -w raw.node 
   - yarn make
   - ps: |
-          $BRANCH = $env:APPVEYOR_REPO_BRANCH
-          $IS_TAG_BUILD=$env:APPVEYOR_REPO_TAG -eq "true"
-          $TAG_NAME=$env:APPVEYOR_REPO_TAG_NAME
 
-          if (!$IS_TAG_BUILD) { 
-            Write-Host "Not a TAG BUILD. Skipping."
-            return
-          }
-
-          $GITLAB_PROJECT_ID = $env:GITLAB_PROJECT_ID           
-          $GITLAB_API_TOKEN = $env:GITLAB_API_TOKEN
-          $url = "https://gitlab.com/api/v4/projects/$GITLAB_PROJECT_ID/uploads"
-          $webClient = New-Object System.Net.webClient
-          $webClient.Headers.Add("PRIVATE-TOKEN", "$GITLAB_API_TOKEN") 
-
-
-          $artifacts = gci .\out\make -Recurse | ?{ $_.PSIsContainer -eq $false } 
-          [System.Collections.ArrayList]$files = @()
-          foreach ($artifact in $artifacts) { 
-              Write-Host ""
-              Write-Host "****************************************"
-              Write-Host "Artifact name  : $($artifact.Name)"
-              Write-Host "Artifact path  : $($artifact.Fullname)"
-              Write-Host "****************************************"
-              
-              $file = New-Object -TypeName psobject
-              Write-Host "[+] Uploading artifact $($artifact.name)"
-              
-              #upload
-              $bytes = $WebClient.UploadFile($url, "POST", $artifact.fullname)
-              $text = [System.Text.Encoding]::ASCII.GetString($bytes) 
-              $jRes = $text | ConvertFrom-json
-
-
-              Write-Host "Upload result : "
-              $jRes | fl
-
-              $file | Add-Member -MemberType NoteProperty -Name "name" -Value "$($jRes.alt)"
-              $file | Add-Member -MemberType NoteProperty -Name "url" -Value "https://gitlab.com$($jRes.full_path)"
-
-              $files.Add($file)
-
-          }
-          $files|ft
-
-          if (!$IS_TAG_BUILD) { return}
-          Write-Host "[+] Generating Release"
-
-          $releaseURL = "https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/releases"
-          $params = @{
-            "name"          = "Hurry $TAG_NAME"
-            "tag_name"      = "$TAG_NAME"
-            "description"   = "Hurry (daily helpful admin tool) $TAG_NAME"
-            "assets" = @{ 
-              "links" =  $files
-            }
-          } | ConvertTo-Json -Depth 10
-     
-          $release = Invoke-RestMethod -Method Post `
-            -Headers @{"PRIVATE-TOKEN" = "$GITLAB_API_TOKEN" ; 'Content-Type'='application/json' } `
-            -Body $params `
-            -Uri $releaseURL
+          $GITLAB_PROJECT_ID  = $env:GITLAB_PROJECT_ID           
+          $GITLAB_API_TOKEN   = $env:GITLAB_API_TOKEN
+          $uploadURL          = "https://gitlab.com/api/v4/projects/$GITLAB_PROJECT_ID/uploads"
+          $releaseURL         = "https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/releases"
           
-          Write-Host "Release result : "
-          $release
+
+          function uploadGitLabFile{
+            params($Artifact)
+            $webClient = New-Object System.Net.webClient
+            $webClient.Headers.Add("PRIVATE-TOKEN", "$GITLAB_API_TOKEN") 
+            $file = New-Object -TypeName psobject
+
+            Write-Host "[+] Uploading artifact $($artifact.name)"
+            $bytes = $WebClient.UploadFile($uploadURL, "POST", $artifact.fullname)
+            $text = [System.Text.Encoding]::ASCII.GetString($bytes) 
+            $jRes = $text | ConvertFrom-json
+
+            $file | Add-Member -MemberType NoteProperty -Name "name" -Value "$($jRes.alt)"
+            $file | Add-Member -MemberType NoteProperty -Name "url" -Value "https://gitlab.com$($jRes.full_path)"
+
+            return $file
+          }
+
+          function New-EmptyAsset{
+            [System.Collections.ArrayList]$arr = @()
+            return @{ 
+              links = $arr
+            }
+          }
+          function Get-GitlabRelease{
+            param($TagName)
+            $res = $null
+            $releases = Invoke-RestMethod -Method Get `
+              -Headers @{"PRIVATE-TOKEN" = "$GITLAB_API_TOKEN" ; 'Content-Type'='application/json' } `
+              -Uri $releaseURL
+            $releases | % {
+              if ($_.tag_name -eq $TagName){
+                Write-Host "Existing release found for tag $TagName"
+                $res = $_.tag_name
+              }
+            }
+            return $res
+          }
+
+          function Remove-GitlabRelease {
+            params($TagName)
+            Write-Host "[+] Removing release $TagName"
+            $res = Invoke-RestMethod -Method DELETE `
+              -Headers @{"PRIVATE-TOKEN" = "$GITLAB_API_TOKEN" ; 'Content-Type'='application/json' } `
+              -Body $params `
+              -Uri $releaseURL + "/$TagName"
+            return $res
+          }
+
+          function New-GitlabRelease {
+            params(
+              $Name, $TagName, $Description, $Assets
+            )
+            $params = @{
+              "name"          = "$Name"
+              "tag_name"      = "$TagName"
+              "description"   = "$Description"
+              "assets"        = "$Assets"
+            } | ConvertTo-Json -Depth 10
+
+            $release = Invoke-RestMethod -Method Post `
+              -Headers @{"PRIVATE-TOKEN" = "$GITLAB_API_TOKEN" ; 'Content-Type'='application/json' } `
+              -Body $params `
+              -Uri $releaseURL
+          
+          }
+          function Main{
+            $BRANCH = $env:APPVEYOR_REPO_BRANCH
+            $IS_TAG_BUILD=$env:APPVEYOR_REPO_TAG -eq "true"
+            $TAG_NAME=$env:APPVEYOR_REPO_TAG_NAME
+
+            if (!$IS_TAG_BUILD) { 
+              Write-Host "Not a TAG BUILD. Skipping."
+              return
+            }
+            $artifacts = gci .\out\make -Recurse | ?{ $_.PSIsContainer -eq $false } 
+            [System.Collections.ArrayList]$files = @()
+            foreach ($artifact in $artifacts) { 
+              $file = uploadGitLabFile -Artifact $artifact
+              $files.Add($file)
+            }
+            $files|ft
+
+            Write-Host "[+] Generating Release"
+
+            $assets = New-EmptyAsset
+
+            $files | % { $assets.links.Add($_) }
+
+            # check if previous release exist
+            $previousRelease = Get-GitlabRelease -TagName $TAG_NAME
+            # if so,
+            if ($previousRelease){
+              # add existing links to asset object
+              $previousRelease.assets | % {
+                $assets.links.Add($_)
+              }
+
+              # delete the Release
+              Remove-GitlabRelease -TagName $TAG_Name
+            }
+            # create the release (again)
+            $release = New-GitlabRelease -name "Hurry $TAG_NAME" -TagName $TAG_NAME -Description "Hurry (daily helpful admin tool) $TAG_NAME" -Assets $Assets
+      
+            Write-Host "Release result : "
+            $release
+          }
+          Main
   # useful for debugging
   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
