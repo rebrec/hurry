@@ -17,7 +17,7 @@ install:
 build_script:
   # useful for debugging
   # - set
-  - yarn electron-rebuild -o raw.node -f
+  - yarn electron-rebuild -f -w raw.node 
   - yarn make
   - ps: |
           $BRANCH = $env:APPVEYOR_REPO_BRANCH
