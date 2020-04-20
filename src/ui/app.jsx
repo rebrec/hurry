@@ -16,6 +16,7 @@ library.add(fab, faFolder, faFolderOpen, faTerminal, faChevronLeft, faChevronRig
 import Viewer from './Viewer'
 import Main from './views/Main'
 import Configuration from './views/Configuration'
+import MenuEditor from './views/MenuEditor'
 
 
 @observer
@@ -25,6 +26,7 @@ export default class App extends React.Component {
     this.state = { };
     store.uiState.addView('Main', Main);
     store.uiState.addView('Configuration', Configuration);
+    store.uiState.addView('MenuEditor', MenuEditor);
     if (config.isValid) {
       store.uiState.setCurrentView(config.debug.defaultView);
     } else {
