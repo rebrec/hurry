@@ -2,6 +2,7 @@ image: Visual Studio 2017
 
 platform:
   - x86
+  - x64
 
 cache:
   - node_modules
@@ -25,10 +26,9 @@ build_script:
           $GITLAB_API_TOKEN   = $env:GITLAB_API_TOKEN
           $uploadURL          = "https://gitlab.com/api/v4/projects/$GITLAB_PROJECT_ID/uploads"
           $releaseURL         = "https://gitlab.com/api/v4/projects/${GITLAB_PROJECT_ID}/releases"
-          
 
           function uploadGitLabFile{
-            params($Artifact)
+            param($Artifact)
             $webClient = New-Object System.Net.webClient
             $webClient.Headers.Add("PRIVATE-TOKEN", "$GITLAB_API_TOKEN") 
             $file = New-Object -TypeName psobject
@@ -47,7 +47,7 @@ build_script:
           function New-EmptyAsset{
             [System.Collections.ArrayList]$arr = @()
             return @{ 
-              links = $arr
+              "links" = $arr
             }
           }
           function Get-GitlabRelease{
@@ -59,43 +59,41 @@ build_script:
             $releases | % {
               if ($_.tag_name -eq $TagName){
                 Write-Host "Existing release found for tag $TagName"
-                $res = $_.tag_name
+                $res = $_
               }
             }
             return $res
           }
 
           function Remove-GitlabRelease {
-            params($TagName)
+            param($TagName)
             Write-Host "[+] Removing release $TagName"
-            $res = Invoke-RestMethod -Method DELETE `
+            $res = Invoke-RestMethod -Method Delete `
               -Headers @{"PRIVATE-TOKEN" = "$GITLAB_API_TOKEN" ; 'Content-Type'='application/json' } `
-              -Body $params `
-              -Uri $releaseURL + "/$TagName"
+              -Uri "$releaseURL/$TagName"
             return $res
           }
 
           function New-GitlabRelease {
-            params(
-              $Name, $TagName, $Description, $Assets
-            )
+            param($Name, $TagName, $Description, $Assets)
             $params = @{
               "name"          = "$Name"
               "tag_name"      = "$TagName"
               "description"   = "$Description"
-              "assets"        = "$Assets"
+              "assets"        = $Assets
             } | ConvertTo-Json -Depth 10
 
+            write-host "sending : $params"
             $release = Invoke-RestMethod -Method Post `
               -Headers @{"PRIVATE-TOKEN" = "$GITLAB_API_TOKEN" ; 'Content-Type'='application/json' } `
               -Body $params `
               -Uri $releaseURL
-          
+            return $release
+
           }
+
           function Main{
-            $BRANCH = $env:APPVEYOR_REPO_BRANCH
-            $IS_TAG_BUILD=$env:APPVEYOR_REPO_TAG -eq "true"
-            $TAG_NAME=$env:APPVEYOR_REPO_TAG_NAME
+
 
             if (!$IS_TAG_BUILD) { 
               Write-Host "Not a TAG BUILD. Skipping."
@@ -107,21 +105,31 @@ build_script:
               $file = uploadGitLabFile -Artifact $artifact
               $files.Add($file)
             }
-            $files|ft
-
             Write-Host "[+] Generating Release"
 
             $assets = New-EmptyAsset
 
-            $files | % { $assets.links.Add($_) }
+            $files | % { 
+              Write-Host "Adding file $_"
+              $assets.links.Add($_) 
+            }   
 
             # check if previous release exist
             $previousRelease = Get-GitlabRelease -TagName $TAG_NAME
             # if so,
             if ($previousRelease){
+              # Write-Host "PreviousRelease result $previousRelease"
               # add existing links to asset object
-              $previousRelease.assets | % {
-                $assets.links.Add($_)
+              $linkNames = $assets.links | select -ExpandProperty Name
+              $previousRelease.assets.links | % {
+                  # check before adding previous links that no link already exist with the same name
+                  # this import is mainly used to import from different CI providers builds from different platforms.
+                  # They should not have the same name if a duplicate exist, the most recent (the one from this script)
+                  # will be used
+                  if ($linkNames -notcontains $_.name) {
+                      Write-Host "Adding file $_"
+                      $assets.links.Add($_)
+                }
               }
 
               # delete the Release
@@ -129,12 +137,13 @@ build_script:
             }
             # create the release (again)
             $release = New-GitlabRelease -name "Hurry $TAG_NAME" -TagName $TAG_NAME -Description "Hurry (daily helpful admin tool) $TAG_NAME" -Assets $Assets
-      
+
             Write-Host "Release result : "
             $release
+
           }
           Main
-  # useful for debugging
+# useful for debugging
   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 test: off
