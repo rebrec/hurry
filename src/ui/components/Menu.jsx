@@ -169,24 +169,16 @@ class Menu extends React.Component {
     ];
     return (
       <>
-{/*  */}
-          <div className="col-sm-12" onClick={(e)=>{e.stopPropagation();}}>
-            <div className="row ">
-              <div className="col-sm-12">
-                <h3>{ selectedResult[selectedResult._datasource.mainColumnProperty].toUpperCase()}</h3>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-sm-12">
-
-                <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.menu.selectedTab}/>
-              </div>
-              
-            </div>
-{/*  */}
+        <div className="row ">
+          <div className="col-sm-12">
+            <h3>{ selectedResult[selectedResult._datasource.mainColumnProperty].toUpperCase()}</h3>
           </div>
-
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
+            <TabProvider tabs={tabs} onClick={this.handleTabProviderClick} selected={store.uiState.app.menu.selectedTab}/>
+          </div>
+        </div>
       </>
     );
   }
