@@ -27,6 +27,7 @@ class EditableMenuElement extends React.Component {
 
   onElementClick(e){
     this.props.onClick(e, this);
+    this.setState({collapsed: false});
   }
 
   toggleContainer(e, elt){

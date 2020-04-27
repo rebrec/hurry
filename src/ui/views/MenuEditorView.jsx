@@ -6,8 +6,9 @@ import EditableMenuElement from '../components/EditableMenu';
 import { MenuItemContainer } from '../../core/helpers/MenuItems'
 import { MenuItemDetail, MenuItemDetailToolBar } from '../components/MenuItemEditor';
 import Api from "../../core/api"
-import { writeFile } from "fs"
+import { writeFileSync } from "fs"
 import './MenuEditorView.scss'
+import config from '../../config'
 import api from '../../core/api';
 
 
@@ -22,6 +23,7 @@ export default class MenuEditorView extends React.Component {
       editableMenu: MenuItemContainer.fromObject(store.menuConfig) || {}
     }
     this.onMenuElementClick = this.onMenuElementClick.bind(this);
+    this.saveMenu = this.saveMenu.bind(this);
     this.saveMenuAs = this.saveMenuAs.bind(this);
   }
 
@@ -35,18 +37,23 @@ export default class MenuEditorView extends React.Component {
     }
   }
 
-  saveMenuAs(){
-    const filePath = api.dialog.showSaveDialogSync({
-      title: "Save this Menu as",
-      filters:["*.js","*.json"]
-    });
+  saveMenu(){
+    this.saveMenuAs(null, config.menuPath);
+    store.loadMenu();
+  }
+
+  saveMenuAs(e, filePath){
+    if (!filePath) {
+      filePath = api.dialog.showSaveDialogSync({
+        title: "Save this Menu as",
+        filters:["*.js","*.json"]
+      });
+    }
     console.log('saving menu as ', filePath);
     const data = JSON.stringify(this.state.editableMenu.toObject());
     if (!filePath) return;
-    writeFile(filePath, data, (err) => {
-      if (err) throw err;
-      console.log('The file has been saved to ' + filePath + ' !');
-    });
+    writeFileSync(filePath, data);
+    console.log('The file has been saved to ' + filePath + ' !');
   }
 
   render() {
@@ -71,6 +78,7 @@ export default class MenuEditorView extends React.Component {
         <div className="row">
           <div className="col-sm-12">
             <Button variant="primary" onClick={this.saveMenuAs} >Save Menu As</Button>
+            <Button variant="primary" onClick={this.saveMenu} >Update Menu (save in place)</Button>
           </div>
         </div>
         <div className="row">
