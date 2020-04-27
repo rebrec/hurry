@@ -7,6 +7,7 @@ console.log('BASE PATH = ' + basepath);
 
 module.exports = {
     projectRoot: basepath,
+    menuPath: path.join(__dirname, "..", "modules", "menuConfig.json"),
     datasources: {
         glpi: {
             glpiApiEndpoint: "http://hostname/apirest.php",

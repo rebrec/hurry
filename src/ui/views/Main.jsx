@@ -8,7 +8,8 @@ import RunnerDebugConsole from '../components/RunnerDebugConsole';
 import HistoryViewer from '../components/HistoryViewer';
 import Menu from '../components/Menu';
 import ModalDialog from '../components/ModalDialog';
-import menuConfig from '../../modules/menuConfig.js'
+
+
 
 import './Main.scss'
 
@@ -97,7 +98,7 @@ export default class Main extends React.Component {
             </div>
             {uiState.app.menu.visible && (
               <ModalDialog onClose={uiState.hideMenu}>
-                  <Menu data={menuConfig} context={ store.uiState.search.selectedResult } />
+                  <Menu data={store.menuConfig} context={ store.uiState.search.selectedResult } />
               </ModalDialog> 
             )}
             </div>
