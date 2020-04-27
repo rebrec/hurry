@@ -15,6 +15,10 @@ module.exports = {
                 }
             }
         },        
+        menuPath: {
+            title: "Menu Path",
+            type: "string"
+        },
         projectRoot: {
             title: "Project Root Directory",
             type: "string"
