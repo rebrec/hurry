@@ -28,7 +28,9 @@ delete customSettings.isValid;
 Object.assign(config, customSettings);
 
 // Check a few valid things before considering the config is valid
-if (existsSync(config.projectRoot)){
+console.log('projectRoot exist : ', existsSync(config.projectRoot));
+console.log('menuPath exist : ', existsSync(config.menuPath));
+if (existsSync(config.projectRoot) && existsSync(config.menuPath)){
     config.isValid = true;
 }
 
