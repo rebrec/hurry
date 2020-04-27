@@ -41,7 +41,10 @@ export default class Configuration extends React.Component {
               <div className="col-sm-12">
                 { config.isValid ? 
                   (
-                    <button onClick={_=>{store.uiState.setCurrentView('Main')}}>Main</button>
+                    <>
+                      <button onClick={_=>{store.uiState.setCurrentView('Main')}}>Main</button>
+                      <button onClick={_=>{store.uiState.setCurrentView('MenuEditorView')}}>Edit Menu</button>
+                    </>
                   ) : (
                     <h1>First Run Configuration</h1>               
                   )

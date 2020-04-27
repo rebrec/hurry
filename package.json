@@ -89,6 +89,7 @@
     "ping": "^0.2.2",
     "popper.js": "^1.16.0",
     "react": "^16.12.0",
+    "react-bootstrap": "^1.0.1",
     "react-dom": "^16.12.0",
     "react-jsonschema-form": "^1.8.1",
     "react-split-pane": "^0.1.89",
