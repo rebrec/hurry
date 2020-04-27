@@ -14,9 +14,11 @@ const {platform} = require('os');
 configure({ enforceActions: "always" });
 
 class RootStore {
-       
+ 
+    @observable menuConfig={};
+
     constructor() {
-        this.menuConfig = this.loadMenu();
+        this.loadMenu();
         this.historyStore = new HistoryStore();
         this.shellManager = new ShellManager(config, this.historyStore);
         this.datasourceManager = new DatasourceManager(this.shellManager, config, this.historyStore);
@@ -30,13 +32,13 @@ class RootStore {
         this.shellManager.start();
     }
 
-    loadMenu(){
+    @action.bound loadMenu(){
         let res = {}
         const data = readFileSync(config.menuPath);
         if (data){
             res = JSON.parse(data.toString());
         }
-        return res;
+        this.menuConfig = res;
     }
 }
 
