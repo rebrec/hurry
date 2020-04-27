@@ -169,71 +169,26 @@ class MenuItemDetailToolBar extends React.Component {
     this.props.element.moveUp();
   }
   render() {
-
+    const {element} = this.props;
     return (
       <>
-        <Button variant="primary" onClick={() => {this.props.element.moveUp()}} >Move Up</Button>{' '}
-        <Button variant="primary" onClick={() => {this.props.element.moveDown()}} >Move Down</Button>{' '}
-        <Button variant="primary" onClick={() => {this.props.element.moveToParent()}} >Move to Parent</Button>{' '}
+        { element && element.isContainer() && (
+            <>
+              <Button variant="primary" onClick={() => {element.addNewMenuItemContainer({type:"CONTAINER", caption: "New Container"})}} >Add Container</Button>
+              <Button variant="primary" onClick={() => {element.addNewMenuItemElement({type:"COMMAND", caption: "New Command"})}} >Add Command</Button>
+            </>
+          )
+        }
+        <Button variant="primary" onClick={() => {element.moveUp()}} >Move Up</Button>{' '}
+        <Button variant="primary" onClick={() => {element.moveUp()}} >Move Up</Button>{' '}
+        <Button variant="primary" onClick={() => {element.moveDown()}} >Move Down</Button>{' '}
+        <Button variant="primary" onClick={() => {element.moveToParent()}} >Move to Parent</Button>{' '}
       </>
     );
   }
 }
 
 
-// class FieldEditor extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.handleChange = this.handleChange.bind(this);
-//   }
-
-//   handleChange(event) {
-//     const text = event.target.value;
-//     this.props.onChange(this.props.id, text);
-//   }
-
-//   render() {
-//     return (
-//       <div className="field-editor">
-//         <input onChange={this.handleChange} value={this.props.value} />
-//       </div>
-//     );
-//   }
-// }
-
-// class FormEditor extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {};
-    
-//     this.handleFieldChange = this.handleFieldChange.bind(this);
-//   }
-
-//   handleFieldChange(fieldId, value) {
-//     this.setState({ [fieldId]: value });
-//   }
-
-//   render() {
-//     this.props.fields.map(field => {
-//       console.log('field', field);
-//     })
-//     const fields = this.props.fields.map(field => (
-//       <FieldEditor
-//         key={field}
-//         id={field}
-//         onChange={this.handleFieldChange}
-//         value={this.state[field]}
-//       />
-//     ));
-
-//     return (
-//       <div>
-//         {fields}
-//         <div>{JSON.stringify(this.state)}</div>
-//       </div>
-//     );
-//   }
-// }
 
 export {
   MenuItemDetail,

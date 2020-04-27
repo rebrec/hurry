@@ -5,6 +5,11 @@ class MenuItemElement {
     constructor(properties){
         this.updateProperties(properties);
         this.parent = null;
+        this.isContainer = this.isContainer.bind(this);
+    }
+
+    isContainer(){
+        return this.hasOwnProperty("children");
     }
 
     @action.bound updateProperties(properties){
@@ -65,6 +70,16 @@ class MenuItemContainer extends MenuItemElement{
     childrenAt(idx){
         return this.children[idx];
     }
+
+
+    @action.bound addNewMenuItemContainer(properties={}){
+        return this.addElement(new MenuItemContainer(properties));
+    }
+
+    @action.bound addNewMenuItemElement(properties={}){
+        return this.addElement(new MenuItemElement(properties));
+    }
+
 
     @action.bound addElement(element){
         element.parent = this;
