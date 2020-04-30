@@ -12,6 +12,8 @@ config.isValid = false;
 // const configPath = Path.join("/home/rebrec/projets/dev/js/hurry/src","config.js");
 const defaultConfigPath = Path.join(__dirname, 'example', 'config.js');
 const configPath = Path.join(homedir, '.hurry', 'config.js');
+const historyFilePath = Path.join(homedir, '.hurry', 'history.json');
+
 // const configPath = Path.join(__dirname,"config.js");
 
 
@@ -41,7 +43,7 @@ Object.assign(config, {
     shellFeaturesPath: Path.join(modulesRoot, "shellfeatures"),
     datasourcesPath: Path.join(modulesRoot, "datasources"),
     viewsPath:  Path.join(config.projectRoot, "ui", "views"),
-
+    historyFilePath:  historyFilePath
 });
 
 //Object.assign(config, customSettings);

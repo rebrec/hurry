@@ -19,7 +19,7 @@ class RootStore {
 
     constructor() {
         this.loadMenu();
-        this.historyStore = new HistoryStore();
+        this.historyStore = new HistoryStore({filePath: config.historyFilePath});
         this.shellManager = new ShellManager(config, this.historyStore);
         this.datasourceManager = new DatasourceManager(this.shellManager, config, this.historyStore);
         
