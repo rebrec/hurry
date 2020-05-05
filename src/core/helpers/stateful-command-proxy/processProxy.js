@@ -126,14 +126,16 @@ function ProcessProxy(processToSpawn, args,
                       processCmdBlacklistRegex,
                       processCmdWhitelistRegex,
                       autoInvalidationConfig,
-                      windowsVerbatimArguments) {
+                      windowsVerbatimArguments,
+                      monitorMgr) {
 
     this._createdAt = new Date();
     this._processPid = null;
     this._processToSpawn = processToSpawn;
     this._processArguments = args;
     this._logFunction = logFunction;
-
+    this._monitorMgr = monitorMgr;
+    this._monitor = null;
 
     this._commandHistory = observable([]);
     if(typeof(retainMaxCmdHistory)==='undefined') {
@@ -512,7 +514,7 @@ ProcessProxy.prototype._commandIsWhitelisted = function(command) {
 **/
 ProcessProxy.prototype.onData = function(type, data) {
 
-    var cmd = null;
+    var cmd = null;https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
     var dataToWrite = null;
 
     if (data) {
@@ -612,6 +614,9 @@ ProcessProxy.prototype.initialize = function(initCommands) {
             // spawn
             self._log('info',"Spawning process: " + self._processToSpawn);
             self._process = spawn(self._processToSpawn, self._processArguments, self._processOptions);
+            
+            self._monitor = self._monitorMgr.addMonitor(self._process);
+            
             self._log('info',"Process: " + self._processToSpawn +
                 " PID: " + self._process.pid);
 
