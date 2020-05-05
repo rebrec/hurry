@@ -2,6 +2,7 @@ const { platform } = require('os');
 const { parseTemplate } = require('./helpers/helpers');
 const StatefulProcessCommandProxy = require("./helpers/stateful-command-proxy/statefulProcessCommandProxy");
 import { observable, computed, action, extendObservable } from 'mobx'
+import MonitorManager from "./MonitorManager";
 const path = require('path');
 
 const defaultConfig = {
@@ -28,7 +29,7 @@ const defaultConfig = {
 export default class Shell{
   
   @observable runner;
-
+  
   constructor(config){
     this.name = config.name;
     const {initCommands, preDestroyCommands} = config;
@@ -38,6 +39,9 @@ export default class Shell{
     this.registerPreDestroyCommands(preDestroyCommands);
     this.config = {};
     Object.assign(this.config, defaultConfig, config);
+    this.monitorManager = new MonitorManager(config);
+    this.config.monitorMgr = this.monitorManager;
+    
     this.config.logFunction = (severity,origin,msg) => {
       console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
     };

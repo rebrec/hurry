@@ -150,7 +150,8 @@ function StatefulProcessCommandProxy(config) {
                                                 config.processCmdBlacklistRegex,
                                                 config.processCmdWhitelistRegex,
                                                 config.autoInvalidationConfig,
-                                                config.windowsVerbatimArguments);
+                                                config.windowsVerbatimArguments,
+                                                config.monitorMgr);
 
 
                 // initialize
