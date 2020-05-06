@@ -70,9 +70,9 @@ class ConsoleMonitor extends React.Component {
     for (const [i, stream] of output.entries()){
       const { type, data } = stream;
       const lines = data.split('\n');
-      for (const line of lines){
+      for (const [j, line] of lines.entries()){
         res.push(
-          <div key={i} className={"process-console-" + type}>
+          <div key={"console-" + i + '-' + j} className={"process-console-" + type}>
             {line}
           </div>
         );
