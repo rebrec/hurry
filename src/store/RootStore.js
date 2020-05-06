@@ -34,7 +34,7 @@ class RootStore {
 
     @action.bound loadMenu(){
         let res = {}
-        const data = readFileSync(config.menuPath);
+        const data = readFileSync(config.menu.menuPath);
         if (data){
             res = JSON.parse(data.toString());
         }
