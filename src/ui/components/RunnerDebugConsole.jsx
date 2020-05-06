@@ -2,7 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react'
 import './RunnerDebugConsole.scss';
 import TabProvider from './TabProvider'
-import store from '../../store/RootStore'
+import api from '../../core/api'
+const { store, config } = api;
 
 
 @observer
@@ -66,11 +67,14 @@ class ConsoleMonitor extends React.Component {
   render(){
     const { monitor } = this.props;
     const { output } = monitor;
+    const { hideMarkers } = config.consoleMonitor;
+    const markers = ['echo __done__', '__done__'];
     const res = [];
     for (const [i, stream] of output.entries()){
       const { type, data } = stream;
       const lines = data.split('\n');
       for (const [j, line] of lines.entries()){
+        if (hideMarkers && markers.indexOf(line) > -1) continue;
         res.push(
           <div key={"console-" + i + '-' + j} className={"process-console-" + type}>
             {line}

@@ -30,6 +30,17 @@ module.exports = {
                 }
             }
         },
+        consoleMonitor: {
+            title: "Console Monitor settings",
+            type: "object",
+            properties: {
+                hideMarkers: {
+                    title: "Hide markers",
+                    type: "boolean",
+                    default: true
+                }
+            }
+        },
         projectRoot: {
                     title: "Project Root Directory",
             type: "string"
