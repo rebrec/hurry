@@ -2,8 +2,10 @@ import React from 'react';
 import './Menu.scss';
 import { observer } from 'mobx-react'
 import TabProvider from './TabProvider'
-import store from '../../store/RootStore'
+import api from '../../core/api'
+const {config, store} = api
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 
 @observer
@@ -117,6 +119,7 @@ class Menu extends React.Component {
 
   render() {
     const selectedResult = this.props.context;
+    const leftPanelMouseHandlerType = config.menu.submenuShowOnClick ? "onClick" : "onMouseOver"
     // const tree = this.genHistoryTree();
     const tabs = [
       {
@@ -146,7 +149,7 @@ class Menu extends React.Component {
                             selected={this.state.panelLeftSelection}
                             onClick={this.handlePanelLeftClick}
                             extraclass="menu-command-panel-left"
-                            handlerType="onMouseOver"
+                            handlerType={leftPanelMouseHandlerType}
               />
               <CommandPanel data={this.state.dataR}
                             context={this.props.context}

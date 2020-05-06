@@ -31,8 +31,8 @@ Object.assign(config, customSettings);
 
 // Check a few valid things before considering the config is valid
 console.log('projectRoot exist : ', existsSync(config.projectRoot));
-console.log('menuPath exist : ', existsSync(config.menuPath));
-if (existsSync(config.projectRoot) && existsSync(config.menuPath)){
+console.log('menuPath exist : ', existsSync(config.menu.menuPath));
+if (existsSync(config.projectRoot) && existsSync(config.menu.menuPath)){
     config.isValid = true;
 }
 
