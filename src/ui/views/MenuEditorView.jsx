@@ -1,15 +1,15 @@
 import React from 'react';
 import { observer, } from 'mobx-react'
 import Button from 'react-bootstrap/Button';
-import store from '../../store/RootStore'
+import api from '../../core/api';
+const { store, config } = api;
 import EditableMenuElement from '../components/EditableMenu';
 import { MenuItemContainer } from '../../core/helpers/MenuItems'
 import { MenuItemDetail, MenuItemDetailToolBar } from '../components/MenuItemEditor';
-import Api from "../../core/api"
+
 import { writeFileSync } from "fs"
 import './MenuEditorView.scss'
-import config from '../../config'
-import api from '../../core/api';
+
 
 
 
@@ -38,7 +38,7 @@ export default class MenuEditorView extends React.Component {
   }
 
   saveMenu(){
-    this.saveMenuAs(null, config.menuPath);
+    this.saveMenuAs(null, config.menu.menuPath);
     store.loadMenu();
   }
 
