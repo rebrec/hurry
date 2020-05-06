@@ -15,12 +15,23 @@ module.exports = {
                 }
             }
         },        
-        menuPath: {
-            title: "Menu Path",
-            type: "string"
+        menu: {
+            title: "Menu settings",
+            type: "object",
+            properties: {
+                menuPath: {
+                    title: "Menu Path",
+                    type: "string"
+                },
+                submenuShowOnClick: {
+                    title: "Show submenu by clicking (instead of simple mouse overing",
+                    type: "boolean",
+                    default: true
+                }
+            }
         },
         projectRoot: {
-            title: "Project Root Directory",
+                    title: "Project Root Directory",
             type: "string"
         },
         datasources: {
