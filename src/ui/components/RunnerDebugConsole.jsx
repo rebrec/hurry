@@ -25,7 +25,6 @@ class RunnerDebugConsole extends React.Component {
         caption: "no process", content: (<div>No Processes are running yet !</div>)
       });
     }
-    console.log("Shell Entries ", Object.entries(shells))
     for (const [shellName, shellObj] of Object.entries(shells)){
       const { monitorManager } = shellObj;
       if (!monitorManager) continue;
@@ -62,7 +61,7 @@ class RunnerDebugConsole extends React.Component {
 @observer
 class ConsoleMonitor extends React.Component {
   constructor(props) {
-    super(props);setInterval(_=>{this.forceUpdate()},1000);
+    super(props);
   }
   render(){
     const { monitor } = this.props;
@@ -98,7 +97,7 @@ class ConsoleMonitor extends React.Component {
 @observer
 class ProcessConsole extends React.Component {
   constructor(props) {
-    super(props);setInterval(_=>{this.forceUpdate()},1000);
+    super(props);
   }
   render(){
     const { shellName, pid, processProxy } = this.props;
