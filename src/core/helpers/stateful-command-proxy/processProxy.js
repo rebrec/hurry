@@ -624,14 +624,11 @@ ProcessProxy.prototype.initialize = function(initCommands) {
 
             // register stdout stream handler
             self._process.stdout.on('data', function(data) {
-                console.log(`[${self._process.pid}] [out] ${data}`);
                 self.onData('stdout', data);
             });
 
             // register stderr stream handler
             self._process.stderr.on('data', function(data) {
-                console.log(`[${self._process.pid}] [err] ${data}`);
-                
                 self.onData('stderr', data);
             });
 
