@@ -10,7 +10,6 @@ const { store, config } = api;
 class RunnerDebugConsole extends React.Component {
   constructor(props) {
     super(props);
-    // setInterval(_=>{this.forceUpdate()},1000)
   }
 
   handleTabProviderClick(e, element){
@@ -33,16 +32,11 @@ class RunnerDebugConsole extends React.Component {
         const { pid } = monitor;
         const processProxy = monitor._process;
 
-      // }
-        // const pids = monitorManager._pid2processMap
-        // for (const [pid, processProxy] of Object.entries(pids)){
           tabs.push({
           caption: `${shellName} (${pid})`,
           content: (
             <>
-              {/* <ProcessConsole shellName={shellName} pid={pid} processProxy={processProxy} /> */}
               <ConsoleMonitor monitor={monitor} />
-              
             </>
           )
         });
@@ -103,7 +97,6 @@ class ProcessConsole extends React.Component {
     const { shellName, pid, processProxy } = this.props;
     const history = processProxy._commandHistory;
     const lines = [];
-    // for (let i = 0; i < history.length; i++) {
     for (let i = history.length - 1; i >=0 ; i--) { // iterate from end to first
       
       const item = history[i];
@@ -124,7 +117,6 @@ class ProcessConsole extends React.Component {
 class ConsoleCommandHistory extends React.Component {
   constructor(props) {
     super(props);
-    // setInterval(_=>{this.forceUpdate()},1000)
   }
   render() {
     const { 
