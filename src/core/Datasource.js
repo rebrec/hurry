@@ -34,7 +34,11 @@ export default class Datasource {
         .then(searchResults =>{
             if (searchResults.success){
                 for (const result of searchResults.data){
-                    result._datasource = this;
+                    result.datasource = {
+                        name: this.name,
+                        mainColumnProperty: this.mainColumnProperty,
+                        columns: this.columns
+                    };
                     result._pingableProperty = this.pingableProperty;
                     for (const column of this.columns){
                         if (column.variableName !== null){
