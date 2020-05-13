@@ -66,7 +66,7 @@ class HistoryCommand extends React.Component {
     console.log('HISTORY', this.props.item);
     const { command, context } = this.props.item;
     const { caption: commandCaption, description} = command;
-    const mainColumnProperty = context[context._datasource.mainColumnProperty];
+    const mainColumnProperty = context[context.datasource.mainColumnProperty];
 
     return (
 
