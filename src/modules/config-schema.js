@@ -53,6 +53,16 @@ module.exports = {
                     title: "Glpi",
                     type: "object",
                     properties: {
+                        disabled: {
+                            title: "Disabled",
+                            type: "boolean",
+                            default: false
+                        },
+                        customDatasourceName: {
+                            title: "Custom Datasource Name",
+                            type: "string",
+                            default: ""
+                        },
                         glpiApiEndpoint: {
                             title: "API Endpoint",
                             type: "string",
@@ -72,6 +82,16 @@ module.exports = {
                     title: "JS Hosts File",
                     type: "object",
                     properties: {
+                        disabled: {
+                            title: "Disabled",
+                            type: "boolean",
+                            default: false
+                        },
+                        customDatasourceName: {
+                            title: "Custom Datasource Name",
+                            type: "string",
+                            default: "Artémis"
+                        },
                         hostfile: {
                             title: "File Path",
                             type: "string",
@@ -79,7 +99,70 @@ module.exports = {
                         },
                     }
                 },
-                
+                rawip: {
+                    title: "Raw IP",
+                    type: "object",
+                    properties: {
+                        disabled: {
+                            title: "Disabled",
+                            type: "boolean",
+                            default: false
+                        },
+                        customDatasourceName: {
+                            title: "Custom Datasource Name",
+                            type: "string",
+                            default: ""
+                        },
+                    },
+                },
+                dummy: {
+                    title: "Dummy (test)",
+                    type: "object",
+                    properties: {
+                        disabled: {
+                            title: "Disabled",
+                            type: "boolean",
+                            default: false
+                        },
+                        customDatasourceName: {
+                            title: "Custom Datasource Name",
+                            type: "string",
+                            default: ""
+                        },
+                    },
+                }, 
+                "host-file": {
+                    title: "Host File",
+                    type: "object",
+                    properties: {
+                        disabled: {
+                            title: "Disabled",
+                            type: "boolean",
+                            default: false
+                        },
+                        customDatasourceName: {
+                            title: "Custom Datasource Name",
+                            type: "string",
+                            default: ""
+                        },
+                    },
+                },  
+                "jsHostsFile        ": {
+                    title: "Host (js)",
+                    type: "object",
+                    properties: {
+                        disabled: {
+                            title: "Disabled",
+                            type: "boolean",
+                            default: false
+                        },
+                        customDatasourceName: {
+                            title: "Custom Datasource Name",
+                            type: "string",
+                            default: ""
+                        },
+                    },
+                },  
             },
         },
         defaultDataSource: {
