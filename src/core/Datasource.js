@@ -23,8 +23,8 @@ export default class Datasource {
         this.modulePath =  `${modulePath}${Path.sep}`;
         this.templateContext = {modulePath: this.modulePath};
         Object.assign(this.templateContext, this.config);
-        
-        this.initCommands = parseTemplateArray(definition.initCommands, this.templateContext);
+        this.initCommands = [];
+        if (!this.config.disabled) this.initCommands = parseTemplateArray(definition.initCommands, this.templateContext);
         this.shell.registerInitCommands(this.initCommands);
 
         this.searchFunc = definition.searchFunc;
