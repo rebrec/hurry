@@ -69,7 +69,9 @@ class DatasourceButton extends React.Component{
     const datasources = store.datasourceManager.getDatasources();
     const items = [];
     for (const [i, datasource] of Object.entries(datasources)) {
-      items.push(<a className="dropdown-item" key={i} onClick={this.onDropDownClick.bind(this, datasource)} href="#">{datasource.caption}</a>);
+      if (datasource.config.disabled) continue; 
+      const caption = (datasource.config.customDatasourceName && datasource.config.customDatasourceName.length > 0) ? datasource.config.customDatasourceName : datasource.caption;
+      items.push(<a className="dropdown-item" key={i} onClick={this.onDropDownClick.bind(this, datasource)} href="#">{caption}</a>);
     }
     return (
       <div className="dropdown-menu" aria-labelledby={id}>
