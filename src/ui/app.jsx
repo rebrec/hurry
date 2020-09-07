@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import { observer } from 'mobx-react'
 import store from '../store/RootStore'
-import config from '../config'
+import api from '../core/api'
 import { getFiles } from '../core/helpers/helpers'
 import { basename } from 'path'
 import $ from "jquery";
@@ -28,8 +28,8 @@ export default class App extends React.Component {
     store.uiState.addView('Main', Main);
     store.uiState.addView('Configuration', Configuration);
     store.uiState.addView('MenuEditorView', MenuEditorView);
-    if (config.isValid) {
-      store.uiState.setCurrentView(config.debug.defaultView);
+    if (api.config.isValid) {
+      store.uiState.setCurrentView(api.config.debug.defaultView);
     } else {
       store.uiState.setCurrentView('Configuration');
     }
