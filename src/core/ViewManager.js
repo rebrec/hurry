@@ -2,7 +2,7 @@ import  Path from  'path'
 import { getFiles } from './helpers/helpers'
 import { observable, computed, action, extendObservable } from 'mobx'
 import { basename } from 'path'
-import config from '../config'
+import api from '../core/api'
 
 export default new class ViewManager{
 
@@ -10,7 +10,7 @@ export default new class ViewManager{
         this.loadViews();    
     }
     loadViews(){
-        const { viewsPath } = config;
+        const { viewsPath } = api.config;
         const viewsPaths = getFiles(viewsPath);
         
         for (const path of viewsPaths){

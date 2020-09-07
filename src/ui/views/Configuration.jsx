@@ -7,7 +7,7 @@ import Api from "../../core/api"
 // const Api = remote.require("./core/api");
 import Form from "react-jsonschema-form";
 import schema from "../../modules/config-schema"
-import config from "../../config"
+import api from "../../core/api"
 import { saveConfig } from "../../core/helpers/helpers"
 
 const APP_STATUS = {
