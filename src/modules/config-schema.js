@@ -1,6 +1,35 @@
-//https://medium.com/@sairamkrish/rapid-development-of-data-collection-platform-with-reactjs-and-json-schema-ef147f4c665
+import config from '../config'
+import {getDirectories} from '../core/helpers/helpers'
+import { existsSync } from 'fs';
+import Path from 'path'
 
-module.exports = {
+const { datasourcesPath } = config;
+let datasourceConfigurationSchema = {};
+
+function addDatasourceConfigurationSchema(path){
+    const schemaPath = Path.join(path, 'config-schema.js');
+    if (!existsSync(schemaPath)){
+        console.warn('Missing config-schema', schemaPath);
+        return;
+    }
+    
+    console.log('addDatasourceConfigurationSchema : Processing file :', schemaPath);
+    const datasourceDefinition = __non_webpack_require__(schemaPath);
+    Object.assign(datasourceConfigurationSchema, datasourceDefinition);
+}
+
+
+
+
+
+
+const paths = getDirectories(datasourcesPath);
+for (const path of paths){
+    addDatasourceConfigurationSchema(path);
+}
+console.log("SCHEMA",datasourceConfigurationSchema )
+
+export default {
     title: "Settings",
     type: "object",
     properties: {
@@ -48,147 +77,7 @@ module.exports = {
         datasources: {
             type: "object",
             title: "Datasources",
-            properties: {
-                glpi: {
-                    title: "Glpi",
-                    type: "object",
-                    properties: {
-                        disabled: {
-                            title: "Disabled",
-                            type: "boolean",
-                            default: false
-                        },
-                        customDatasourceName: {
-                            title: "Custom Datasource Name",
-                            type: "string",
-                            default: ""
-                        },
-                        glpiApiEndpoint: {
-                            title: "API Endpoint",
-                            type: "string",
-                            format: "uri"
-                        },
-                        glpiAppToken: {
-                            title: "API App Token",
-                            type: "string",
-                        },
-                        glpiUserToken: {
-                            title: "API User Token",
-                            type: "string",
-                        },
-                    }
-                },
-                jsHostsFile: {
-                    title: "JS Hosts File",
-                    type: "object",
-                    properties: {
-                        disabled: {
-                            title: "Disabled",
-                            type: "boolean",
-                            default: false
-                        },
-                        customDatasourceName: {
-                            title: "Custom Datasource Name",
-                            type: "string",
-                            default: ""
-                        },
-                        hostfile: {
-                            title: "File Path",
-                            type: "string",
-                            default: "/path/to/hosts"
-                        },
-                    }
-                },
-                rawip: {
-                    title: "Raw IP",
-                    type: "object",
-                    properties: {
-                        disabled: {
-                            title: "Disabled",
-                            type: "boolean",
-                            default: false
-                        },
-                        customDatasourceName: {
-                            title: "Custom Datasource Name",
-                            type: "string",
-                            default: ""
-                        },
-                    },
-                },
-                searchDodo: {
-                    title: "Search Dodo",
-                    type: "object",
-                    properties: {
-                        disabled: {
-                            title: "Disabled",
-                            type: "boolean",
-                            default: false
-                        },
-                        customDatasourceName: {
-                            title: "Custom Datasource Name",
-                            type: "string",
-                            default: ""
-                        },
-                        dodoApiHost: {
-                            title: "API Hostname",
-                            type: "string",
-                        },
-                        dodoApiPort: {
-                            title: "API Port",
-                            type: "string",
-                        },
-                    }
-
-                },
-                dummy: {
-                    title: "Dummy (test)",
-                    type: "object",
-                    properties: {
-                        disabled: {
-                            title: "Disabled",
-                            type: "boolean",
-                            default: false
-                        },
-                        customDatasourceName: {
-                            title: "Custom Datasource Name",
-                            type: "string",
-                            default: ""
-                        },
-                    },
-                }, 
-                "host-file": {
-                    title: "Host File",
-                    type: "object",
-                    properties: {
-                        disabled: {
-                            title: "Disabled",
-                            type: "boolean",
-                            default: false
-                        },
-                        customDatasourceName: {
-                            title: "Custom Datasource Name",
-                            type: "string",
-                            default: ""
-                        },
-                    },
-                },  
-                "jsHostsFile        ": {
-                    title: "Host (js)",
-                    type: "object",
-                    properties: {
-                        disabled: {
-                            title: "Disabled",
-                            type: "boolean",
-                            default: false
-                        },
-                        customDatasourceName: {
-                            title: "Custom Datasource Name",
-                            type: "string",
-                            default: ""
-                        },
-                    },
-                },  
-            },
+            properties: datasourceConfigurationSchema
         },
         defaultDataSource: {
             title: "Default Datasource",
