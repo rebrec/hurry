@@ -9,9 +9,9 @@ module.exports = {
     columns: [  
         { columnName: 'Hostname', property: 'computername', variableName: 'hostname' },
         { columnName: 'Username', property: 'username', variableName: 'username' },
-        { columnName: 'Ip', property: 'ipaddresses', variableName: 'username' },
+        { columnName: 'Ip', property: 'ipaddresses', variableName: 'ipaddresses' },
     ],
-    pingableProperty: 'computername',
+    pingableProperty: 'ipaddresses',
     mainColumnProperty: 'computername',
     searchFunc: keyword => {
         return 'Search-Dodo ' + keyword + ' | ConvertTo-Json -Compress';
