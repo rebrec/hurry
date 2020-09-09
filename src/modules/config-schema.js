@@ -90,7 +90,7 @@ module.exports = {
                         customDatasourceName: {
                             title: "Custom Datasource Name",
                             type: "string",
-                            default: "Artémis"
+                            default: ""
                         },
                         hostfile: {
                             title: "File Path",
@@ -114,6 +114,31 @@ module.exports = {
                             default: ""
                         },
                     },
+                },
+                searchDodo: {
+                    title: "Search Dodo",
+                    type: "object",
+                    properties: {
+                        disabled: {
+                            title: "Disabled",
+                            type: "boolean",
+                            default: false
+                        },
+                        customDatasourceName: {
+                            title: "Custom Datasource Name",
+                            type: "string",
+                            default: ""
+                        },
+                        dodoApiHost: {
+                            title: "API Hostname",
+                            type: "string",
+                        },
+                        dodoApiPort: {
+                            title: "API Port",
+                            type: "string",
+                        },
+                    }
+
                 },
                 dummy: {
                     title: "Dummy (test)",
