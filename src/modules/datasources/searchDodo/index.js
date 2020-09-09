@@ -1,11 +1,15 @@
 module.exports = {
-    name: "search-dodo",
+    name: "searchDodo",
     caption: "Dodo",
-    shell: "powershell",
-    initCommands: [],
+    shell: "powershell", 
+    initCommands: [
+        `$global:DODO_BASE_URL="http://#{dodoApiHost}" + ":" + "#{dodoApiPort}/api/script"`,
+        `. #{modulePath}init.ps1`
+    ],
     columns: [  
         { columnName: 'Hostname', property: 'computername', variableName: 'hostname' },
         { columnName: 'Username', property: 'username', variableName: 'username' },
+        { columnName: 'Ip', property: 'ipaddresses', variableName: 'username' },
     ],
     pingableProperty: 'computername',
     mainColumnProperty: 'computername',
