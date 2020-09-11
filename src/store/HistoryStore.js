@@ -29,7 +29,9 @@ class HistoryStore {
     }
 
     @action.bound addCommand(command, context){
+        let historySize = 37;
         this.commands.push({command: command, context: context});
+        if (this.commands.length >= historySize) this.commands.splice(0,this.commands.length - historySize); 
         this.saveToFile();
     }
     @action.bound addSearch(datastore, keyword){

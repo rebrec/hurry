@@ -41,6 +41,7 @@ export default class Shell{
     Object.assign(this.config, defaultConfig, config);
     this.monitorManager = new MonitorManager(config);
     this.config.monitorMgr = this.monitorManager;
+    // this.config.monitorMgr = new MonitorManager(config);;
     
     this.config.logFunction = (severity,origin,msg) => {
       console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
