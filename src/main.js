@@ -1,4 +1,4 @@
-const { app, BrowserWindow, globalShortcut } = require("electron");
+const { app, BrowserWindow, Menu, globalShortcut } = require("electron");
 
 import "./main-process/ipcMain";
 
@@ -13,7 +13,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-
+Menu.setApplicationMenu(false);
 const createWindow = () => {
   // Create the browser window.
 
