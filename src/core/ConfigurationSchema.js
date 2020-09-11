@@ -43,17 +43,7 @@ export default new class ConfigurationSchema{
             title: "Settings",
             type: "object",
             properties: {
-                debug: {
-                    type: "object",
-                    title: "Debug Settings",
-                    properties:{
-                        defaultView: {
-                            title: "Default view",
-                            type: "string",
-                            default: "Main"
-                        }
-                    }
-                },        
+
                 menu: {
                     title: "Menu settings",
                     type: "object",
@@ -69,6 +59,26 @@ export default new class ConfigurationSchema{
                         }
                     }
                 },
+                projectRoot: {
+                    title: "Project Root Directory",
+                    type: "string"
+                },
+                defaultDataSource: {
+                    title: "Default Datasource",
+                    type: "string",
+                    enum: datasourceNames
+                },
+                
+                datasources: {
+                    type: "object",
+                    title: "Datasources",
+                    properties: this._datasourceConfigurationSchema
+                },
+                defaultSearch: {
+                    title: "Default Search",
+                    type: "string",
+                    default: ""
+                },
                 consoleMonitor: {
                     title: "Console Monitor settings",
                     type: "object",
@@ -79,26 +89,24 @@ export default new class ConfigurationSchema{
                             default: true
                         }
                     }
-                },
-                projectRoot: {
-                            title: "Project Root Directory",
-                    type: "string"
-                },
-                datasources: {
+                },                
+                debug: {
                     type: "object",
-                    title: "Datasources",
-                    properties: this._datasourceConfigurationSchema
-                },
-                defaultDataSource: {
-                    title: "Default Datasource",
-                    type: "string",
-                    enum: datasourceNames
-                },
-                defaultSearch: {
-                    title: "Default Search",
-                    type: "string",
-                    default: ""
-                },
+                    title: "Debug Settings",
+                    properties:{
+                        defaultView: {
+                            title: "Default view",
+                            type: "string",
+                            default: "Main"
+                        },
+                        enableDevTools: {
+                            title: "Enable web console (need application restart to take effect)",
+                            type: "boolean",
+                            default: false
+                        }
+                    }
+                }, 
+
             }
         }
 
