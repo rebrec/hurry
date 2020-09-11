@@ -174,7 +174,7 @@ class Menu extends React.Component {
       <>
         <div className="row ">
           <div className="col-sm-12">
-            <h3>{ selectedResult[selectedResult._datasource.mainColumnProperty].toUpperCase()}</h3>
+            <h3>{ selectedResult[selectedResult.datasource.mainColumnProperty].toUpperCase()}</h3>
           </div>
         </div>
         <div className="row">
@@ -230,7 +230,7 @@ class CommandPanel extends React.Component {
     for (let i=0;i<data.length;i++){
       const elt = data[i];
       if (elt.hasOwnProperty('platform') && elt.platform != store.platform) continue;
-      if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context._datasource.name) continue;
+      if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context.datasource.name) continue;
 
       elts.push(<MenuElement 
         key={i} 
