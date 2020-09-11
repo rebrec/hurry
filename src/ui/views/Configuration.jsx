@@ -6,7 +6,7 @@ import './Configuration.scss'
 // import {remote} from "electron"
 // const Api = remote.require("./core/api");
 import Form from "react-jsonschema-form";
-import configurationSchema from "../../modules/config-schema"
+import configurationSchema from "../../core/ConfigurationSchema"
 import api from "../../core/api"
 const { config } = api
 import { saveConfig } from "../../core/helpers/helpers"
