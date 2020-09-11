@@ -23,8 +23,8 @@ export default class Datasource {
         this.modulePath =  `${modulePath}${Path.sep}`;
         this.templateContext = {modulePath: this.modulePath};
         Object.assign(this.templateContext, this.config);
-        
-        this.initCommands = parseTemplateArray(definition.initCommands, this.templateContext);
+        this.initCommands = [];
+        if (!this.config.disabled) this.initCommands = parseTemplateArray(definition.initCommands, this.templateContext);
         this.shell.registerInitCommands(this.initCommands);
 
         this.searchFunc = definition.searchFunc;
@@ -34,7 +34,11 @@ export default class Datasource {
         .then(searchResults =>{
             if (searchResults.success){
                 for (const result of searchResults.data){
-                    result._datasource = this;
+                    result.datasource = {
+                        name: this.name,
+                        mainColumnProperty: this.mainColumnProperty,
+                        columns: this.columns
+                    };
                     result._pingableProperty = this.pingableProperty;
                     for (const column of this.columns){
                         if (column.variableName !== null){

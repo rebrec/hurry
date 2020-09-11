@@ -60,7 +60,7 @@ export default class MenuEditorView extends React.Component {
     const {uiState} = store;
     console.log('store',uiState);
     const context = {
-      _datasource: {
+      datasource: {
         mainColumnProperty: "hostname",
         pingableProperty: "ip",
       },
