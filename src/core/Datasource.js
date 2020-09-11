@@ -29,6 +29,11 @@ export default class Datasource {
 
         this.searchFunc = definition.searchFunc;
     }
+
+    getName(){
+        return (this.config.customDatasourceName && this.config.customDatasourceName.length > 0) ? this.config.customDatasourceName : this.caption;
+    }
+
     search(keyword){
         return this.shell.run(this.searchFunc(keyword), {}, 'json')
         .then(searchResults =>{
