@@ -23,7 +23,6 @@ export default class DatasourceManager{
         this.historyStore = historyStore;
         this._defaultDataSource = defaultDataSource;
 
-
         if (!config.isValid) return;
         const datasourcesPaths = getDirectories(datasourcesPath);
         
@@ -48,13 +47,30 @@ export default class DatasourceManager{
     }
 
     getDefaultDatasource(){
+        const defaultDatasource = this.getDatasource(this._defaultDataSource);
+        if (!defaultDatasource) return this.getDatasourcesAvailable()[0];
         return this.getDatasource(this._defaultDataSource)
     }
 
-    getDatasource(name){
+    getDatasourceId(name){
         return this._datasources[name];
+    }
+    getDatasource(caption){
+        for (const props in this._datasources){
+            const datasource = this._datasources[props];
+            if (datasource.getName() === caption) return datasource;
+        }
+        return false;
     }
     getDatasources(){
         return this._datasources;
+    }
+
+    getDatasourcesAvailable(){
+        const datasources = [];
+        for (const props in this._datasources){
+            datasources.push(this._datasources[props]);
+        }
+        return datasources.filter(datasource => datasource.config.disabled !== true);
     }
 }
