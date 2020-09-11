@@ -6,7 +6,7 @@ import './Configuration.scss'
 // import {remote} from "electron"
 // const Api = remote.require("./core/api");
 import Form from "react-jsonschema-form";
-import schema from "../../modules/config-schema"
+import configurationSchema from "../../modules/config-schema"
 import api from "../../core/api"
 const { config } = api
 import { saveConfig } from "../../core/helpers/helpers"
@@ -35,7 +35,7 @@ export default class Configuration extends React.Component {
   render() {
 
     const log = (type) => console.log.bind(console, type);
-
+    const schema = configurationSchema.getConfigurationSchema();
     return (
         <div className="container-fluid">
           <div className="row">
