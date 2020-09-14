@@ -1,0 +1,43 @@
+image: Visual Studio 2017
+
+platform:
+  - x86
+
+cache:
+  - node_modules
+  - '%USERPROFILE%\.electron'
+
+init:
+  - git config --global core.autocrlf input
+
+install:
+  - ps: Install-Product node 12.13.0
+  - yarn
+
+build_script:
+  # useful for debugging
+  # - set
+  - yarn electron-rebuild -f -w raw.node 
+  - yarn make
+
+
+
+test: off
+
+deploy:
+  release: hurry-v$(APPVEYOR_BUILD_VERSION)
+  description: 'Release description'
+  provider: GitHub
+  auth_token:
+    secure: ewc4vyGxmUjt4bGrvy0rLHwjcxmY5VUvo0qynCUKrdh8JdTbs5Vi2UyGmtRKelV2
+  artifact: /.*\.*/            # upload all NuGet packages to release assets
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    APPVEYOR_REPO_TAG: true        # deploy on tag push only
+
+
+
+artifacts:
+  - path: 'out\make\**\*.*'
