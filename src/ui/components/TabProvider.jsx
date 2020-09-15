@@ -2,6 +2,7 @@ import React from 'react';
 import './Menu.scss';
 import { observer } from 'mobx-react'
 import store from '../../store/RootStore'
+import './TabProvider.scss';
 
 
 @observer
@@ -23,7 +24,7 @@ class TabProvider extends React.Component {
     }
     return (
       <>
-        <div className="row">
+        <div className="row tabprovider-header">
           <ul className="col-sm-12 nav nav-tabs">
             {elts}
           </ul>
@@ -49,7 +50,7 @@ class TabElement extends React.Component {
     const {selected, element} = this.props;
     return (
       <li className="nav-item">
-        <a className={"nav-link" + (selected ? " active" : "")} href="#"
+        <a className={"nav-link tabprovider-tabelement" + (selected ? " active" : "")} href="#"
            onClick={this.handleClick}>{element.caption}</a>
       </li>
     )
