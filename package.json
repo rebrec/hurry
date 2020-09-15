@@ -122,6 +122,7 @@
     "style-loader": "^0.23.1",
     "ts-jest": "^24.1.0",
     "ts-loader": "^6.2.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "webpack-cli": "^3.3.12"
   }
 }

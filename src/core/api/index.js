@@ -10,7 +10,13 @@ class Api {
         this.config = config;
         this.store = store;
         this.dialog = dialog;
+        
     }
+
+    _init(){
+        this.store._init();
+    }
+
 
     reloadBrowserWindow(){
         remote.getCurrentWindow().reload();
