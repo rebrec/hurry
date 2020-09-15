@@ -94,3 +94,5 @@ typings/
 out/
 
 .idea/
+yarn.lock
+plugins/*.bundle.js
