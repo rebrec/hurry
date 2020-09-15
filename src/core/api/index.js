@@ -6,7 +6,6 @@ const { dialog } = remote
 
 class Api {
     constructor() {
-        this.browserWindow = null;
         this.config = config;
         this.store = store;
         this.dialog = dialog;
@@ -22,7 +21,9 @@ class Api {
         remote.getCurrentWindow().reload();
         // this.browserWindow.reload();
     }
-
+    openDevTools(){
+        remote.getCurrentWindow().webContents.openDevTools();
+    }
 }
 
 
