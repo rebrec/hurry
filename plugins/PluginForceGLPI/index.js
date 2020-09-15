@@ -12,8 +12,7 @@ export default class PluginForceGLPI extends Plugin{
     onReady(){
         console.log("PluginForceGLPI ready");
         const api = this._api
-
-        const ds = api.store.datasourceManager.getDatasource('glpi');
+        const ds = api.store.datasourceManager.getDatasource('Glpi');
         api.store.uiState.setDatasource(ds);
     }
 } 
