@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import { observer } from 'mobx-react'
+import api from '../core/api'
 import store from '../store/RootStore'
-import config from '../config'
 import { getFiles } from '../core/helpers/helpers'
 import { basename } from 'path'
 import $ from "jquery";
@@ -18,7 +18,6 @@ import Main from './views/Main'
 import Configuration from './views/Configuration'
 import MenuEditorView from './views/MenuEditorView'
 
-
 @observer
 export default class App extends React.Component {
   constructor(props) {
@@ -28,8 +27,8 @@ export default class App extends React.Component {
     store.uiState.addView('Main', Main);
     store.uiState.addView('Configuration', Configuration);
     store.uiState.addView('MenuEditorView', MenuEditorView);
-    if (config.isValid) {
-      store.uiState.setCurrentView(config.debug.defaultView);
+    if (api.config.isValid) {
+      store.uiState.setCurrentView(api.config.debug.defaultView);
     } else {
       store.uiState.setCurrentView('Configuration');
     }
