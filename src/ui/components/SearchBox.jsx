@@ -66,11 +66,10 @@ class DatasourceButton extends React.Component{
   }
 
   renderDropDown(id){
-    const datasources = store.datasourceManager.getDatasources();
+    const datasources = store.datasourceManager.getDatasourcesAvailable();
     const items = [];
     for (const [i, datasource] of Object.entries(datasources)) {
-      if (datasource.config.disabled) continue; 
-      const caption = (datasource.config.customDatasourceName && datasource.config.customDatasourceName.length > 0) ? datasource.config.customDatasourceName : datasource.caption;
+      const caption = datasource.getName();
       items.push(<a className="dropdown-item" key={i} onClick={this.onDropDownClick.bind(this, datasource)} href="#">{caption}</a>);
     }
     return (
@@ -85,7 +84,7 @@ class DatasourceButton extends React.Component{
     const { datasource } = store.uiState.app;
     return (
       <div className="btn-group ml-3 col-3">
-        <button type="button" className="btn btn-primary" onClick={this.onButtonClick}>{ datasource.caption }</button>
+        <button type="button" className="btn btn-primary" onClick={this.onButtonClick}>{ datasource.getName() }</button>
         <button type="button" className="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span className="sr-only">Toggle Dropdown</span>
         </button>
