@@ -1,6 +1,7 @@
 # Hurry
 
-[![Build status](https://ci.appveyor.com/api/projects/status/s9ay0h06pwtw81rk?svg=true)](https://ci.appveyor.com/project/rebrec/hurry)
+[![Build status](https://ci.appveyor.com/api/projects/status/feo740yf95h17v2t?svg=true)](https://ci.appveyor.com/project/rebrec/hurry-6asla)
+
 
 The (cross platform) SysAdmin's tool to get repetitive things done Fast.
 
