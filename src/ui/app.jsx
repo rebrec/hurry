@@ -17,14 +17,14 @@ import Viewer from './Viewer'
 import Main from './views/Main'
 import Configuration from './views/Configuration'
 import MenuEditorView from './views/MenuEditorView'
-import Api from '../core/api'
+
 
 @observer
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { };
-    window.api = Api;
+    
     store.uiState.addView('Main', Main);
     store.uiState.addView('Configuration', Configuration);
     store.uiState.addView('MenuEditorView', MenuEditorView);
