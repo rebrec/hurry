@@ -4,6 +4,7 @@ import { observable, action } from 'mobx'
 import UiState from './UiState'
 import Settings from './Settings'
 import ShellManager from '../core/ShellManager';
+import PluginManager from '../core/PluginManager';
 import DatasourceManager from '../core/DatasourceManager';
 import HistoryStore from './HistoryStore'
 import config from '../config'
@@ -22,14 +23,20 @@ class RootStore {
         this.historyStore = new HistoryStore({filePath: config.historyFilePath});
         this.shellManager = new ShellManager(config, this.historyStore);
         this.datasourceManager = new DatasourceManager(this.shellManager, config, this.historyStore);
-        
+        this.pluginManager = new PluginManager(config);
 
         this.settings = new Settings(this);
         this.uiState = new UiState(this, config);
         
         
         this.platform = platform();
+        
+    }
+
+    _init(){
         this.shellManager.start();
+        this.pluginManager._init();
+        
     }
 
     @action.bound loadMenu(){
