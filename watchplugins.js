@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const webpackconfig = require('./webpack.hurryplugins.config');
 const path = require('path');
 const fs = require('fs');
 
@@ -44,6 +45,12 @@ for (let i=0;i<pluginNames.length;i++){
 const config = {
   mode: 'development',
   entry: entrypoints,
+  module: {
+    rules: webpackconfig
+  },
+  resolve: {
+    extensions: ['.js', '.ts', '.jsx', '.tsx']
+  },
   output: {
     path: pluginPath,
     filename: "[name].bundle.js",
