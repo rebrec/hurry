@@ -73,11 +73,6 @@ export default class Main extends React.Component {
 
           <div className="container-fluid main-hostlist-area">
             <div className="row">
-              <div className="col-sm-2">
-                <button onClick={_=> {store.uiState.setCurrentView('Configuration')}}>Configuration</button>
-              </div>
-            </div>
-            <div className="row">
               <div className="col-sm-12">
                 <SearchBox />
               </div>
