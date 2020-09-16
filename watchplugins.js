@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 
@@ -10,6 +11,7 @@ const pluginNames = [];
 const entryName = "index.js";
 const outputName = "index.bundle.js";
 
+const entrypoints = {};
 function getDirectories(source) {
     return fs.readdirSync(source, { withFileTypes: true })
         .filter(dirent => dirent.isDirectory())
@@ -34,17 +36,24 @@ for (let i=0;i<directories.length;i++){
 
 for (let i=0;i<pluginNames.length;i++){
     const pluginName = pluginNames[i];
-    const entry = pluginName + "=" + path.join(pluginPath, pluginName, entryName)
-    params.push(entry);
+    entrypoints[pluginName] = path.join(pluginPath, pluginName, entryName);
 }
 
-params.push("-o");
-params.push(pluginDir + path.sep + "[name].bundle.js" );
-params.push('-w');
-params.push('--output-library aaa');
-params.push('--output-library-target');
-params.push('"commonjs-module"');
-console.log(params);
-console.log('Your plugins will be rebuild live by webpack. Just refresh Hurry to use latest version')
-
-require("child_process").spawn(command, params, { cwd: process.cwd(), detached: true, stdio: "inherit" });
+// Defining the webpack config inline, but you can replace this
+// with `require('./webpack.config.js')`
+const config = {
+  mode: 'development',
+  entry: entrypoints,
+  output: {
+    path: pluginPath,
+    filename: "[name].bundle.js",
+    library: 'plugins',
+    libraryTarget: 'commonjs-module'
+  }
+};
+const compiler = webpack(config);
+const watcher = compiler.watch({}, function(err,info) {
+    if (err) console.error(err);
+    console.log('[' + new Date().toISOString() + '] Rebuilding plugins...');
+  // Gets called every time Webpack finishes recompiling.
+});
