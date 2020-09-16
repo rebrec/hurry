@@ -7,6 +7,7 @@
   "scripts": {
     "startroot": "electron-forge start -- --no-sandbox",
     "start": "electron-forge start",
+    "buildplugins": "node watchplugins.js",
     "test": "mocha --require @babel/register --recursive",
     "package": "env NODE_ENV=production electron-forge package",
     "make": "env NODE_ENV=production electron-forge make",
