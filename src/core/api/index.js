@@ -11,6 +11,7 @@ class Api {
         this.store = store;
         this.remote = remote;
         this.menu = new MenuManager(this);
+        this.version = require('../../../package.json').version;
     }
 
     _init(){
