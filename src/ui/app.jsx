@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import store from '../store/RootStore'
 import api from '../core/api'
+import store from '../store/RootStore'
 import { getFiles } from '../core/helpers/helpers'
 import { basename } from 'path'
 import $ from "jquery";
@@ -17,16 +17,13 @@ import Viewer from './Viewer'
 import Main from './views/Main'
 import Configuration from './views/Configuration'
 import MenuEditorView from './views/MenuEditorView'
-import Api from '../core/api'
-import config from '../config'
 
 @observer
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { };
-    if (config.debug.enableDevTools) api.openDevTools();
-    window.api = Api;
+    
     store.uiState.addView('Main', Main);
     store.uiState.addView('Configuration', Configuration);
     store.uiState.addView('MenuEditorView', MenuEditorView);
