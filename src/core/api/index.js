@@ -11,8 +11,12 @@ class Api {
         this.store = store;
         this.remote = remote;
         this.menu = new MenuManager(this);
-        
     }
+
+    _init(){
+        this.store._init();
+    }
+
 
     reloadBrowserWindow(){
         remote.getCurrentWindow().reload();
