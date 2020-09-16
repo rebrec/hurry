@@ -10,6 +10,10 @@
     background: #072991;
 }
 
+.process-console-stdin::before {
+    content: "> ";
+    
+}
 
 .process-console-stdin {
     //background-color: $console-background;
