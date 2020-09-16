@@ -1,5 +1,6 @@
 import config from '../../config'
 import store from '../../store/RootStore'
+import MenuManager from '../../core/MenuManager'
 import {remote} from "electron"
 const { dialog } = remote
 
@@ -8,7 +9,9 @@ class Api {
     constructor() {
         this.config = config;
         this.store = store;
-        this.dialog = dialog;
+        this.remote = remote;
+        this.menu = new MenuManager(this);
+        
     }
 
     reloadBrowserWindow(){
