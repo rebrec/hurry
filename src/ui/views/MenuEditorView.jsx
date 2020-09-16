@@ -44,7 +44,7 @@ export default class MenuEditorView extends React.Component {
 
   saveMenuAs(e, filePath){
     if (!filePath) {
-      filePath = api.dialog.showSaveDialogSync({
+      filePath = api.remote.dialog.showSaveDialogSync({
         title: "Save this Menu as",
         filters:["*.js","*.json"]
       });
