@@ -27,13 +27,16 @@ export default class DatasourceManager{
         const datasourcesPaths = getDirectories(datasourcesPath);
         
         for (const path of datasourcesPaths){
-            this.addDatasource(path);
+            this.addDatasourcePath(path);
         }
     }
-
-    addDatasource(path){
+    addDatasourcePath(path){
         console.log('DatasourceManager.addDatasource : Processing file :', path);
         const datasourceDefinition = __non_webpack_require__(path);
+        return this.addDatasourceDefinition(datasourceDefinition, path);
+    }
+
+    addDatasourceDefinition(datasourceDefinition, modulePath){
         if (datasourceDefinition.hasOwnProperty('platform') && datasourceDefinition.platform.indexOf(platform())<0){
             console.log('DatasourceManager.addDatasource : Skipping incompatible Datasource', datasourceDefinition.name);
             return;
@@ -42,7 +45,7 @@ export default class DatasourceManager{
         if (!shell) { return console.log(`'DatasourceManager.addDatasource : Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
         
         const config = this.config.hasOwnProperty(datasourceDefinition.name) ? this.config[datasourceDefinition.name] : {};
-        const datasource = new Datasource(datasourceDefinition, config, shell, path);
+        const datasource = new Datasource(datasourceDefinition, config, shell, modulePath);
         this._datasources[datasource.name] = datasource;
     }
 
