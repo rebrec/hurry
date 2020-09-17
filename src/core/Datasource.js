@@ -24,7 +24,8 @@ export default class Datasource {
         this.templateContext = {modulePath: this.modulePath};
         Object.assign(this.templateContext, this.config);
         this.initCommands = [];
-        if (!this.config.disabled) this.initCommands = parseTemplateArray(definition.initCommands, this.templateContext);
+        if (this.config.disabled) return
+        this.initCommands = parseTemplateArray(definition.initCommands, this.templateContext);
         this.shell.registerInitCommands(this.initCommands);
 
         this.searchFunc = definition.searchFunc;
