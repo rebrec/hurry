@@ -1,4 +1,15 @@
+const path = require('path');
 const rules = []
+
+rules.push({
+  test: /^(?!.*\.(js|jsx?|ts|tsx?|css|s[ca]ss)$)/,
+  loader: 'file-loader',
+  options: {
+    context: path.resolve(__dirname, 'plugins'),
+    
+    name: '[path][name].[ext]'
+  },
+}); 
 
 rules.push(
   {
@@ -40,5 +51,7 @@ rules.push({
       }
     }],
 });
+
+
 
 module.exports = rules;
