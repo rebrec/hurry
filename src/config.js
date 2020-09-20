@@ -42,7 +42,7 @@ Object.assign(config, {
     shellsPath: Path.join(modulesRoot, "shells"),
     shellFeaturesPath: Path.join(modulesRoot, "shellfeatures"),
     datasourcesPath: Path.join(modulesRoot, "datasources"),
-    pluginsPath: Path.join(modulesRoot, "..", "..", "plugins"),
+    pluginsPath: Path.join(config.projectRoot, "..", "plugins", "dist"),
     viewsPath:  Path.join(config.projectRoot, "ui", "views"),
     historyFilePath:  historyFilePath
 });
