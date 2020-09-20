@@ -7,12 +7,15 @@ const dnsPromise = dns.promises;
 import net from 'net';
 
 
-
-const pingSession = ping.createSession ({
-    retries: 1,
-    timeout: 1000,
-    ttl: 200
-});
+try {
+  const pingSession = ping.createSession ({
+      retries: 1,
+      timeout: 1000,
+      ttl: 200
+  });
+} catch (e){
+  console.error("Need to be run as root to be able to ping hosts. Connectivity test won't be available during this runtime")
+}
 
 
 export const pingHost = (target, options) => {
@@ -65,16 +68,26 @@ export const saveConfig = data => {
 
 
 
-    export const getDirectories = source =>
-    readdirSync(source, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => Path.join(source, dirent.name))
+export const getDirectories = (source) => {
+  let dirs;
+  try {
+    dirs = readdirSync(source, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => Path.join(source, dirent.name))
+  } catch (e){}
+  return dirs || [];
+}
   
   
-export const getFiles = source =>
-  readdirSync(source, { withFileTypes: true })
-    .filter(ent => ent.isFile())
-    .map(ent => Path.join(source, ent.name))
+export const getFiles = (source) => {
+  let files;
+  try {
+    files = readdirSync(source, { withFileTypes: true })
+      .filter(ent => ent.isFile())
+      .map(ent => Path.join(source, ent.name))
+  } catch (e){}
+  return files || [];
+}
   
 
 export const parseTemplate = (text, context) => {
