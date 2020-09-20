@@ -1,6 +1,6 @@
 
 Write-Host "Working"
-function Search-Dodo1 {
+function Search-Test {
     param(
         $filter
     )
