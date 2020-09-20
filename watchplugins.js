@@ -1,16 +1,14 @@
 const webpack = require('webpack');
-const webpackconfig = require('./webpack.hurryplugins.config');
+const rules = require('./webpack.hurryplugins.config');
 const path = require('path');
 const fs = require('fs');
 
-const command = 'yarn';
-const params = [ 'webpack', '--mode', 'development' ];
-const pluginDir = "plugins";
-const pluginPath = path.join(process.cwd(), pluginDir);
+
+const pluginOutputPath = path.join(process.cwd(), "plugins", "dist");
+const pluginInputPath = path.join(process.cwd(), "plugins");
 const pluginNames = [];
 
 const entryName = "index.js";
-const outputName = "index.bundle.js";
 
 const entrypoints = {};
 function getDirectories(source) {
@@ -20,13 +18,14 @@ function getDirectories(source) {
 }
 
 
-console.log('Searching for plugins within folder:', pluginPath);
+console.log('Searching for plugins within folder:', pluginInputPath);
 
-const directories = getDirectories(pluginPath);
+const directories = getDirectories(pluginInputPath);
 
 for (let i=0;i<directories.length;i++){
     const directory = directories[i];
     const pluginName = directory.split(path.sep).pop();
+    if (pluginName === 'dist') continue;
     if (!fs.existsSync(path.join(directory, entryName))) {
         console.warn("Skipping plugin : " + pluginName + " (missing " + entryName +").");
         continue;
@@ -37,16 +36,17 @@ for (let i=0;i<directories.length;i++){
 
 for (let i=0;i<pluginNames.length;i++){
     const pluginName = pluginNames[i];
-    entrypoints[pluginName] = path.join(pluginPath, pluginName, entryName);
+    entrypoints[pluginName] = path.join(pluginInputPath, pluginName, entryName);
 }
 
 // Defining the webpack config inline, but you can replace this
 // with `require('./webpack.config.js')`
 const config = {
   mode: 'development',
+  devtool: 'source-map',
   entry: entrypoints,
   module: {
-    rules: webpackconfig
+    rules: rules
   },
   node: {
     __dirname: false
@@ -55,9 +55,9 @@ const config = {
     extensions: ['.js', '.ts', '.jsx', '.tsx']
   },
   output: {
-    path: pluginPath + path.sep + '[name]',
+    path: pluginOutputPath,
     filename: "[name].bundle.js",
-    library: 'plugins',
+    library: 'plugin',
     libraryTarget: 'commonjs-module'
   }
 };
