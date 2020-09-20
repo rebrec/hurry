@@ -6,7 +6,7 @@ rules.push({
   loader: 'file-loader',
   options: {
     context: path.resolve(__dirname, 'plugins'),
-    
+    publicPath: (url, resourcePath, context) => { return `plugin://${url}`; },
     name: '[path][name].[ext]'
   },
 }); 
