@@ -95,5 +95,4 @@ out/
 
 .idea/
 yarn.lock
-plugins/*.bundle.js
-pluguins/dist/
+plugins/dist/
