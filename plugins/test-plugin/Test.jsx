@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react'
-import './About.scss'
+import './Test.scss'
+import img from './img/smile.png'
 
 export default function (api){ 
     return class About extends React.Component {
@@ -16,7 +17,7 @@ export default function (api){
                 <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-12">
-                        Version : { api.version }
+                        <img src={ img } />
                     </div>
                 </div>
                 </div>);

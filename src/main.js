@@ -1,7 +1,7 @@
-const { app, BrowserWindow, Menu, globalShortcut } = require("electron");
-
+const { app, BrowserWindow, Menu, globalShortcut, protocol } = require("electron");
+import path from 'path'
+import config from './config.main'
 import "./main-process/ipcMain";
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   // eslint-disable-line global-require
@@ -52,6 +52,13 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.on("ready", createWindow);
 app.on('ready', registerShortcut);
+
+app.on('ready', () => {
+  protocol.registerFileProtocol('plugin', (request, callback) => {
+    const url = request.url.substr(9)
+    callback({ path: path.normalize(`${config.pluginsPath}/${url}`) })
+  })
+})
 
 function registerShortcut() {
   // Enregistrer un écouteur de raccourci 'CommandOrControl+X'.

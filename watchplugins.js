@@ -48,11 +48,14 @@ const config = {
   module: {
     rules: webpackconfig
   },
+  node: {
+    __dirname: false
+  },
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx']
   },
   output: {
-    path: pluginPath,
+    path: pluginPath + path.sep + '[name]',
     filename: "[name].bundle.js",
     library: 'plugins',
     libraryTarget: 'commonjs-module'
