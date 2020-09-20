@@ -1,6 +1,7 @@
 import { getFiles } from './helpers/helpers'
 import { observable, action } from 'mobx';
 import api from './api';
+import Path from 'path';
 
 const { platform } = require('os');
 
@@ -26,14 +27,21 @@ export default class PluginManager{
         this._loadPlugins()
     }
 
-    _initPlugin(path){
-        console.log('PluginManager.loadPlugin : Processing file :', path);
+    _initPlugin(pluginPath){
+        console.log('PluginManager.loadPlugin : Processing file :', pluginPath);
+        const pluginName = Path.basename(pluginPath, '.bundle.js');
+        
+        const pluginContext = {
+            pluginPath: pluginPath,
+            pluginName: pluginName,
+            pluginDir: Path.join(Path.dirname(pluginPath), pluginName)
+        }
         try {
-            const Plugin = __non_webpack_require__(path).default;
-            const plugin = new Plugin(api);
+            const Plugin = __non_webpack_require__(pluginPath).default;
+            const plugin = new Plugin(api, pluginContext);
             this.addPlugin(plugin);
         } catch (e) {
-            console.warn('Failed to load plugin', path, e);            
+            console.warn('Failed to load plugin', pluginPath, e);            
         }
     }
 
