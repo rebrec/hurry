@@ -38,6 +38,7 @@ export default new class ConfigurationSchema{
         this.updateDatasourceConfigurationSchema();
         const dasourcesAvailable = api.store.datasourceManager.getDatasourcesAvailable();
         const datasourceNames = dasourcesAvailable.map(datasource => datasource.getName());
+        if (datasourceNames.length === 0) datasourceNames.push("dummy");
         
         return {
             title: "Settings",
