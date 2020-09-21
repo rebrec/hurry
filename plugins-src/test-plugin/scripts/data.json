@@ -2,41 +2,41 @@
   {
     "hostname": "8.8.8.8",
     "username": "google",
-    "something":"else"
+    "ipaddress": "8.8.8.8"
   },
   {
     "hostname": "host1",
     "username": "user1",
-    "something":"else"
+    "ipaddress": "8.8.8.8"
   },
   {
     "hostname": "host2",
     "username": "user2",
-    "something": "else"
+    "ipaddress": "8.8.8.8"
   },
   {
     "hostname": "host3",
     "username": "user3",
-    "something": "else3"
+    "ipaddress": "8.8.8.8"
   },
   {
     "hostname": "ovh",
     "username": "user5",
-    "something": "else4"
+    "ipaddress": "8.8.8.8"
   },
   {
     "hostname": "ovh1",
     "username": "user6",
-    "something": "else4"
+    "ipaddress": "8.8.8.8"
   },
   {
     "hostname": "ovh1",
     "username": "user7",
-    "something": "else4"
+    "ipaddress": "8.8.8.8"
   },
   {
     "hostname": "srv-sup01",
     "username": "user8",
-    "something": "else6"
+    "ipaddress": "8.8.8.8"
   }
 ]
