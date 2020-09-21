@@ -22,6 +22,9 @@ class UiState {
             current: null,
             available: null,
         },
+        modal: {
+            view: null
+        },
         datasource: { caption: "N / A" },
         status: APP_STATUS.WAITING_FOR_SEARCH,
         menu: {
@@ -55,6 +58,14 @@ class UiState {
         },2000);
     }
 
+    getModalView(){
+        const viewName = this.app.modal.view;
+        if (viewName) {
+            return this.app.views.available.get(viewName);
+        } 
+        return null;
+    }
+
     @action.bound initViews(){
         this.app.views.available = new Map();
         this.clearSearch();
@@ -71,6 +82,8 @@ class UiState {
     @action.bound toggleMenu(){ this.app.menu.visible = !this.app.menu.visible; }
     @action.bound showMenu(){ this.app.menu.visible = true; }
     @action.bound hideMenu(){ this.app.menu.visible = false; }
+    @action.bound showModal(view){ this.app.modal.view = view; }
+    @action.bound hideModal(){ this.app.modal.view = null; }
 
     @action.bound setSearchedText(text){ this.search.text = text; }
     @action.bound setSearchResults(results=[]){ this.search.results = results; }
