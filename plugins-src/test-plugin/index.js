@@ -1,6 +1,5 @@
 import Plugin from '../../src/core/Plugin'
 import Test from './Test.jsx'
-import psinit from './scripts/init1.ps1'
 import datasourceDefinition from './datasource.definition'
 
 
