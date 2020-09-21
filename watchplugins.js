@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const rules = require('./webpack.hurryplugins.config');
 const path = require('path');
 const fs = require('fs');
-
+const CopyPlugin = require('copy-webpack-plugin');
 
 const pluginOutputPath = path.join(process.cwd(), "plugins", "dist");
 const pluginInputPath = path.join(process.cwd(), "plugins");
@@ -48,6 +48,19 @@ const config = {
   module: {
     rules: rules
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { 
+          from: 'plugins/**/*', 
+          to: '',
+          globOptions: {
+            ignore: ['**/dist/**/*'],
+          },
+        },
+      ],
+    }),
+  ],
   node: {
     __dirname: false
   },
