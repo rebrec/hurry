@@ -112,10 +112,11 @@
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "@types/jest": "^24.0.23",
     "babel-loader": "^8.0.6",
-    "copy-webpack-plugin": "^5.0.5",
+    "copy-webpack-plugin": "^6.1.1",
     "css-loader": "^3.0.0",
     "electron": "7.1.1",
     "electron-rebuild": "^1.10.1",
+    "file-loader": "^6.1.0",
     "fork-ts-checker-webpack-plugin": "^3.1.0",
     "jest": "^24.9.0",
     "node-loader": "^0.6.0",
@@ -123,6 +124,7 @@
     "style-loader": "^0.23.1",
     "ts-jest": "^24.1.0",
     "ts-loader": "^6.2.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "webpack-cli": "^3.3.12"
   }
 }
