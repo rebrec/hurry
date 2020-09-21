@@ -4,12 +4,12 @@ module.exports = {
     shell: "powershell", 
     initCommands: [
         `$global:DODO_BASE_URL="http://#{dodoApiHost}" + ":" + "#{dodoApiPort}/api/script"`,
-        `. #{modulePath}scripts/init1.ps1`
+        `. $(Join-Path -Path '#{modulePath}' -ChildPath 'scripts/init1.ps1')`
     ],
     columns: [  
-        { columnName: 'Hostname', property: 'computername', variableName: 'hostname' },
-        { columnName: 'Username', property: 'username', variableName: 'username' },
-        { columnName: 'Ip', property: 'ipaddresses', variableName: 'ipaddresses' },
+        { columnName: 'Column1', property: 'hostname', variableName: 'hostname' },
+        { columnName: 'Column2', property: 'username', variableName: 'username' },
+        { columnName: 'Column3', property: 'something'},
     ],
     pingableProperty: 'ipaddresses',
     mainColumnProperty: 'computername',
