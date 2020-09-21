@@ -6,13 +6,13 @@ module.exports = {
         `. #{modulePath}scripts/init.ps1`
     ],
     columns: [  
-        { columnName: 'Hostname', property: 'computername', variableName: 'hostname' },
+        { columnName: 'Hostname', property: 'hostname', variableName: 'hostname' },
         { columnName: 'Username', property: 'username', variableName: 'username' },
-        { columnName: 'Ip', property: 'ipaddresses', variableName: 'ipaddresses' },
+        { columnName: 'Some Info', property: 'something', variableName: 'ipaddresses' },
     ],
     pingableProperty: 'ipaddresses',
     mainColumnProperty: 'computername',
     searchFunc: keyword => {
-        return '$dummy.search("' + keyword + '") | ConvertTo-Json -Compress';
+        return '$test.search("' + keyword + '") | ConvertTo-Json -Compress';
     },
 };
