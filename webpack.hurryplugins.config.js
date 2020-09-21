@@ -5,7 +5,7 @@ rules.push({
   test: /^(?!.*\.(js|jsx?|ts|tsx?|css|s[ca]ss)$)/,
   loader: 'file-loader',
   options: {
-    context: path.resolve(__dirname, 'plugins'),
+    context: path.resolve(__dirname, 'plugins-src'),
     publicPath: (url, resourcePath, context) => { return `plugin://${url}`; },
     name: '[path][name].[ext]'
   },
