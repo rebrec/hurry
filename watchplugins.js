@@ -2,10 +2,10 @@ const webpack = require('webpack');
 const rules = require('./webpack.hurryplugins.config');
 const path = require('path');
 const fs = require('fs');
+const CopyWebPackPlugin = require('copy-webpack-plugin');
 
-
-const pluginOutputPath = path.join(process.cwd(), "plugins", "dist");
-const pluginInputPath = path.join(process.cwd(), "plugins");
+const pluginOutputPath = path.join(process.cwd(), "plugins-dist");
+const pluginInputPath = path.join(process.cwd(), "plugins-src");
 const pluginNames = [];
 
 const entryName = "index.js";
@@ -48,6 +48,17 @@ const config = {
   module: {
     rules: rules
   },
+  plugins: [
+    new CopyWebPackPlugin({
+      patterns: [
+        {
+          from: '**/*',
+          to: "",
+          context: "plugins-src/",
+        },
+      ],
+    }),
+  ],
   node: {
     __dirname: false
   },
