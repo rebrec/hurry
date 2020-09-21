@@ -3,8 +3,7 @@ module.exports = {
     caption: "test",
     shell: "powershell", 
     initCommands: [
-        `$global:DODO_BASE_URL="http://#{dodoApiHost}" + ":" + "#{dodoApiPort}/api/script"`,
-        `. #{modulePath}scripts/init1.ps1`
+        `. #{modulePath}scripts/init.ps1`
     ],
     columns: [  
         { columnName: 'Hostname', property: 'computername', variableName: 'hostname' },
@@ -14,6 +13,6 @@ module.exports = {
     pingableProperty: 'ipaddresses',
     mainColumnProperty: 'computername',
     searchFunc: keyword => {
-        return 'Search-Test ' + keyword + ' | ConvertTo-Json -Compress';
+        return '$dummy.search("' + keyword + '") | ConvertTo-Json -Compress';
     },
 };
