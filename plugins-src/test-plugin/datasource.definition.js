@@ -8,7 +8,7 @@ module.exports = {
     columns: [  
         { columnName: 'Hostname', property: 'hostname', variableName: 'hostname' },
         { columnName: 'Username', property: 'username', variableName: 'username' },
-        { columnName: 'Some Info', property: 'something', variableName: 'ipaddresses' },
+        { columnName: 'Some Info', property: 'ipaddress', variableName: 'ipaddress' },
     ],
     pingableProperty: 'ipaddresses',
     mainColumnProperty: 'computername',
