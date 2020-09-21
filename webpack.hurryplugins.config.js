@@ -1,15 +1,15 @@
 const path = require('path');
 const rules = []
 
-rules.push({
-  test: /^(?!.*\.(js|jsx?|ts|tsx?|css|s[ca]ss)$)/,
-  loader: 'file-loader',
-  options: {
-    context: path.resolve(__dirname, 'plugins'),
-    publicPath: (url, resourcePath, context) => { return `plugin://${url}`; },
-    name: '[path][name].[ext]'
-  },
-}); 
+// rules.push({
+//   test: /^(?!.*\.(js|jsx?|ts|tsx?|css|s[ca]ss)$)/,
+//   loader: 'file-loader',
+//   options: {
+//     context: path.resolve(__dirname, 'plugins'),
+//     publicPath: (url, resourcePath, context) => { return `plugin://${url}`; },
+//     name: '[path][name].[ext]'
+//   },
+// }); 
 
 rules.push(
   {
