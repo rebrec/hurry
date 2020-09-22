@@ -7,7 +7,7 @@ export default class TestPlugin extends Plugin{
     constructor(api, context ){
         super(api); 
         api.store.uiState.addView('Test', Test(api)); 
-        api.menu.insertMenuItem('Help',{label: "&Test", click: () => api.store.uiState.showModal('Test')})
+        api.menu.insertMenuItem('Help',{label: "&Test Plugin", click: () => api.store.uiState.showModal('Test')})
         api.store.datasourceManager.addDatasourceDefinition(datasourceDefinition, context.pluginDir);
     }
 } 
