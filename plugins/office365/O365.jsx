@@ -1,9 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react'
-import './Test.scss'
-import img from './img/smile.png'
+import './About.scss'
 
-export default function (api){ 
+// import {remote} from "electron"
+// const Api = remote.require("./core/api");
+
+export default function (api){
     return class About extends React.Component {
         constructor(props) {
             super(props);
@@ -17,7 +19,7 @@ export default function (api){
                 <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-12">
-                        <img src={ img } />
+                        Version : { api.version }
                     </div>
                 </div>
                 </div>);

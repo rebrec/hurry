@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import api from '../core/api'
-import store from '../store/RootStore'
+const { store } = api
 import { getFiles } from '../core/helpers/helpers'
 import { basename } from 'path'
 import $ from "jquery";
@@ -17,6 +17,8 @@ import Viewer from './Viewer'
 import Main from './views/Main'
 import Configuration from './views/Configuration'
 import MenuEditorView from './views/MenuEditorView'
+import ModalDialog from './components/ModalDialog'
+
 
 @observer
 export default class App extends React.Component {
@@ -37,9 +39,15 @@ export default class App extends React.Component {
 
   render() {
     const {uiState} = store;
-    console.log('store',uiState);
-
-    return (<Viewer/>);
+    const ModalView = uiState.getModalView();
+    return (<>
+      {ModalView && (
+        <ModalDialog onClose={uiState.hideModal}>
+          <ModalView />
+        </ModalDialog> 
+      )}
+      <Viewer/>
+    </>);
   }
 }
 
