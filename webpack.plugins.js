@@ -6,8 +6,10 @@ module.exports = [
   new ForkTsCheckerWebpackPlugin({
     async: false
   }),
-  new CopyPlugin([
-    { from: path.join('src', 'modules'), to: 'modules' },
-  ]),
+  new CopyPlugin({
+      patterns: [
+        { from: path.join('src', 'modules'), to: 'modules' },
+      ]
+  }),
 ];
 
