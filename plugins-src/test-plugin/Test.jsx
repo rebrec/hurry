@@ -18,7 +18,7 @@ export default function (api){
                 <div className="row">
                     <div className="col-sm-12">
                         <h1>This is a view provided by the <i>Test plugin</i></h1>
-                        <img class="testplugin-example-image" src={ img } />
+                        <img className="testplugin-example-image" src={ img } />
                     </div>
                 </div>
                 </div>);

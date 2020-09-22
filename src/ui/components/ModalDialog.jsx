@@ -17,9 +17,9 @@ class ModalDialog extends React.Component {
     return (
       <>
         <div className="modal-background" onClick={this.props.onClose}>
-          <div className="menu row">
-            <button onClick={this.props.onClose} className="menu-close-button"><FontAwesomeIcon icon="times" /></button>
-            <div className="col-sm-12" onClick={(e)=>{e.stopPropagation();}}>
+          <div className="modal-box row">
+            <button onClick={this.props.onClose} className="modal-box-close-button"><FontAwesomeIcon icon="times" /></button>
+            <div className="col-sm-12 modal-box-content" onClick={(e)=>{e.stopPropagation();}}>
               {this.props.children}
             </div>
           </div>
