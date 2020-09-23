@@ -13,9 +13,9 @@ After entering a search keyword, you can select on which *datasource* you want t
 
 ![Hurry datasource selection](https://raw.githubusercontent.com/rebrec/hurry/master/docs/hurry_vSphere_datasource_selection.png)
 
-After clicking on the *search* button, you will a list of datasource results will be displayed.
+After clicking on the *search* button, a list of datasource results will be displayed.
 
-If applicable, hurry will try to ping hosts displayed in the result area. So you can quickly know which host is up or not.
+If applicable, hurry will try to ping hosts displayed in the result area. The *datasource result* will be displayed in green or red so you can quickly know which host is up or not.
 
 ![Hurry_Main](https://raw.githubusercontent.com/rebrec/hurry/master/docs/hurry_vSphere_result_ping.png)
 
@@ -71,5 +71,12 @@ Here is an example of the Ping *action* full definition (Hurry has a build-in me
   ]
 }
 ```
+
+To understand how commands are executed by Hurry, a process console is available at the bottom of the app for the most curious users. So you can improve your skills or reuse commands that hurry runs for you.
+
+![hurry_vSphere_console_recording](https://raw.githubusercontent.com/rebrec/hurry/master/docs/hurry_vSphere_console_recording.png)
+
+
+
 
 
