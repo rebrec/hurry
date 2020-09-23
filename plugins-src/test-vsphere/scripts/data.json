@@ -1,0 +1,46 @@
+[
+  {
+    "hostname": "SRV-DC-01",
+    "host": "ESX-EU-01"
+  },
+  {
+    "hostname": "SRV-DC-02",
+    "host": "ESX-EU-01",
+    "ipaddress": "127.0.0.1"
+  },
+  {
+    "hostname": "SRV-DC-03",
+    "host": "ESX-EU-02",
+    "ipaddress": "127.0.0.1"
+  },
+  {
+    "hostname": "SRV-DC-04",
+    "host": "ESX-EU-02",
+    "ipaddress": "127.0.0.1"
+  },
+  {
+    "hostname": "SRV-DC-05",
+    "host": "ESX-PAR-01"
+  },
+  {
+    "hostname": "SRV-DC-06",
+    "host": "ESX-PAR-02",
+    "ipaddress": "127.0.0.1"
+  },
+  {
+    "hostname": "SRV-DC-07",
+    "host": "ESX-PAR-01",
+    "ipaddress": "127.0.0.1"
+  },
+  {
+    "hostname": "SRV-DC-08",
+    "host": "ESX-PAR-02",
+    "ipaddress": "127.0.0.1"
+  },
+  {
+    "hostname": "SRV-DC-09",
+    "host": "ESX-PAR-01",
+    "ipaddress": "127.0.0.1"
+  }
+
+]
