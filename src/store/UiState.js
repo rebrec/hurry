@@ -125,7 +125,7 @@ class UiState {
         
         this.setAppStatus(APP_STATUS.SEARCHING);
         
-        if (text.length >= 3) {
+        if (text.length >= 0) {
             this.search.history.push(text);
         } else {
             return console.log("Not enough chars");
