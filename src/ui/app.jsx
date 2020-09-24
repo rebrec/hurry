@@ -42,7 +42,7 @@ export default class App extends React.Component {
     const ModalView = uiState.getModalView();
     return (<>
       {ModalView && (
-        <ModalDialog onClose={uiState.hideModal}>
+        <ModalDialog onClose={uiState.hideModal} zIndex="50">
           <ModalView />
         </ModalDialog> 
       )}
