@@ -7,6 +7,7 @@ The (cross platform) SysAdmin's tool to get repetitive things done Fast.
 
 ![Hurry_Main](https://raw.githubusercontent.com/rebrec/hurry/master/docs/hurry_vSphere_result_ping.png)
 
+[More screenshots](https://github.com/rebrec/hurry/blob/master/docs/GUI_Overview.md)
 
 
 # Download latest builds
@@ -21,7 +22,7 @@ Follow [this page](https://github.com/rebrec/hurry/docs/How_to_build.md) describ
 
 # Project description
 
-Checkout the [GUI Overview with screenshots](https://github.com/rebrec/hurry/docs/GUI_Overview.md)
+Checkout the [GUI Overview with screenshots](https://github.com/rebrec/hurry/blob/master/docs/GUI_Overview.md)
 
 Hurry's is to allow command line gurus to share their work with users who prefer GUIs.
 
