@@ -3,7 +3,7 @@ module.exports = StatefulProcessCommandProxy;
 var poolModule = require('generic-pool');
 var ProcessProxy = require('./processProxy');
 // var Promise = require('Promise');
-const { observable } = require('mobx');
+const { observable, action } = require('mobx');
 
 /**
 * StatefulProcessCommandProxy is the gateway for executing commands
@@ -157,12 +157,12 @@ function StatefulProcessCommandProxy(config) {
                 // initialize
                 processProxy.initialize(config.initCommands)
 
-                .then(function(cmdResults) {
+                .then(action("createProcess",function(cmdResults) {
                     self._log('info',"new process ready, initialization commands completed. ("+processProxy.getPid()+')');
                     self._pid2processMap[processProxy.getPid()] = processProxy; // register in our process map
                     callback(null, processProxy);
 
-                }).catch(function(exception) {
+                })).catch(function(exception) {
                     self._log('error',"new process initialize threw error: " + exception + ' ' + exception.stack);
                 });
 
@@ -182,7 +182,7 @@ function StatefulProcessCommandProxy(config) {
         },
 
 
-        destroy: function(processProxy) {
+        destroy: action("detroyprocess",function(processProxy) {
 
             try {
                 processProxy.shutdown(config.preDestroyCommands)
@@ -213,7 +213,7 @@ function StatefulProcessCommandProxy(config) {
                     config.preDestroyCommands + "] exception: " + e);
             }
 
-        },
+        }),
 
         // maximum number in the pool
         max: config.max,
