@@ -53,9 +53,7 @@ It includes an example of communication between UI and Main processes (ipcRender
 
 For any bug, questions on how to do I use, or features additions, feel free to create an [issue](https://github.com/rebrec/hurry/issues/new/choose)
 
-A *Discord* server is available here to live chat, ask questions, give your opinion on the project [lets meet there](https://discord.gg/5juNQ2)
-
-Please don't open issues here unless is code related.
+A *Discord* server is available here to live chat, ask questions, give your opinion on the project : [lets meet there](https://discord.gg/5juNQ2)
 
 # License
 
