@@ -514,7 +514,7 @@ ProcessProxy.prototype._commandIsWhitelisted = function(command) {
 **/
 ProcessProxy.prototype.onData = function(type, data) {
 
-    var cmd = null;https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
+    var cmd = null;//https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
     var dataToWrite = null;
 
     if (data) {
