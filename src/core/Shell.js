@@ -6,9 +6,9 @@ import MonitorManager from "./MonitorManager";
 const path = require('path');
 
 const defaultConfig = {
-    min: 2,
-    max: 2,
-    idleTimeoutMS: 20000,    
+    min: 1,
+    max: 1,
+    idleTimeoutMS: 2592000000,   // about 30 Days
     processCommand: null,
     processArgs:  null,
     /*processInvalidateOnRegex : {
@@ -75,16 +75,6 @@ export default class Shell{
     output = output.toLowerCase();
     const processJSON = (output === 'json');
     command = parseTemplate(command, context);
-    // switch (output){
-    //   case 'json':
-    //       command = `${command} | ConvertTo-Json`
-    //     break;
-    //   case 'none':
-
-    //   break;
-    //   default:
-    //     throw `Invalid command output ${output}`
-    // }
     return this._run(command)
       .then((res) => {
         let obj;
