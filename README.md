@@ -22,21 +22,21 @@ Follow [this page](https://github.com/rebrec/hurry/docs/How_to_build.md) describ
 
 # Project description
 
-Checkout the [GUI Overview with screenshots](https://github.com/rebrec/hurry/blob/master/docs/GUI_Overview.md)
+Check out the [GUI Overview with screenshots](https://github.com/rebrec/hurry/blob/master/docs/GUI_Overview.md)
 
-Hurry's is to allow command line gurus to share their work with users who prefer GUIs.
+Hurry's is to allow command-line gurus to share their work with users who prefer GUIs.
 
 It was first released as a tool for support teams.
 
-I was often creating powershell scripts to solve entreprise wide issues. When a user was calling the helpdesk, we had to ask for their computername etc to then execute my scripts remotely using winrm or psexec.
+I was often creating Powershell scripts to solve enterprise wide issues. When a user was calling the helpdesk, we had to ask for their computer name, etc to then execute my scripts remotely using WinRM or psexec.
 
-Now with hurry, i can embed my script within a contextual menu, helpdesk team just have to search for a specific user, click on its computer in the search result grid and choose the right action to perform on its computer from a contextual menu.
+Now with Hurry, I can embed my script within a contextual menu, helpdesk team just have to search for a specific user, click on its computer in the search result grid and choose the right action to perform on its computer from a contextual menu.
 
 Since its beginning, we have extended its use so that :
 
 - it can quickly interface with new datasources
 - menu actions can use variables interpolated from contextual data gathered from the properties available within datasource records.
-- a plugin system let you drive most of the application (adding new Views, updating menu content, adding datasource, new shells, etc.) still WIP.
+- a plugin system lets you drive most of the application (adding new Views, updating menu content, adding datasource, new shells, etc.) still WIP.
 
 # Source code
 
@@ -47,8 +47,15 @@ It enables to use:
 - Typescript for backend process part
 - Jest for unit tests
 
-It includes an example of communication between UI and Main processes (ipcRenderer and ipcMain). This example is curently not used at all.
+It includes an example of communication between UI and Main processes (ipcRenderer and ipcMain). This example is currently not used at all.
 
+# Support
+
+For any bug, questions on how to do / use, or features additions, feel free to create open an [issue](https://github.com/rebrec/hurry/issues/new/choose)
+
+A *Discord* server is available here to live chat, ask questions, give your opinion on the project [lets meet there](https://discord.gg/5juNQ2)
+
+Please don't open issues here unless is code related.
 
 # License
 
