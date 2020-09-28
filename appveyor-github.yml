@@ -25,7 +25,7 @@ build_script:
 test: off
 
 deploy:
-  release: hurry-v$(APPVEYOR_BUILD_VERSION)
+  release: hurry-$(APPVEYOR_BUILD_VERSION)
   description: 'Release description'
   provider: GitHub
   auth_token:
