@@ -26,7 +26,7 @@ test: off
 
 deploy:
   release: hurry-$(APPVEYOR_BUILD_VERSION)
-  description: 'Release description'
+  description: ''
   provider: GitHub
   auth_token:
     secure: ewc4vyGxmUjt4bGrvy0rLHwjcxmY5VUvo0qynCUKrdh8JdTbs5Vi2UyGmtRKelV2
