@@ -5,68 +5,40 @@
 
 The (cross platform) SysAdmin's tool to get repetitive things done Fast.
 
+![Hurry_Main](https://raw.githubusercontent.com/rebrec/hurry/master/docs/hurry_vSphere_result_ping.png)
+
+[More screenshots](https://github.com/rebrec/hurry/blob/master/docs/GUI_Overview.md)
+
+
 # Download latest builds
 
-- [Windows Release](https://gitlab.com/rebrec/hurry/-/releases)
-- [Linux Release](https://xxxxxxxxxxxxx)
+- [Windows Release](https://github.com/rebrec/hurry/releases)
+- Linux Release (Not available yet. Fill an issue if interested)
 
-# Manual Build
+# Manual builds
 
-## Installation
-
-Clone this repository using common *git clone* command :
-
-```
-git clone https://gitlab.com/rebrec/hurry
-```
-
-## Linux
-
-After cloning the repository
-
-You will have to run the program as root (for now) to be able to create raw packets to send icmp packets to check hosts availability.
-
-To start the project, run the following command :
-
-sudo $(which node) $(which yarn) startroot
-
-I was expecting to make it work without root privileges using network capabilities but it seems to not work properly with electron.
-
-I have currently tried this (but it's not working) :
-
-```
-sudo setcap cap_net_admin,cap_net_raw,cap_net_bind_service=+eip node_modules/electron/dist/electron
-```
-Then to prevent electron from complaining it cannot load xxxxxx, you will have to add the path to this library to a specific ld.conf configuration file 
-
-```
-# cd to your project's root
-# become root
-sudo -s
-# create file
-cat >/etc/ld.so.conf.d/electron.conf <<EOF
-${PWD}/node_modules/electron/dist/
-EOF
-
-#update configuration
-ldconfig
-# go back as user
-exit
-```
-
-If you don't want to add specific capabilities, you can still run this project as *root* user but it is strongly NOT RECOMMENDED.
-
-
-## Windows
-
-Like for Linux, under Windows, electron will need to be run in a priviledged UAC environment so that it can create raw icmp packet to send ping requests to check hosts availability.
-
-This is done by default when running the dev environment with `yarn start` but in production, you may need to right click on the program and select *Run as Administrator*
-
-
+Follow [this page](https://github.com/rebrec/hurry/docs/How_to_build.md) describing how to build from the sources
 
 
 # Project description
+
+Check out the [GUI Overview with screenshots](https://github.com/rebrec/hurry/blob/master/docs/GUI_Overview.md)
+
+Hurry's is to allow command-line gurus to share their work with users who prefer GUIs.
+
+It was first released as a tool for support teams.
+
+I was often creating Powershell scripts to solve enterprise wide issues. When a user was calling the helpdesk, we had to ask for their computer name, etc to then execute my scripts remotely using WinRM or psexec.
+
+Now with Hurry, I can embed my script within a contextual menu, helpdesk team just have to search for a specific user, click on its computer in the search result grid and choose the right action to perform on its computer from a contextual menu.
+
+Since its beginning, we have extended its use so that :
+
+- it can quickly interface with new datasources
+- menu actions can use variables interpolated from contextual data gathered from the properties available within datasource records.
+- a plugin system lets you drive most of the application (adding new Views, updating menu content, adding datasource, new shells, etc.) still WIP.
+
+# Source code
 
 This project has been build with the great *electron-react-ts-boilerplate* project (based on [Electron Forge](https://www.electronforge.io/)). Thanks to this project, we can concentrate on coding an Electron Application with a React JS front end. The included Webpack configuration allow using both Javascript (*.js, *.jsx) and Typescript (*.ts, *.tsx).
 
@@ -75,11 +47,16 @@ It enables to use:
 - Typescript for backend process part
 - Jest for unit tests
 
-It includes an example of communication between UI and Main processes (ipcRenderer and ipcMain). This example is curently not used at all.
+It includes an example of communication between UI and Main processes (ipcRenderer and ipcMain). This example is currently not used at all.
 
+# Support
 
-Since i don't know much about Typescript (which looks great), the following code only contains JS code. But contributions could be done in TS if wanted.
+For any bug, questions on how to do I use, or features additions, feel free to create an [issue](https://github.com/rebrec/hurry/issues/new/choose)
 
-Sooner or later i guess this project (if it stay alive thanks to contributors) may slowly become 100% Typescript code to improve code quality.
+A *Discord* server is available here to live chat, ask questions, give your opinion on the project : [lets meet there](https://discord.gg/5juNQ2)
+
+# License
+
+LGPL
 
 
