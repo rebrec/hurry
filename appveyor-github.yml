@@ -39,5 +39,5 @@ deploy:
 
 
 
-#artifacts:
-#  - path: 'out\make\**\*.*'
+artifacts:
+  - path: 'out\make\**\*.*'
