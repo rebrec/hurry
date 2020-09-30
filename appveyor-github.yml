@@ -33,10 +33,11 @@ deploy:
   artifact: /.*\.*/            # upload all NuGet packages to release assets
   draft: false
   prerelease: false
+  tag: $(APPVEYOR_REPO_TAG_NAME)
   on:
     APPVEYOR_REPO_TAG: true        # deploy on tag push only
 
 
 
-#artifacts:
-#  - path: 'out\make\**\*.*'
+artifacts:
+  - path: 'out\make\**\*.*'
