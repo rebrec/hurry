@@ -1,7 +1,13 @@
 const path = require('path');
 const app = require('electron').remote.app
 const isProd = process.env.NODE_ENV === 'production';
-const basepath = isProd ? path.join(app.getAppPath(), '.webpack', 'renderer') : path.join(__dirname, '..');
+let basepath;
+if (isProd) {
+    basepath = path.join(app.getAppPath(), '.webpack', 'renderer') 
+ } else {
+    basepath = path.join(__dirname, '..'); // doesn't seems to work anymore.....
+    basepath = __dirname.split('node_modules')[0] + 'src';
+ } 
 console.log('isProd : ' + isProd);
 console.log('BASE PATH = ' + basepath);
 
