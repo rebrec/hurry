@@ -3,7 +3,7 @@
     "type": "CONTAINER",
     "children": [
         {
-            "caption": "Artemis V2",
+            "caption": "Wonder V2",
             "type": "CONTAINER",
             "children": [
                 {
@@ -28,7 +28,7 @@
                 },
                 {
                     "description": null,
-                    "caption": "map_artemis_v1",
+                    "caption": "map_Wonder_v1",
                     "shell": "cmd",
                     "type": "COMMAND",
                     "platform": "win32",
@@ -38,7 +38,7 @@
                 },
                 {
                     "description": null,
-                    "caption": "map_artemis_v2_win7",
+                    "caption": "map_Wonder_v2_win7",
                     "shell": "cmd",
                     "type": "COMMAND",
                     "platform": "win32",
@@ -303,7 +303,7 @@
                                     "type": "COMMAND",
                                     "platform": "win32",
                                     "commands": [
-                                        "\"t:\\12- Administration Systemes Reseaux\\Outils\\CSharp\\GlpiSearch\\GlpiSearch\\Addons\\putty.exe\" -pw artemis artemis@#{hostname}"
+                                        "\"t:\\12- Administration Systemes Reseaux\\Outils\\CSharp\\GlpiSearch\\GlpiSearch\\Addons\\putty.exe\" -pw Wonder Wonder@#{hostname}"
                                     ]
                                 },
                                 {
