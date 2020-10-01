@@ -1,9 +1,9 @@
 # Hurry
 
-[![Build status](https://ci.appveyor.com/api/projects/status/feo740yf95h17v2t?svg=true)](https://ci.appveyor.com/project/rebrec/hurry-6asla)
+[[![Build status](https://ci.appveyor.com/api/projects/status/br0s4qlnkwop064x?svg=true)](https://ci.appveyor.com/project/rebrec/hurry-rkfu0)
 
 
-The (cross platform) SysAdmin's tool to get repetitive things done Fast.
+The (cross-platform) SysAdmin's tool to get repetitive things done Fast.
 
 ![Hurry_Main](https://raw.githubusercontent.com/rebrec/hurry/master/docs/hurry_vSphere_result_ping.png)
 
