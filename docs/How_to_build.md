@@ -1,11 +1,17 @@
 # Manual Build
 
+## Prerequisites
+
+- a Recent version of [NodeJS](https://nodejs.org/en/download/)
+- [Yarn](https://classic.yarnpkg.com/en/docs/install/) package manager (equivalent of npm)
+
 ## Installation
 
 Clone this repository using common *git clone* command :
 
 ```
 git clone https://gitlab.com/rebrec/hurry
+yarn install
 ```
 
 ## Linux
