@@ -1,0 +1,78 @@
+{
+    "caption": "CONTAINER_ROOT",
+    "type": "CONTAINER",
+    "children": [
+        {
+            "caption": "Windows Workstations",
+            "type": "CONTAINER",
+            "children": [
+                {
+                    "description": null,
+                    "caption": "Show C$",
+                    "shell": "cmd",
+                    "type": "COMMAND",
+                    "platform": "win32",
+                    "commands": [
+                        "explorer \"\\\\#{hostname}\\c$\""
+                    ]
+                },
+                {
+                    "description": "Get a remote DOS",
+                    "caption": "Remote DOS",
+                    "shell": "cmd",
+                    "type": "COMMAND",
+                    "platform": "win32",
+                    "commands": [
+                        "start \"\" Psexec \\\\#{hostname} cmd"
+                    ]
+                },
+                {
+                    "description": "Spawn a cmd.exe as SYSTEM on remote host",
+                    "caption": "Show remote DOS (SYSTEM)",
+                    "shell": "cmd",
+                    "type": "COMMAND",
+                    "platform": "win32",
+                    "commands": [
+                        "start \"\" Psexec -s -i \\\\#{hostname} cmd"
+                    ]
+                },
+                {
+                    "description": "Reboot",
+                    "caption": "Reboot",
+                    "shell": "cmd",
+                    "type": "COMMAND",
+                    "platform": "win32",
+                    "commands": [
+                        "start \"\" PSSHUTDOWN -m \"Reboot for maintenance (IT Support)\" -f -t 0 -r  \\\\#{hostname}"
+                    ]
+                }
+            ]
+        },
+        {
+            "caption": "Network commands",
+            "type": "CONTAINER",
+            "children": [
+                {
+                    "description": "Ping remote Host",
+                    "caption": "Ping",
+                    "shell": "cmd",
+                    "type": "COMMAND",
+                    "platform": "win32",
+                    "commands": [
+                        "start \"ping -t #{hostname}\" ping -t #{hostname}"
+                    ]
+                },
+                {
+                    "description": "Ping remote Host",
+                    "caption": "Ping",
+                    "shell": "bash",
+                    "type": "COMMAND",
+                    "platform": "linux",
+                    "commands": [
+                        "xterm -e \"ping #{hostname}\""
+                    ]
+                }
+            ]
+        }
+    ]
+}

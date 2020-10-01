@@ -1,6 +1,7 @@
 import Path from 'path';
-import { existsSync, writeFileSync} from 'fs'
+import { existsSync, writeFileSync, copyFileSync} from 'fs'
 const defaultConfig = require('./example/config');
+const exampleMenuData = require('./example/menuConfig.json');
 
 const homedir = require('os').homedir();
 
@@ -9,14 +10,21 @@ let config = {};
 let noConfig = false;
 
 config.isValid = false;
+
+const defaultConfigPath = Path.join(__dirname, 'example', 'config.js');
+
 const profilePath = Path.join(homedir, '.hurry');
 const examplePath = Path.join(__dirname, 'example');
-
+ 
 const configPath = Path.join(profilePath, 'config.js');
-const historyPath = Path.join(profilePath, 'history.json');
+const historyFilePath = Path.join(profilePath, 'history.json');
 const menuPath = Path.join(profilePath, 'menuConfig.json');
 
-const exampleMenuPath = Path.join(examplePath, 'menuConfig.json');
+// const exampleMenuPath = Path.join(examplePath, 'menuConfig.json');
+
+
+// const configPath = Path.join(__dirname,"config.js");
+
 
 if (existsSync(configPath)){
     console.log('Importing custom configuration');
@@ -37,15 +45,18 @@ if (noConfig){
    if (!existsSync(profilePath)){
            mkdirSync(profilePath);
    }
-   const exampleMenuData = require(exampleMenuPath)
+//    copyFileSync(examplePath, menuPath);
+//    const exampleMenuData = require(exampleMenuPath)
    writeFileSync(menuPath, JSON.stringify(exampleMenuData));
    config.menu.menuPath = menuPath;
 
 }
 
+    
+
 
 // Check a few valid things before considering the config is valid
-console.log('projectRoot exists : ', existsSync(config.projectRoot), "and is at " + config.projectRoot);
+console.log('projectRoot exist : ', existsSync(config.projectRoot));
 console.log('menuPath exist : ', existsSync(config.menu.menuPath));
 if (existsSync(config.projectRoot) && existsSync(config.menu.menuPath)){
     config.isValid = true;
@@ -59,7 +70,7 @@ Object.assign(config, {
     datasourcesPath: Path.join(modulesRoot, "datasources"),
     pluginsPath: Path.join(config.projectRoot, "..", "plugins-dist"),
     viewsPath:  Path.join(config.projectRoot, "ui", "views"),
-    historyFilePath:  historyPath
+    historyFilePath:  historyFilePath
 });
 
 //Object.assign(config, customSettings);
