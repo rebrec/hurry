@@ -1,13 +1,14 @@
 import Path from 'path';
-import { existsSync, writeFileSync, copyFileSync} from 'fs'
+import { existsSync, writeFileSync, mkdirSync} from 'fs'
 const defaultConfig = require('./example/config');
 const exampleMenuData = require('./example/menuConfig.json');
+const isProd = process.env.NODE_ENV === 'production';
 
 const homedir = require('os').homedir();
 
 let customSettings = {};
 let config = {};
-let noConfig = false;
+let newProfile = false;
 
 config.isValid = false;
 
@@ -30,7 +31,7 @@ if (existsSync(configPath)){
     console.log('Importing custom configuration');
     customSettings = __non_webpack_require__(configPath);
 } else {
-    noConfig = true;
+    newProfile = true;
     console.log('No custom configuration file found at ' + configPath);
     customSettings = defaultConfig;
 }
@@ -39,16 +40,27 @@ delete customSettings.isValid;
 
 Object.assign(config, customSettings);
 
-if (noConfig){
+if (newProfile){
     // create an initial menu from example folder
 
-   if (!existsSync(profilePath)){
-           mkdirSync(profilePath);
-   }
+    if (!existsSync(profilePath)){
+        mkdirSync(profilePath);
+    }
 //    copyFileSync(examplePath, menuPath);
 //    const exampleMenuData = require(exampleMenuPath)
    writeFileSync(menuPath, JSON.stringify(exampleMenuData));
    config.menu.menuPath = menuPath;
+
+    if (isProd){
+        const pluginsPath = Path.join(profilePath, "plugins")
+        if (!existsSync(pluginsPath)){
+            mkdirSync(pluginsPath);
+        }
+        Object.assign(config, { pluginsPath: pluginsPath })
+    } else {
+        const pluginsPath = Path.join(config.projectRoot, "..", "plugins-dist")
+        Object.assign(config, { pluginsPath: pluginsPath })
+    }
 
 }
 
@@ -68,7 +80,6 @@ Object.assign(config, {
     shellsPath: Path.join(modulesRoot, "shells"),
     shellFeaturesPath: Path.join(modulesRoot, "shellfeatures"),
     datasourcesPath: Path.join(modulesRoot, "datasources"),
-    pluginsPath: Path.join(config.projectRoot, "..", "plugins-dist"),
     viewsPath:  Path.join(config.projectRoot, "ui", "views"),
     historyFilePath:  historyFilePath
 });
