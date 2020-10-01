@@ -19,6 +19,12 @@ The (cross platform) SysAdmin's tool to get repetitive things done Fast.
 
 Follow [this page](https://github.com/rebrec/hurry/blob/master/docs/How_to_build.md) describing how to build from the sources
 
+# Prerequisites
+
+To be able to use most of Hurry's features, you will need a recent version or *Powershell*.
+
+For Linux users, get it from [here](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7)
+
 
 # Project description
 
