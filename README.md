@@ -17,7 +17,7 @@ The (cross platform) SysAdmin's tool to get repetitive things done Fast.
 
 # Manual builds
 
-Follow [this page](https://github.com/rebrec/hurry/docs/How_to_build.md) describing how to build from the sources
+Follow [this page](https://github.com/rebrec/hurry/blob/master/docs/How_to_build.md) describing how to build from the sources
 
 
 # Project description
