@@ -13,13 +13,14 @@ export default function (api){
         render() {
 
             return (
-                <div className="container-fluid">
-                <div className="row">
-                    <div className="col-sm-12">
-                        Version : { api.version }
+                <div class="container h-100">
+                    <div class="row h-100 justify-content-center align-items-center">
+                        <h1 className="col-12 text-center">
+                            Version : { api.version }
+                        </h1>
                     </div>
                 </div>
-                </div>);
+            );
         }
     }
 }
