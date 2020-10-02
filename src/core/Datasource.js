@@ -3,7 +3,8 @@ import { parseTemplate, parseTemplateArray } from './helpers/helpers';
 import Fs from 'fs'
 
 let globalObjects = {
-    fs : Fs
+    fs : Fs,
+    promise: Promise
 };
 
 
@@ -17,7 +18,11 @@ export default class Datasource {
         this.pingableProperty = definition.pingableProperty;
         this.config = config;
         if (definition.hasOwnProperty('init')){
-            definition.init(globalObjects, config);
+            const initResult = definition.init(globalObjects, config);
+            if (!initResult) {
+                console.error('disabling Datasource', this.name, 'due to init problem');
+                this.config.disabled = true;
+            }
         }
         this.shell = shell;
         this.modulePath =  `${modulePath}${Path.sep}`;
