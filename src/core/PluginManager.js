@@ -30,7 +30,7 @@ export default class PluginManager{
     _initPlugin(pluginPath){
         console.log('PluginManager.loadPlugin : Processing file :', pluginPath);
         const pluginName = Path.basename(pluginPath, '.bundle.js');
-        
+        if (pluginName.indexOf('-') === 0) return; // We skip plugins whose name starts with a '-'
         const pluginContext = {
             pluginPath: pluginPath,
             pluginName: pluginName,
