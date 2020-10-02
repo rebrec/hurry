@@ -17,7 +17,7 @@ export default function (api){
                 <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-12">
-                        <h1>This is a view provided by the <i>Test plugin</i></h1>
+                        <h1>This is a view provided by the <i>smileytest-plugin plugin</i></h1>
                         <img className="testplugin-example-image" src={ img } />
                     </div>
                 </div>
