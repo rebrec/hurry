@@ -1,6 +1,6 @@
 
 
-function Search-Dodo1 {
+function Search-Dodo {
     param(
         $filter
     )
