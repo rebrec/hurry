@@ -1,5 +1,5 @@
 module.exports = {
-    jsHostsFile: {
+    "js-hosts-file": {
         title: "JS Hosts File",
         type: "object",
         properties: {
