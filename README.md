@@ -10,10 +10,37 @@ The (cross-platform) SysAdmin's tool to get repetitive things done Fast.
 [More screenshots](https://github.com/rebrec/hurry/blob/master/docs/GUI_Overview.md)
 
 
-# Download latest builds
+# Installation and configuration
+
+## Download latest builds
 
 - [Windows Release](https://github.com/rebrec/hurry/releases)
-- Linux Release (Not available yet. Fill an issue if interested)
+- Linux Release (Not available yet. Fill an issue if interested or ask on [Discord](https://discord.gg/5juNQ2))
+
+## Download plugins
+
+To be able to work with some data **you need plugins**.
+
+Only manual installation of plugins is currently available. You will have to download
+a zip file containing plugins, and then extract it's content to the *hurry plugin directory* (see *Configuration*).
+
+You can download the plugin release from [here](https://github.com/rebrec/hurry-plugins/releases/download/1.0.1/plugins.tar.gz)
+The latest release is always available from [this page](https://github.com/rebrec/hurry-plugins/releases/latest/)
+
+## Initial Configuration
+
+Run the freshly downloaded Hurry setup and then start Hurry.
+
+It will prompt you with a *First Configuration* screen.
+
+![First_Configuration_Screen](https://raw.githubusercontent.com/rebrec/hurry/master/docs/hurry_initial_setup_plugin_dir.png)
+
+Note the path written within the *Plugin Directory* text area (see the red arrow in the above screenshot) and extract the content of the plugins' archive file into that folder:
+
+- For Windows, you can use [7zip](https://www.7-zip.org/download.html)
+- Under Linux, you may type from a terminal something like `cd $HOME/.hurry/plugins;tar zxvf <THE_PATH_TO_YOUR_plugins.tar.gz_FILE>`
+
+Then, click on the *Submit* button at the bottom of the configuration screen and you are done !
 
 # Manual builds
 
@@ -34,7 +61,7 @@ Hurry's is to allow command-line gurus to share their work with users who prefer
 
 It was first released as a tool for support teams.
 
-I was often creating Powershell scripts to solve enterprise wide issues. When a user was calling the helpdesk, we had to ask for their computer name, etc to then execute my scripts remotely using WinRM or psexec.
+I was often creating Powershell scripts to solve enterprise-wide issues. When a user was calling the helpdesk, we had to ask for their computer name, etc to then execute my scripts remotely using WinRM or psexec.
 
 Now with Hurry, I can embed my script within a contextual menu, helpdesk team just have to search for a specific user, click on its computer in the search result grid and choose the right action to perform on its computer from a contextual menu.
 
