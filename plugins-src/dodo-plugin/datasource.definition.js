@@ -1,10 +1,10 @@
 module.exports = {
-    name: "searchDodo1",
-    caption: "Dodo1",
+    name: "dodo-plugin",
+    caption: "Dodo",
     shell: "powershell", 
     initCommands: [
         `$global:DODO_BASE_URL="http://#{dodoApiHost}" + ":" + "#{dodoApiPort}/api/script"`,
-        `. #{modulePath}init1.ps1`
+        `. #{modulePath}init.ps1`
     ],
     columns: [  
         { columnName: 'Hostname', property: 'computername', variableName: 'hostname' },
@@ -14,6 +14,6 @@ module.exports = {
     pingableProperty: 'ipaddresses',
     mainColumnProperty: 'computername',
     searchFunc: keyword => {
-        return 'Search-Dodo1 ' + keyword + ' | ConvertTo-Json -Compress';
+        return 'Search-Dodo ' + keyword + ' | ConvertTo-Json -Compress';
     },
 };
