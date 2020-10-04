@@ -15,7 +15,7 @@ The (cross-platform) SysAdmin's tool to get repetitive things done Fast.
 ## Download latest builds
 
 - [Windows Release](https://github.com/rebrec/hurry/releases)
-- Linux Release (Not available yet. Fill an issue if interested or ask on [Discord](https://discord.gg/5juNQ2))
+- Linux Release (Not available yet. Fill an issue if interested or ask on [Discord](https://discord.com/invite/7cEWVvC))
 
 ## Download plugins
 
@@ -86,7 +86,7 @@ It includes an example of communication between UI and Main processes (ipcRender
 
 For any bug, questions on how to do I use, or features additions, feel free to create an [issue](https://github.com/rebrec/hurry/issues/new/choose)
 
-A *Discord* server is available here to live chat, ask questions, give your opinion on the project : [lets meet there](https://discord.gg/5juNQ2)
+A *Discord* server is available here to live chat, ask questions, give your opinion on the project : [lets meet there](https://discord.com/invite/7cEWVvC)
 
 # License
 
