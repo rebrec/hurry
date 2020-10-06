@@ -58,7 +58,7 @@ if (newProfile){
         }
         Object.assign(config, { pluginsPath: pluginsPath })
     } else {
-        const pluginsPath = Path.join(config.projectRoot, "..", "plugins-dist")
+        const pluginsPath = Path.join(config.projectRoot, "..", "plugins-src")
         Object.assign(config, { pluginsPath: pluginsPath })
     }
 
