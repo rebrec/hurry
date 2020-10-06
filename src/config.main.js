@@ -20,5 +20,5 @@ delete customSettings.isValid;
 console.log('projectRoot exist : ', existsSync(customSettings.projectRoot));
 
 
-customSettings.pluginsPath = Path.join(customSettings.projectRoot, "..", "plugins-dist")
+customSettings.pluginsPath = Path.join(customSettings.projectRoot, "..", "plugins-src")
 export default customSettings;
