@@ -1,3 +1,4 @@
+const { promises } = require("fs");
 
 function parseHostData(data){
     const res = [];
@@ -58,16 +59,16 @@ function searchData(data, keyword){ // COULD BE IMPROVED USING Array.filter ?
 }
 
 module.exports = {
-    name: "jsHostsFile",
+    name: "js-hosts-file",
     caption: "Host (js)",
     shell: 'js',
-    init: (globalObjects, config) =>{
+    init: (globalObjects, config) => {
         this.config = config;
-        return globalObjects.fs.promises.readFile(config.hostfile)
-        .then(data=> {
-            this.data = parseHostData(data.toString());
-            return true;
-        });
+        if (!globalObjects.fs.existsSync(config.hostfile)) return false;
+        
+        const data = globalObjects.fs.readFileSync(config.hostfile);
+        this.data = parseHostData(data.toString());
+        return true;
     },
     initCommands : [],
     columns: [  

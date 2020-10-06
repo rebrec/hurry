@@ -9,48 +9,60 @@ import DatasourceManager from '../core/DatasourceManager';
 import HistoryStore from './HistoryStore'
 import config from '../config'
 // import PowershellRunner from '../modules/runner';
-const {platform} = require('os');
+const { platform } = require('os');
 
 
 configure({ enforceActions: "always" });
 
 class RootStore {
- 
-    @observable menuConfig={};
+
+    @observable menuConfig = {};
 
     constructor() {
         this.loadMenu();
-        this.historyStore = new HistoryStore({filePath: config.historyFilePath});
+        this.historyStore = new HistoryStore({ filePath: config.historyFilePath });
         this.shellManager = new ShellManager(config, this.historyStore);
         this.datasourceManager = new DatasourceManager(this.shellManager, config, this.historyStore);
         this.pluginManager = new PluginManager(config);
 
         this.settings = new Settings(this);
         this.uiState = new UiState(this, config);
-        
-        
+
+
         this.platform = platform();
-        
+
     }
 
-    _init(){
+    _init() {
         this.shellManager.start();
         this.pluginManager._init();
-        
+
     }
 
-    @action.bound loadMenu(){
+    @action.bound loadMenu() {
         let res = {}
         try {
             const data = readFileSync(config.menu.menuPath);
-            if (data){
+            if (data) {
                 res = JSON.parse(data.toString());
             }
-        } catch (e){}
+        } catch (e) { }
         this.menuConfig = res;
     }
+
+    @action.bound registerContextMenu(menu) {
+        try {
+            if (!this.menuConfig) return false;
+            if (!this.menuConfig.children) return false;
+            this.menuConfig.children.push(menu);
+            return true;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
 }
 
 
-export default  new RootStore();
+export default new RootStore();
 

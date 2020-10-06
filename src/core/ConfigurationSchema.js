@@ -64,6 +64,10 @@ export default new class ConfigurationSchema{
                     title: "Project Root Directory",
                     type: "string"
                 },
+                pluginsPath: {
+                    title: "Plugin Directory",
+                    type: "string"
+                },
                 defaultDataSource: {
                     title: "Default Datasource",
                     type: "string",
