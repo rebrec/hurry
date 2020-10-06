@@ -33,7 +33,8 @@ deploy:
   artifact: /.*\.*/            # upload all NuGet packages to release assets
   draft: false
   prerelease: false
-  tag: $(appveyor_repo_tag_name)
+  force_update: true
+  tag: $(APPVEYOR_REPO_TAG_NAME)
   on:
     APPVEYOR_REPO_TAG: true        # deploy on tag push only
 

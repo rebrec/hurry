@@ -1,11 +1,17 @@
 # Manual Build
 
+## Prerequisites
+
+- a Recent version of [NodeJS](https://nodejs.org/en/download/)
+- [Yarn](https://classic.yarnpkg.com/en/docs/install/) package manager (equivalent of npm)
+
 ## Installation
 
 Clone this repository using common *git clone* command :
 
 ```
 git clone https://gitlab.com/rebrec/hurry
+yarn install
 ```
 
 ## Linux
@@ -14,9 +20,11 @@ After cloning the repository
 
 You will have to run the program as root (for now) to be able to create raw packets to send icmp packets to check hosts availability.
 
-To start the project, run the following command :
+To start the project, run the following command:
 
+```
 sudo $(which node) $(which yarn) startroot
+```
 
 I was expecting to make it work without root privileges using network capabilities but it seems to not work properly with electron.
 
@@ -42,7 +50,8 @@ ldconfig
 exit
 ```
 
-If you don't want to add specific capabilities, you can still run this project as *root* user but it is strongly NOT RECOMMENDED.
+If you don't want to add specific capabilities, **you can still run this project as *root* user** but it is strongly NOT RECOMMENDED.
+
 
 
 ## Windows

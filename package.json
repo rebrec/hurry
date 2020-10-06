@@ -1,13 +1,14 @@
 {
   "name": "hurry",
   "productName": "hurry",
-  "version": "1.0.9",
+  "version": "1.0.15",
   "description": "Daily Helpdesk / admin's tool",
   "main": ".webpack/main",
   "scripts": {
     "startroot": "electron-forge start -- --no-sandbox",
     "start": "electron-forge start",
     "buildplugins": "node watchplugins.js",
+    "releaseplugins": "node releaseplugins.js",
     "test": "mocha --require @babel/register --recursive",
     "package": "env NODE_ENV=production electron-forge package",
     "make": "env NODE_ENV=production electron-forge make",
@@ -97,7 +98,8 @@
     "react-dom": "^16.12.0",
     "react-jsonschema-form": "^1.8.1",
     "react-split-pane": "^0.1.89",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^8.0.0",
+    "targz": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
