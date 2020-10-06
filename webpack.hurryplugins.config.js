@@ -4,6 +4,7 @@ const rules = []
 rules.push({
   test: /^(?!.*\.(js|jsx?|ts|tsx?|css|s[ca]ss)$)/,
   loader: 'file-loader',
+  exclude: /(node_modules|.webpack)/,
   options: {
     context: path.resolve(__dirname, 'plugins-src'),
     publicPath: (url, resourcePath, context) => { return `plugin://${url}`; },
