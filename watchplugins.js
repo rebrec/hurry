@@ -59,11 +59,12 @@ const config = {
       ],
     }),
   ],
+  target: 'node',
   node: {
     __dirname: false
   },
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx']
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx']
   },
   output: {
     path: pluginOutputPath,
