@@ -18,7 +18,7 @@ class ModalDialog extends React.Component {
     const index = zIndex || 40;
     return (
       <>
-        <div className="modal-background" style={{"z-index": index}} onClick={this.props.onClose}>
+        <div className="modal-background" style={{zIndex: index}} onClick={this.props.onClose}>
           <div className="modal-box row">
             <button onClick={this.props.onClose} className="modal-box-close-button"><FontAwesomeIcon icon="times" /></button>
             <div className="col-sm-12 modal-box-content" onClick={(e)=>{e.stopPropagation();}}>
