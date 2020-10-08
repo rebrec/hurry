@@ -74,8 +74,8 @@ class HostListLine extends React.Component {
     }
     for (let j = 0; j < columns.length; j++) {
       const col = columns[j];
-      const colValue = element[col.property];
-      trElements.push(<td key={colValue}>{colValue}</td>);
+      const colValue = "" + element[col.property];
+      trElements.push(<td key={col.property + "-" + colValue}>{colValue}</td>);
     }
     return (
 
