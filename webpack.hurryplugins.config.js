@@ -1,15 +1,25 @@
 const path = require('path');
 const rules = []
 
-// rules.push({
-//   test: /^(?!.*\.(js|jsx?|ts|tsx?|css|s[ca]ss)$)/,
-//   loader: 'file-loader',
-//   options: {
-//     context: path.resolve(__dirname, 'plugins-src'),
-//     publicPath: (url, resourcePath, context) => { return `plugin://${url}`; },
-//     name: '[path][name].[ext]'
-//   },
-// }); 
+rules.push({
+  test: /^(?!.*\.(js|jsx?|ts|tsx?|css|s[ca]ss)$)/,
+  loader: 'file-loader',
+  exclude: /(node_modules|.webpack)/,
+  options: {
+    // context: path.resolve(__dirname, 'plugins-src'),
+    publicPath: (url, resourcePath, context) => { 
+      const paths = url.split('/');
+      if (paths.shift() !== 'plugins-src'){
+        console.log('Skipping ' + resourcePath + 'because it is not a "plugin-src" subfolder !')
+        return resourcePath;
+      }
+      const pluginRelativePath = paths.join('/');
+      // console.log(url, resourcePath, context, '-> ', pluginRelativePath);
+      return `plugin://${pluginRelativePath}`; 
+    },
+    name: '[path][name].[ext]'
+  },
+}); 
 
 rules.push(
   {

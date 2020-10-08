@@ -1,4 +1,5 @@
-import { getFiles } from './helpers/helpers'
+import { existsSync } from 'fs'
+import { getFiles, getDirectories } from './helpers/helpers'
 import { observable, action } from 'mobx';
 import api from './api';
 import Path from 'path';
@@ -17,25 +18,40 @@ export default class PluginManager{
     constructor(config){
         const {pluginsPath} = config;
         const pluginSuffix = '.bundle.js';
-        this._pluginFiles = getFiles(pluginsPath).filter(ent => ent.endsWith(pluginSuffix));
+        this._pluginInfos = this._getPluginInfos(pluginsPath);
+    }
+
+    _getPluginInfos(pluginsPath){
+        const pluginInfos = []
+        const pluginDirs = getDirectories(pluginsPath);
+        for (const pluginDirPath of pluginDirs){
+            console.log('scanning ', pluginDirPath);
+            const pluginRoot = Path.join(pluginDirPath, 'dist')
+            const pluginFullPath = Path.join(pluginRoot, 'main.bundle.js');
+            if (existsSync(pluginFullPath)){
+                const pluginName = pluginRoot.split('/').splice(-2).shift()
+                const pluginInfo = {
+                    pluginName: pluginName,
+                    pluginPath: pluginFullPath,
+                    pluginDir: pluginRoot
+                }
+                pluginInfos.push(pluginInfo);
+                console.log('Found plugin !', pluginFullPath);
+            }
+        }
+        return pluginInfos;
     }
 
     _init(){
-        for (const path of this._pluginFiles){
-            this._initPlugin(path);
+        for (const info of this._pluginInfos){
+            this._initPlugin(info);
         }
         this._loadPlugins()
     }
 
-    _initPlugin(pluginPath){
+    _initPlugin(pluginContext){
+        const {pluginNAme, pluginPath, pluginDir} = pluginContext
         console.log('PluginManager.loadPlugin : Processing file :', pluginPath);
-        const pluginName = Path.basename(pluginPath, '.bundle.js');
-        if (pluginName.indexOf('-') === 0) return; // We skip plugins whose name starts with a '-'
-        const pluginContext = {
-            pluginPath: pluginPath,
-            pluginName: pluginName,
-            pluginDir: Path.join(Path.dirname(pluginPath), pluginName)
-        }
         try {
             const Plugin = __non_webpack_require__(pluginPath).default;
             const plugin = new Plugin(api, pluginContext);
