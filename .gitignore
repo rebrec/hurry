@@ -96,4 +96,5 @@ out/
 .idea/
 yarn.lock
 plugins-dist/
+plugins-src/
 build/

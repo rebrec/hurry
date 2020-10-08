@@ -3,6 +3,7 @@ const rules = require('./webpack.hurryplugins.config');
 const path = require('path');
 const fs = require('fs');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const pluginOutputPath = path.join(process.cwd(), "plugins-dist");
 const pluginInputPath = path.join(process.cwd(), "plugins-src");
@@ -25,7 +26,6 @@ const directories = getDirectories(pluginInputPath);
 for (let i=0;i<directories.length;i++){
     const directory = directories[i];
     const pluginName = directory.split(path.sep).pop();
-    if (pluginName === 'dist') continue;
     if (!fs.existsSync(path.join(directory, entryName))) {
         console.warn("Skipping plugin : " + pluginName + " (missing " + entryName +").");
         continue;
@@ -34,47 +34,63 @@ for (let i=0;i<directories.length;i++){
     pluginNames.push(pluginName);
 }
 
-for (let i=0;i<pluginNames.length;i++){
-    const pluginName = pluginNames[i];
-    entrypoints[pluginName] = path.join(pluginInputPath, pluginName, entryName);
+for (const plugin of pluginNames){
+    buildAndWatchPlugin(plugin);
 }
+function buildAndWatchPlugin(pluginName){
+  // const pluginName = 'dummy-datasource'
+  // const pluginName = 'smileytest-plugin'
+  // const pluginName = 'about-plugin'
+  const entry = path.join(__dirname, 'plugins-src', pluginName, entryName)
+  const source = path.join(__dirname, 'plugins-src', pluginName)
+  const output = path.join(__dirname, 'plugins-src', pluginName, 'dist')
 
-// Defining the webpack config inline, but you can replace this
-// with `require('./webpack.config.js')`
-const config = {
-  mode: 'development',
-  devtool: 'source-map',
-  entry: entrypoints,
-  module: {
-    rules: rules
-  },
-  plugins: [
-    new CopyWebPackPlugin({
-      patterns: [
-        {
-          from: '**/*',
-          to: "",
-          context: "plugins-src/",
-        },
-      ],
-    }),
-  ],
-  node: {
-    __dirname: false
-  },
-  resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx']
-  },
-  output: {
-    path: pluginOutputPath,
-    filename: "[name].bundle.js",
-    library: 'plugin',
-    libraryTarget: 'commonjs-module'
-  }
-};
-const compiler = webpack(config);
-const watcher = compiler.watch({}, function(err,info) {
-    if (err) console.error(err);
-    console.log('[' + new Date().toISOString() + '] Rebuilding plugins...');
-  // Gets called every time Webpack finishes recompiling.
-});
+  const config = {
+    mode: 'development',
+    devtool: 'source-map',
+    entry: entry,
+    module: {
+      rules: rules
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new CopyWebPackPlugin({
+        patterns: [
+          {
+            from: source,
+            globOptions: {
+              ignore: [
+                  '**/node_modules',
+                  '**/dist',
+                  '**/.gitignore',
+                  '**/.git',
+                  '**/yarn.lock',
+                  
+            ]},
+            to: '.',
+            // context: "plugins-src/",
+          },
+        ],
+      }),
+    ],
+    target: 'node',
+    node: {
+      __dirname: false
+    },
+    resolve: {
+      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx']
+    },
+    output: {
+      path: output,
+      filename: "[name].bundle.js",
+      library: 'plugin',
+      libraryTarget: 'commonjs-module'
+    }
+  };
+  const compiler = webpack(config);
+  const watcher = compiler.watch({}, function(err,info) {
+      if (err) console.error(err);
+      console.log('[' + new Date().toISOString() + '] Rebuilding plugin ' + pluginName + ' ...');
+    // Gets called every time Webpack finishes recompiling.
+  });
+}
