@@ -20,7 +20,7 @@ export default class MenuEditorView extends React.Component {
     
     this.state = {
       selectedElement: null,
-      editableMenu: MenuItemContainer.fromObject(store.menuConfig) || {}
+      editableMenu: MenuItemContainer.fromObject(api.contextMenu.getMenu()) || {}
     }
     this.onMenuElementClick = this.onMenuElementClick.bind(this);
     this.saveMenu = this.saveMenu.bind(this);

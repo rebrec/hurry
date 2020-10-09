@@ -1,8 +1,9 @@
-import { readFileSync } from "fs"
+
 import { configure } from "mobx"
 import { observable, action } from 'mobx'
 import UiState from './UiState'
 import Settings from './Settings'
+import ContextMenuManager from '../core/ContextMenuManager';
 import ShellManager from '../core/ShellManager';
 import PluginManager from '../core/PluginManager';
 import DatasourceManager from '../core/DatasourceManager';
@@ -16,10 +17,9 @@ configure({ enforceActions: "always" });
 
 class RootStore {
 
-    @observable menuConfig = {};
-
     constructor() {
-        this.loadMenu();
+        this.contextMenu = new ContextMenuManager(config.menu.menuPath);
+        
         this.historyStore = new HistoryStore({ filePath: config.historyFilePath });
         this.shellManager = new ShellManager(config, this.historyStore);
         this.datasourceManager = new DatasourceManager(this.shellManager, config, this.historyStore);
@@ -37,28 +37,6 @@ class RootStore {
         this.shellManager.start();
         this.pluginManager._init();
 
-    }
-
-    @action.bound loadMenu() {
-        let res = {}
-        try {
-            const data = readFileSync(config.menu.menuPath);
-            if (data) {
-                res = JSON.parse(data.toString());
-            }
-        } catch (e) { }
-        this.menuConfig = res;
-    }
-
-    @action.bound registerContextMenu(menu) {
-        try {
-            if (!this.menuConfig) return false;
-            if (!this.menuConfig.children) return false;
-            this.menuConfig.children.push(menu);
-            return true;
-        } catch (e) {
-            console.error(e);
-        }
     }
 
 }

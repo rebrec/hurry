@@ -59,6 +59,7 @@ export default class Main extends React.Component {
 
   render() {
     const {uiState} = store;
+    const menuConfig = store.contextMenu.getMenu();
     console.log('store',uiState);
 
     return (<div>
@@ -93,7 +94,7 @@ export default class Main extends React.Component {
             </div>
             {uiState.app.menu.visible && (
               <ModalDialog onClose={uiState.hideMenu}>
-                  <Menu data={store.menuConfig} context={ store.uiState.search.selectedResult } />
+                  <Menu data={menuConfig} context={ store.uiState.search.selectedResult } />
               </ModalDialog> 
             )}
             </div>

@@ -217,7 +217,7 @@ class CommandPanel extends React.Component {
   }
 
   render() {
-    const {data, extraclass, selected, handlerType}= this.props;
+    const {data, extraclass, selected, handlerType, context}= this.props;
     const handlerList = ['onClick', 'onMouseOver'];
     if (handlerList.indexOf(handlerType)<=-1) {
       return (
@@ -229,6 +229,9 @@ class CommandPanel extends React.Component {
     let elts = [];
     for (let i=0;i<data.length;i++){
       const elt = data[i];
+      if (elt.hasOwnProperty('datasources')) {
+        if ((elt.datasources.length >0) && elt.datasources.indexOf(context.datasource.name)<0) continue;
+      }
       if (elt.hasOwnProperty('platform') && elt.platform != store.platform) continue;
       if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context.datasource.name) continue;
 
