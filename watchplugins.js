@@ -18,6 +18,21 @@ function getDirectories(source) {
         .map(dirent => path.join(source, dirent.name))
 }
 
+class WatchRunPlugin {
+  apply(compiler) {
+    compiler.hooks.watchRun.tap('WatchRun', (comp) => {
+      const changedTimes = comp.watchFileSystem.watcher.mtimes;
+      const changedFiles = Object.keys(changedTimes)
+        .map(file => `\n  ${file}`)
+        .join('');
+      if (changedFiles.length) {
+        console.log("====================================")
+        console.log('NEW BUILD FILES CHANGED:', changedFiles);
+        console.log("====================================")
+      }
+    });
+  }
+}
 
 console.log('Searching for plugins within folder:', pluginInputPath);
 
@@ -33,7 +48,6 @@ for (let i=0;i<directories.length;i++){
     console.log('Found plugin: ' + pluginName);
     pluginNames.push(pluginName);
 }
-
 for (const plugin of pluginNames){
     buildAndWatchPlugin(plugin);
 }
@@ -53,6 +67,7 @@ function buildAndWatchPlugin(pluginName){
       rules: rules
     },
     plugins: [
+      // new WatchRunPlugin(),
       new CleanWebpackPlugin(),
       new CopyWebPackPlugin({
         patterns: [
@@ -88,7 +103,7 @@ function buildAndWatchPlugin(pluginName){
     }
   };
   const compiler = webpack(config);
-  const watcher = compiler.watch({}, function(err,info) {
+  const watcher = compiler.watch({ ignored: /dist/ }, function(err,info) {
       if (err) console.error(err);
       console.log('[' + new Date().toISOString() + '] Rebuilding plugin ' + pluginName + ' ...');
     // Gets called every time Webpack finishes recompiling.
