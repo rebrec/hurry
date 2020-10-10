@@ -2,6 +2,8 @@ import { existsSync } from 'fs'
 import { getFiles, getDirectories } from './helpers/helpers'
 import { observable, action } from 'mobx';
 import api from './api';
+import config from '../config'
+
 import Path from 'path';
 
 const { platform } = require('os');
@@ -23,20 +25,23 @@ export default class PluginManager{
 
     _getPluginInfos(pluginsPath){
         const pluginInfos = []
-        const pluginDirs = getDirectories(pluginsPath);
-        for (const pluginDirPath of pluginDirs){
-            console.log('scanning ', pluginDirPath);
-            const pluginRoot = Path.join(pluginDirPath, 'dist')
-            const pluginFullPath = Path.join(pluginRoot, 'main.bundle.js');
-            if (existsSync(pluginFullPath)){
-                const pluginName = pluginRoot.split('/').splice(-2).shift()
-                const pluginInfo = {
-                    pluginName: pluginName,
-                    pluginPath: pluginFullPath,
-                    pluginDir: pluginRoot
+        const { builtinsPath } = config;
+        for (const pluginsPath of [builtinsPath, pluginsPath]) {
+            const pluginDirs = getDirectories(pluginsPath);
+            for (const pluginDirPath of pluginDirs){
+                console.log('scanning ', pluginDirPath);
+                const pluginRoot = Path.join(pluginDirPath, 'dist')
+                const pluginFullPath = Path.join(pluginRoot, 'main.bundle.js');
+                if (existsSync(pluginFullPath)){
+                    const pluginName = pluginRoot.split('/').splice(-2).shift()
+                    const pluginInfo = {
+                        pluginName: pluginName,
+                        pluginPath: pluginFullPath,
+                        pluginDir: pluginRoot
+                    }
+                    pluginInfos.push(pluginInfo);
+                    console.log('Found plugin !', pluginFullPath);
                 }
-                pluginInfos.push(pluginInfo);
-                console.log('Found plugin !', pluginFullPath);
             }
         }
         return pluginInfos;
