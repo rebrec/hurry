@@ -5231,6 +5231,11 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
+hurry-plugin-definition@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/hurry-plugin-definition/-/hurry-plugin-definition-1.0.2.tgz#131aef7759da03e6160ddd61d0523f85783313d9"
+  integrity sha512-Mx/4gAbYwcqYyiGb0x8TE+t2jceaJ2ylfcUhAtzX8AvTWtmVPTCUj7lF2bMjgLJPbDyIhTu/7Kd9xFYUVIlNFg==
+
 icmp@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/icmp/-/icmp-1.4.0.tgz#8ae2305be393b07e55ba4e0837af03bfc8dc4856"
@@ -6414,6 +6419,11 @@ lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.1
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+
+lodash@^4.17.20:
+  version "4.17.20"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
+  integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
 
 log-symbols@2.2.0, log-symbols@^2.2.0:
   version "2.2.0"
