@@ -51,7 +51,9 @@ class EditableMenuElement extends React.Component {
     
     const res = [];
 
-    const cssClass = "editablemenu-" + properties.type.toLowerCase() + (this.props.selected === element ? " editablemenu-selected" : "");
+    let cssClass = "editablemenu-" + properties.type.toLowerCase();
+    cssClass += this.props.selected === element ? " editablemenu-selected" : "";
+    cssClass += element.properties.locked === true ? " editablemenu-locked" : "";
 
     if (!this.isRoot){
       res.push(
