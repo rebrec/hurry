@@ -29,21 +29,30 @@ export default class MenuManager{
         this.show();
     }
 
-    initMenu(){
-        const { Menu, MenuItem } = this._remote;
-
-        this._menu = Menu.buildFromTemplate(this._menuTemplate)
-        
-        Menu.setApplicationMenu(this._menu);
-
+    _findLabelPosition(menu, labelName){
+        for (let i=0; i<menu.length; i++){
+            const elt = menu[i];
+            if (elt.label.replace('&', '') === labelName){
+                return i
+            }
+        }
+        return -1;
     }
 
-    insertMenuItem(location, submenuTemplate){
+    initMenu(){
+        const { Menu, MenuItem } = this._remote;
+        this._menu = Menu.buildFromTemplate(this._menuTemplate)
+        Menu.setApplicationMenu(this._menu);
+    }
+
+    insertMenuItem(location, submenuTemplate, position={}){
         const submenu = this._getSubmenu(location);
-        if (submenu) {
-            submenu.push(submenuTemplate);
-            this.initMenu();
-        }
+        if (!submenu) return
+        let index = submenu.length;
+        if (position.hasOwnProperty('after')){ index = this._findLabelPosition(submenu, position.after) + 1 }
+        if (position.hasOwnProperty('before')){ index = this._findLabelPosition(submenu, position.before) }
+        submenu.splice(index, 0, submenuTemplate)
+        this.initMenu();
         
     }
     _getSubmenu(label){
