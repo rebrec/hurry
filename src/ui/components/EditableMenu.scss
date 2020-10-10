@@ -5,12 +5,16 @@
 }
 
 .editablemenu-selected {
-    background-color: #c9c9c9
+    background-color: #c9c9c9;
 }
 
 .editablemenu-container{
     font-weight: 800;
 
+}
+
+.editablemenu-locked::after {
+    content: ' 🔒';
 }
 
 .editablemenu-element{

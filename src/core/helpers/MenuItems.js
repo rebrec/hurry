@@ -28,6 +28,10 @@ class MenuItemElement {
         return this.parent.moveElementDown(this);
     }
 
+    remove(){
+        return this.parent.removeElement(this);
+    }
+
     static fromObject(obj){
         return new MenuItemElement(obj);
     }
@@ -120,6 +124,7 @@ class MenuItemContainer extends MenuItemElement{
 
     moveElementDown(element) {
         const newIdx = this.children.indexOf(element) + 1;
+        if (this.children[newIdx].properties.locked === true) return element;
         this.removeElement(element);
         this.insertElement(element, newIdx);
         return element;
@@ -139,6 +144,7 @@ class MenuItemContainer extends MenuItemElement{
         tmpObj.children = [];
         for (let i=0;i<this.children.length;i++){
             const child = this.children[i];
+            if (child.properties.locked === true) continue;
             tmpObj.children.push(child.toObject());
         }
         return tmpObj;

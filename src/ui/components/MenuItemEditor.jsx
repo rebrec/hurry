@@ -170,19 +170,21 @@ class MenuItemDetailToolBar extends React.Component {
   }
   render() {
     const {element} = this.props;
+    console.log(element);
+    const disabled = element && element.properties.locked === true;
     return (
       <>
         { element && element.isContainer() && (
             <>
-              <Button variant="primary" onClick={() => {element.addNewMenuItemContainer({type:"CONTAINER", caption: "New Container"})}} >Add Container</Button>
-              <Button variant="primary" onClick={() => {element.addNewMenuItemElement({type:"COMMAND", caption: "New Command"})}} >Add Command</Button>
+              <Button variant="primary" onClick={() => {element.addNewMenuItemContainer({type:"CONTAINER", caption: "New Container"})}} disabled={disabled} >Add Container</Button>
+              <Button variant="primary" onClick={() => {element.addNewMenuItemElement({type:"COMMAND", caption: "New Command"})}} disabled={disabled}>Add Command</Button>
             </>
           )
         }
-        <Button variant="primary" onClick={() => {element.moveUp()}} >Move Up</Button>{' '}
-        <Button variant="primary" onClick={() => {element.moveUp()}} >Move Up</Button>{' '}
-        <Button variant="primary" onClick={() => {element.moveDown()}} >Move Down</Button>{' '}
-        <Button variant="primary" onClick={() => {element.moveToParent()}} >Move to Parent</Button>{' '}
+        <Button variant="primary" onClick={() => {element.moveUp()}} disabled={disabled}>Move Up</Button>{' '}
+        <Button variant="primary" onClick={() => {element.moveDown()}} disabled={disabled}>Move Down</Button>{' '}
+        <Button variant="primary" onClick={() => {element.moveToParent()}} disabled={disabled}>Move to Parent</Button>{' '}
+        <Button variant="primary" onClick={() => {confirm("Are you sure to remove this element ?") && element.remove()}} disabled={disabled}>Remove</Button>{' '}
       </>
     );
   }
