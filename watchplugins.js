@@ -7,7 +7,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const pluginOutputPath = path.join(process.cwd(), "plugins-dist");
 const pluginInputPath = path.join(process.cwd(), "plugins-src");
-const pluginNames = [];
+const builtinsInputPath = path.join(process.cwd(), "src", "builtins");
+const plugins = [];
 
 const entryName = "index.js";
 
@@ -36,28 +37,30 @@ class WatchRunPlugin {
 
 console.log('Searching for plugins within folder:', pluginInputPath);
 
-const directories = getDirectories(pluginInputPath);
+let directories = getDirectories(pluginInputPath);
+directories.push(...getDirectories(builtinsInputPath));
 
 for (let i=0;i<directories.length;i++){
     const directory = directories[i];
     const pluginName = directory.split(path.sep).pop();
-    if (!fs.existsSync(path.join(directory, entryName))) {
+    const entrypoint = path.join(directory, entryName)
+    if (!fs.existsSync(entrypoint)) {
         console.warn("Skipping plugin : " + pluginName + " (missing " + entryName +").");
         continue;
     }
     console.log('Found plugin: ' + pluginName);
-    pluginNames.push(pluginName);
+    plugins.push({name: pluginName, entry: entrypoint, rootdir: directory});
 }
-for (const plugin of pluginNames){
+for (const plugin of plugins){
     buildAndWatchPlugin(plugin);
 }
-function buildAndWatchPlugin(pluginName){
+function buildAndWatchPlugin(plugin){
   // const pluginName = 'dummy-datasource'
   // const pluginName = 'smileytest-plugin'
   // const pluginName = 'about-plugin'
-  const entry = path.join(__dirname, 'plugins-src', pluginName, entryName)
-  const source = path.join(__dirname, 'plugins-src', pluginName)
-  const output = path.join(__dirname, 'plugins-src', pluginName, 'dist')
+  const {name, entry, rootdir} = plugin;
+  const source = rootdir;
+  const output = path.join(rootdir, 'dist')
 
   const config = {
     mode: 'development',
@@ -105,7 +108,7 @@ function buildAndWatchPlugin(pluginName){
   const compiler = webpack(config);
   const watcher = compiler.watch({ ignored: /dist/ }, function(err,info) {
       if (err) console.error(err);
-      console.log('[' + new Date().toISOString() + '] Rebuilding plugin ' + pluginName + ' ...');
+      console.log('[' + new Date().toISOString() + '] Rebuilding plugin ' + name + ' ...');
     // Gets called every time Webpack finishes recompiling.
   });
 }

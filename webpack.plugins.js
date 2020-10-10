@@ -9,6 +9,7 @@ module.exports = [
   new CopyPlugin({
       patterns: [
         { from: path.join('src', 'modules'), to: 'modules' },
+        { from: path.join('src', 'builtins'), to: 'builtins' },
       ]
   }),
 ];
