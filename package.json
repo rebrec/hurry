@@ -1,7 +1,7 @@
 {
   "name": "hurry",
   "productName": "hurry",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Daily Helpdesk / admin's tool",
   "main": ".webpack/main",
   "scripts": {
@@ -83,8 +83,10 @@
     "electron-squirrel-startup": "^1.0.0",
     "fifo": "^2.3.0",
     "generic-pool": "2.4.4",
+    "hurry-plugin-definition": "^1.0.2",
     "icmp": "^1.4.0",
     "jquery": "^3.4.1",
+    "lodash": "^4.17.20",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
     "mocha": "^6.2.2",
