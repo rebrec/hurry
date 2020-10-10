@@ -81,7 +81,9 @@ Object.assign(config, {
     shellFeaturesPath: Path.join(modulesRoot, "shellfeatures"),
     datasourcesPath: Path.join(modulesRoot, "datasources"),
     viewsPath:  Path.join(config.projectRoot, "ui", "views"),
-    historyFilePath:  historyFilePath
+    historyFilePath:  historyFilePath,
+    builtinsPath: Path.join(config.projectRoot, 'builtins')
+    
 });
 
 //Object.assign(config, customSettings);
