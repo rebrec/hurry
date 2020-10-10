@@ -82,7 +82,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./plugins-src/plugin-installer/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/builtins/plugin-installer/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -701,15 +701,15 @@ function objectToString(o) {
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js?!./plugins-src/plugin-installer/PluginInstallerView.scss":
-/*!******************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ref--8-2!./plugins-src/plugin-installer/PluginInstallerView.scss ***!
-  \******************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js?!./src/builtins/plugin-installer/PluginInstallerView.scss":
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ref--8-2!./src/builtins/plugin-installer/PluginInstallerView.scss ***!
+  \*******************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, "", ""]);
@@ -43810,10 +43810,10 @@ function extend() {
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/PluginInstaller.js":
-/*!*********************************************************!*\
-  !*** ./plugins-src/plugin-installer/PluginInstaller.js ***!
-  \*********************************************************/
+/***/ "./src/builtins/plugin-installer/PluginInstaller.js":
+/*!**********************************************************!*\
+  !*** ./src/builtins/plugin-installer/PluginInstaller.js ***!
+  \**********************************************************/
 /*! exports provided: searchPlugin, getDownloadURL, downloadNpmPackage, extractNpmPackage, copyNpmPackage, installNpmPackage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43825,13 +43825,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "extractNpmPackage", function() { return extractNpmPackage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "copyNpmPackage", function() { return copyNpmPackage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "installNpmPackage", function() { return installNpmPackage; });
-/* harmony import */ var ncp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ncp */ "./plugins-src/plugin-installer/node_modules/ncp/lib/ncp.js");
+/* harmony import */ var ncp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ncp */ "./src/builtins/plugin-installer/node_modules/ncp/lib/ncp.js");
 /* harmony import */ var ncp__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(ncp__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var nanoid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nanoid */ "./plugins-src/plugin-installer/node_modules/nanoid/index.js");
+/* harmony import */ var nanoid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nanoid */ "./src/builtins/plugin-installer/node_modules/nanoid/index.js");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! path */ "path");
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! node-fetch */ "./plugins-src/plugin-installer/node_modules/node-fetch/lib/index.mjs");
-/* harmony import */ var search_packages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! search-packages */ "./plugins-src/plugin-installer/node_modules/search-packages/libm/index.js");
+/* harmony import */ var node_fetch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! node-fetch */ "./src/builtins/plugin-installer/node_modules/node-fetch/lib/index.mjs");
+/* harmony import */ var search_packages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! search-packages */ "./src/builtins/plugin-installer/node_modules/search-packages/libm/index.js");
 /* harmony import */ var os__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! os */ "os");
 /* harmony import */ var os__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(os__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var targz__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! targz */ "./node_modules/targz/index.js");
@@ -43927,19 +43927,19 @@ var installNpmPackage = function installNpmPackage(filename, pluginDir) {
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/PluginInstallerView.jsx":
-/*!**************************************************************!*\
-  !*** ./plugins-src/plugin-installer/PluginInstallerView.jsx ***!
-  \**************************************************************/
+/***/ "./src/builtins/plugin-installer/PluginInstallerView.jsx":
+/*!***************************************************************!*\
+  !*** ./src/builtins/plugin-installer/PluginInstallerView.jsx ***!
+  \***************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./plugins-src/plugin-installer/node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./src/builtins/plugin-installer/node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/dist/mobx-react.module.js");
-/* harmony import */ var _PluginInstallerView_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PluginInstallerView.scss */ "./plugins-src/plugin-installer/PluginInstallerView.scss");
+/* harmony import */ var _PluginInstallerView_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PluginInstallerView.scss */ "./src/builtins/plugin-installer/PluginInstallerView.scss");
 /* harmony import */ var _PluginInstallerView_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_PluginInstallerView_scss__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -43959,7 +43959,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var PluginInstaller = __webpack_require__(/*! ./PluginInstaller */ "./plugins-src/plugin-installer/PluginInstaller.js"); // import search from 'libnpmsearch'
+var PluginInstaller = __webpack_require__(/*! ./PluginInstaller */ "./src/builtins/plugin-installer/PluginInstaller.js"); // import search from 'libnpmsearch'
 
 
 
@@ -44053,15 +44053,15 @@ var PluginInstaller = __webpack_require__(/*! ./PluginInstaller */ "./plugins-sr
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/PluginInstallerView.scss":
-/*!***************************************************************!*\
-  !*** ./plugins-src/plugin-installer/PluginInstallerView.scss ***!
-  \***************************************************************/
+/***/ "./src/builtins/plugin-installer/PluginInstallerView.scss":
+/*!****************************************************************!*\
+  !*** ./src/builtins/plugin-installer/PluginInstallerView.scss ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../node_modules/css-loader/dist/cjs.js!../../node_modules/sass-loader/dist/cjs.js??ref--8-2!./PluginInstallerView.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js?!./plugins-src/plugin-installer/PluginInstallerView.scss");
+var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js??ref--8-2!./PluginInstallerView.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js?!./src/builtins/plugin-installer/PluginInstallerView.scss");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -44075,7 +44075,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -44083,18 +44083,18 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/index.js":
-/*!***********************************************!*\
-  !*** ./plugins-src/plugin-installer/index.js ***!
-  \***********************************************/
+/***/ "./src/builtins/plugin-installer/index.js":
+/*!************************************************!*\
+  !*** ./src/builtins/plugin-installer/index.js ***!
+  \************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PluginInstaller; });
-/* harmony import */ var _src_core_Plugin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../src/core/Plugin */ "./src/core/Plugin.js");
-/* harmony import */ var _PluginInstallerView_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PluginInstallerView.jsx */ "./plugins-src/plugin-installer/PluginInstallerView.jsx");
+/* harmony import */ var _src_core_Plugin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../src/core/Plugin */ "./src/core/Plugin.js");
+/* harmony import */ var _PluginInstallerView_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PluginInstallerView.jsx */ "./src/builtins/plugin-installer/PluginInstallerView.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44134,6 +44134,8 @@ function (_Plugin) {
       click: function click() {
         return api.store.uiState.showModal('PluginInstallerView');
       }
+    }, {
+      after: 'Settings'
     });
     return _this;
   }
@@ -44156,10 +44158,10 @@ function (_Plugin) {
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/nanoid/index.js":
-/*!*******************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/nanoid/index.js ***!
-  \*******************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/nanoid/index.js":
+/*!********************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/nanoid/index.js ***!
+  \********************************************************************/
 /*! exports provided: nanoid, customAlphabet, customRandom, urlAlphabet, random */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44171,7 +44173,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "random", function() { return random; });
 /* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! crypto */ "crypto");
 /* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(crypto__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _url_alphabet_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./url-alphabet/index.js */ "./plugins-src/plugin-installer/node_modules/nanoid/url-alphabet/index.js");
+/* harmony import */ var _url_alphabet_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./url-alphabet/index.js */ "./src/builtins/plugin-installer/node_modules/nanoid/url-alphabet/index.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "urlAlphabet", function() { return _url_alphabet_index_js__WEBPACK_IMPORTED_MODULE_1__["urlAlphabet"]; });
 
 
@@ -44251,10 +44253,10 @@ let nanoid = (size = 21) => {
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/nanoid/url-alphabet/index.js":
-/*!********************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/nanoid/url-alphabet/index.js ***!
-  \********************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/nanoid/url-alphabet/index.js":
+/*!*********************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/nanoid/url-alphabet/index.js ***!
+  \*********************************************************************************/
 /*! exports provided: urlAlphabet */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44271,10 +44273,10 @@ let urlAlphabet =
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/ncp/lib/ncp.js":
-/*!******************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/ncp/lib/ncp.js ***!
-  \******************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/ncp/lib/ncp.js":
+/*!*******************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/ncp/lib/ncp.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44543,10 +44545,10 @@ function ncp (source, dest, options, callback) {
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/node-fetch/lib/index.mjs":
-/*!****************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/node-fetch/lib/index.mjs ***!
-  \****************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/node-fetch/lib/index.mjs":
+/*!*****************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/node-fetch/lib/index.mjs ***!
+  \*****************************************************************************/
 /*! exports provided: default, Headers, Request, Response, FetchError */
 /***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
 
@@ -46203,10 +46205,10 @@ fetch.Promise = global.Promise;
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/object-assign/index.js":
-/*!**************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/object-assign/index.js ***!
-  \**************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/object-assign/index.js":
+/*!***************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/object-assign/index.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46305,10 +46307,10 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/prop-types/checkPropTypes.js":
-/*!********************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/prop-types/checkPropTypes.js ***!
-  \********************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/prop-types/checkPropTypes.js":
+/*!*********************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/prop-types/checkPropTypes.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46325,7 +46327,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var printWarning = function() {};
 
 if (true) {
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./plugins-src/plugin-installer/node_modules/prop-types/lib/ReactPropTypesSecret.js");
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./src/builtins/plugin-installer/node_modules/prop-types/lib/ReactPropTypesSecret.js");
   var loggedTypeFailures = {};
   var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -46419,10 +46421,10 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/prop-types/lib/ReactPropTypesSecret.js":
-/*!******************************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
-  \******************************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/prop-types/lib/ReactPropTypesSecret.js":
+/*!*******************************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46443,10 +46445,10 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/react/cjs/react.development.js":
-/*!**********************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/react/cjs/react.development.js ***!
-  \**********************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/react/cjs/react.development.js":
+/*!***********************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/react/cjs/react.development.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46468,8 +46470,8 @@ if (true) {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(/*! object-assign */ "./plugins-src/plugin-installer/node_modules/object-assign/index.js");
-var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "./plugins-src/plugin-installer/node_modules/prop-types/checkPropTypes.js");
+var _assign = __webpack_require__(/*! object-assign */ "./src/builtins/plugin-installer/node_modules/object-assign/index.js");
+var checkPropTypes = __webpack_require__(/*! prop-types/checkPropTypes */ "./src/builtins/plugin-installer/node_modules/prop-types/checkPropTypes.js");
 
 var ReactVersion = '16.13.1';
 
@@ -48367,10 +48369,10 @@ exports.version = ReactVersion;
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/react/index.js":
-/*!******************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/react/index.js ***!
-  \******************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/react/index.js":
+/*!*******************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/react/index.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -48378,16 +48380,16 @@ exports.version = ReactVersion;
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(/*! ./cjs/react.development.js */ "./plugins-src/plugin-installer/node_modules/react/cjs/react.development.js");
+  module.exports = __webpack_require__(/*! ./cjs/react.development.js */ "./src/builtins/plugin-installer/node_modules/react/cjs/react.development.js");
 }
 
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/search-packages/libm/hasAllKeywords.js":
-/*!******************************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/search-packages/libm/hasAllKeywords.js ***!
-  \******************************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/search-packages/libm/hasAllKeywords.js":
+/*!*******************************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/search-packages/libm/hasAllKeywords.js ***!
+  \*******************************************************************************************/
 /*! exports provided: hasAllKeywords */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -48402,16 +48404,16 @@ function hasAllKeywords(actual, expected) {
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/search-packages/libm/index.js":
-/*!*********************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/search-packages/libm/index.js ***!
-  \*********************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/search-packages/libm/index.js":
+/*!**********************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/search-packages/libm/index.js ***!
+  \**********************************************************************************/
 /*! exports provided: searchByKeywords */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _searchByKeywords__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./searchByKeywords */ "./plugins-src/plugin-installer/node_modules/search-packages/libm/searchByKeywords.js");
+/* harmony import */ var _searchByKeywords__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./searchByKeywords */ "./src/builtins/plugin-installer/node_modules/search-packages/libm/searchByKeywords.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "searchByKeywords", function() { return _searchByKeywords__WEBPACK_IMPORTED_MODULE_0__["searchByKeywords"]; });
 
 
@@ -48419,17 +48421,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/search-packages/libm/pickPackagesWithKeywords.js":
-/*!****************************************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/search-packages/libm/pickPackagesWithKeywords.js ***!
-  \****************************************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/search-packages/libm/pickPackagesWithKeywords.js":
+/*!*****************************************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/search-packages/libm/pickPackagesWithKeywords.js ***!
+  \*****************************************************************************************************/
 /*! exports provided: pickPackagesWithKeywords */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pickPackagesWithKeywords", function() { return pickPackagesWithKeywords; });
-/* harmony import */ var _hasAllKeywords__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasAllKeywords */ "./plugins-src/plugin-installer/node_modules/search-packages/libm/hasAllKeywords.js");
+/* harmony import */ var _hasAllKeywords__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasAllKeywords */ "./src/builtins/plugin-installer/node_modules/search-packages/libm/hasAllKeywords.js");
 
 function pickPackagesWithKeywords(packageInfos, keywords, fields) {
     const pkgs = packageInfos.filter(pkg => Object(_hasAllKeywords__WEBPACK_IMPORTED_MODULE_0__["hasAllKeywords"])(pkg.keywords, keywords));
@@ -48445,10 +48447,10 @@ function pickPackagesWithKeywords(packageInfos, keywords, fields) {
 
 /***/ }),
 
-/***/ "./plugins-src/plugin-installer/node_modules/search-packages/libm/searchByKeywords.js":
-/*!********************************************************************************************!*\
-  !*** ./plugins-src/plugin-installer/node_modules/search-packages/libm/searchByKeywords.js ***!
-  \********************************************************************************************/
+/***/ "./src/builtins/plugin-installer/node_modules/search-packages/libm/searchByKeywords.js":
+/*!*********************************************************************************************!*\
+  !*** ./src/builtins/plugin-installer/node_modules/search-packages/libm/searchByKeywords.js ***!
+  \*********************************************************************************************/
 /*! exports provided: searchByKeywords */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -48457,7 +48459,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchByKeywords", function() { return searchByKeywords; });
 /* harmony import */ var child_process__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! child_process */ "child_process");
 /* harmony import */ var child_process__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(child_process__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _pickPackagesWithKeywords__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pickPackagesWithKeywords */ "./plugins-src/plugin-installer/node_modules/search-packages/libm/pickPackagesWithKeywords.js");
+/* harmony import */ var _pickPackagesWithKeywords__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pickPackagesWithKeywords */ "./src/builtins/plugin-installer/node_modules/search-packages/libm/pickPackagesWithKeywords.js");
 
 
 // istanbul ignore next
