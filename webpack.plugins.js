@@ -14,7 +14,6 @@ module.exports = [
           globOptions: {
             ignore: [
                 '**/node_modules',
-                '**/dist',
                 '**/.gitignore',
                 '**/.git',
                 '**/yarn.lock',

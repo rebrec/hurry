@@ -1,7 +1,7 @@
 {
   "name": "hurry",
   "productName": "hurry",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Daily Helpdesk / admin's tool",
   "main": ".webpack/main",
   "scripts": {
@@ -12,6 +12,7 @@
     "test": "mocha --require @babel/register --recursive",
     "package": "env NODE_ENV=production electron-forge package",
     "make": "env NODE_ENV=production electron-forge make",
+    "make-windows": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
