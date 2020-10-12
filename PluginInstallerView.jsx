@@ -1,5 +1,6 @@
 
 const PluginInstaller = require('./PluginInstaller')
+import PluginSearchBar from './components/PluginSearchBar'
 // import search from 'libnpmsearch'
 import React from 'react';
 import { observer } from 'mobx-react'
@@ -11,7 +12,7 @@ export default function (api){
 
         constructor(props) {
             super(props);
-            this.trySearch = this.trySearch.bind(this);
+            this.trySearch = this.search.bind(this);
         }
 
         onDownloadPackageButtonClick(pluginName){
@@ -25,7 +26,7 @@ export default function (api){
             })
         }
 
-        trySearch(){
+        search(){
             PluginInstaller.searchPlugin()
             .then(res =>{
                 this.setState({availablePlugins:res});
@@ -55,11 +56,18 @@ export default function (api){
             return (
                 <div className="container-fluid">
                 <div className="row">
-                    <div className="col-sm-12">
-                        <h1>Plugin Installer</h1>
-                        <button type="button" className="btn btn-primary" onClick={this.trySearch()}>Test</button>
+                    <div className="col-12">
+                    <h1>Plugin Installer</h1>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-3">
+                        <PluginSearchBar onSearch={text=>{console.log('Search Text', text)}}/>
+
+                        <button type="button" className="btn btn-primary" onClick={this.search}>Get Plugin List</button>
                         <ul>{ this.renderPluginList() }</ul>
                     </div>
+                    <div className="col-9"></div>
                 </div>
                 </div>);
         }

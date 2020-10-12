@@ -1,6 +1,6 @@
 import Plugin from '../../../src/core/Plugin'
 // import Plugin from 'hurry-plugin-definition'
-import PluginInstallerView from './views/PluginInstallerView.jsx'
+import PluginInstallerView from './PluginInstallerView.jsx'
 
 export default class PluginInstaller extends Plugin{
 
