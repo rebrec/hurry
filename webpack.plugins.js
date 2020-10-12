@@ -9,7 +9,19 @@ module.exports = [
   new CopyPlugin({
       patterns: [
         { from: path.join('src', 'modules'), to: 'modules' },
-        { from: path.join('src', 'builtins'), to: 'builtins' },
+        { 
+          from: path.join('src', 'builtins'), 
+          globOptions: {
+            ignore: [
+                '**/node_modules',
+                '**/dist',
+                '**/.gitignore',
+                '**/.git',
+                '**/yarn.lock',
+                
+          ]},
+          to: 'builtins' 
+        },
       ]
   }),
 ];
