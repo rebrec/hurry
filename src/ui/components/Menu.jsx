@@ -230,7 +230,7 @@ class CommandPanel extends React.Component {
     for (let i=0;i<data.length;i++){
       const elt = data[i];
       if (elt.hasOwnProperty('datasources')) {
-        if ((elt.datasources.length >0) && elt.datasources.indexOf(context.datasource.name)<0) continue;
+        if ((elt.datasources.length >0) && elt.datasources.indexOf(context.datasource.name)<0) continue; 
       }
       if (elt.hasOwnProperty('platform') && elt.platform != store.platform) continue;
       if (elt.hasOwnProperty('datasource') && elt.datasource !== this.props.context.datasource.name) continue;
