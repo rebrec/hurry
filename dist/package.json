@@ -1,0 +1,28 @@
+{
+  "name": "about-plugin",
+  "version": "1.0.3",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rebrec/hurry-about-plugin.git"
+  },
+  "keywords": [
+    "hurry-admin-plugin"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rebrec/hurry-about-plugin/issues"
+  },
+  "homepage": "https://github.com/rebrec/hurry-about-plugin#readme",
+  "devDependencies": {
+    "np": "^6.5.0"
+  },
+  "dependencies": {
+    "hurry-plugin-definition": "^1.0.2"
+  }
+}
