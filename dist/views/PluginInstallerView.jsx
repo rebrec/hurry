@@ -26,10 +26,10 @@ export default function (api){
         }
 
         onDownloadPackageButtonClick(pluginInfos){
-            const {pluginName} = pluginInfos;
-            console.log('PluginInstaller.downloadNpmPackage', pluginName)
+            const {name} = pluginInfos;
+            console.log('PluginInstaller.downloadNpmPackage', name)
             this.setState({downloadStatus: "Downloading"});
-            PluginInstaller.downloadNpmPackage(pluginName)
+            PluginInstaller.downloadNpmPackage(name)
             .then(filename => {
                 this.setState({downloadStatus: "Installing"});
                 return PluginInstaller.installNpmPackage(filename, api.config.pluginsPath);
