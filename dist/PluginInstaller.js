@@ -15,13 +15,17 @@ export const searchPlugin = function searchPlugin(keyword){
     return searchByKeywords(['hurry-admin-plugin'], keyword)
 }
 
-export const getDownloadURL = function getDownloadURL(packageName){
+export const getPluginInfos = function getPluginInfos(packageName){
     const downloadURL = `https://registry.npmjs.org/${packageName}`;
     console.log('downloading ' + downloadURL);
     return fetch(downloadURL)
     .then(response => {
         return response.json();
     })
+}
+
+export const getDownloadURL = function getDownloadURL(packageName){
+    return getPluginInfos(packageName)
     .then(json => {
         const latestTag = json['dist-tags'].latest;
         const tarballURL = json.versions[latestTag].dist.tarball;
@@ -93,7 +97,13 @@ export const copyNpmPackage = function copyNpmPackage(packagePath, destination){
 export const installNpmPackage = function installNpmPackage(filename, pluginDir){
     return extractNpmPackage(filename)
     .then(tempExtractDir =>{
+        return new Promise((resolve,reject)=>{
+            setTimeout(_=>{
+                resolve()
+            },2000);    
+        }).then(_=>{
+            return copyNpmPackage(Path.join(tempExtractDir, '..'), pluginDir)
+        })
         
-        return copyNpmPackage(Path.join(tempExtractDir, '..'), pluginDir)
     })
 }
