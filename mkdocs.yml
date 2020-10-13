@@ -1,0 +1,11 @@
+site_name: Hurry Documentation
+site_description: 'Documentation about Hurry IT Admin Tool'
+site_author: 'rebrec'
+docs_dir: docs/
+repo_name: 'rebrec/hurry'
+repo_url: 'https://github.com/rebrec/hurry'
+nav:
+    - Home: README.md
+    - Getting Started: guides/getting-started.md
+theme:
+  name: 'material'
