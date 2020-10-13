@@ -1,7 +1,7 @@
 {
   "name": "hurry",
   "productName": "hurry",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Daily Helpdesk / admin's tool",
   "main": ".webpack/main",
   "scripts": {
