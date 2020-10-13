@@ -1,0 +1,19 @@
+.plugin-list-line{
+    list-style: none;
+    text-align: left;
+}
+
+.plugin-list-line:hover{
+    background-color: #505050;
+    color:#adadad;
+}
+
+.plugin-list {
+    padding: 0;
+    list-style-type: none;
+}
+
+.plugin-list-line-selected{
+    background-color: #505050;
+    color:#adadad;
+}
