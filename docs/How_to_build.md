@@ -10,7 +10,7 @@
 Clone this repository using common *git clone* command :
 
 ```
-git clone https://gitlab.com/rebrec/hurry
+git clone https://github.com/rebrec/hurry
 yarn install
 ```
 

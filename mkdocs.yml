@@ -6,8 +6,9 @@ repo_name: 'rebrec/hurry'
 repo_url: 'https://github.com/rebrec/hurry'
 nav:
     - Home: README.md
-    - Getting Started: 
+    - Getting Started:
       - Install and configure: guides/getting-started/install-and-configure.md
       - Install a plugin: guides/getting-started/install-a-plugin.md
+    - Setup your build environment: guides/setup-the-build-environment/setup-the-build-environment.md
 theme:
   name: 'material'
