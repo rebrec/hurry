@@ -44432,9 +44432,6 @@ function (_Plugin) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PluginInstaller).call(this, api, context));
     api.store.uiState.addView('PluginInstallerView', Object(_views_PluginInstallerView_jsx__WEBPACK_IMPORTED_MODULE_1__["default"])(api));
-    setTimeout(function (_) {
-      api.store.uiState.setCurrentView("PluginInstallerView");
-    }, 2000);
     api.menu.insertMenuItem('File', {
       label: "&Install Plugin",
       click: function click() {
@@ -62285,12 +62282,12 @@ var PluginInstaller = __webpack_require__(/*! ../PluginInstaller */ "./src/built
       value: function onDownloadPackageButtonClick(pluginInfos) {
         var _this2 = this;
 
-        var pluginName = pluginInfos.pluginName;
-        console.log('PluginInstaller.downloadNpmPackage', pluginName);
+        var name = pluginInfos.name;
+        console.log('PluginInstaller.downloadNpmPackage', name);
         this.setState({
           downloadStatus: "Downloading"
         });
-        PluginInstaller.downloadNpmPackage(pluginName).then(function (filename) {
+        PluginInstaller.downloadNpmPackage(name).then(function (filename) {
           _this2.setState({
             downloadStatus: "Installing"
           });
