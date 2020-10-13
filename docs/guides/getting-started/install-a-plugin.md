@@ -2,14 +2,14 @@
 
 ## Overview
 
-Plugins are what makes hurry usefull. After a fresh installation, you won't be able to do 
+Plugins are what makes hurry useful. After a fresh installation, you won't be able to do 
 anything useful until you **install a plugin**
 
 Plugins can provide new capabilities to Hurry, such as :
 
 - provide a new **Datasource** to search for
 - provide some **Actions** to perform on search results through the use of the **Context Menu**
-- create a new **View** to display some other informations
+- create a new **View** to display some other information
 - etc.
 
 The goal of the plugin system is to let everyone improve Hurry by adding new features to it.
