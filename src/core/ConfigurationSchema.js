@@ -3,7 +3,7 @@ import api from '../core/api'
 import {getDirectories} from '../core/helpers/helpers'
 import { existsSync } from 'fs';
 import Path from 'path'
-const { datasourcesPath } = config;
+const { datasourcesPath, pluginsPath } = config;
 
 export default new class ConfigurationSchema{
 
@@ -17,6 +17,8 @@ export default new class ConfigurationSchema{
         if (!existsSync(schemaPath)){
             console.warn('Missing config-schema', schemaPath);
             return; 
+        } else {
+            console.log('Processing config-schema', schemaPath);
         }
         
         console.log('addDatasourceConfigurationSchema : Processing file :', schemaPath);
@@ -26,7 +28,8 @@ export default new class ConfigurationSchema{
 
     updateDatasourceConfigurationSchema(){
         this._datasourceConfigurationSchema = {};
-        const paths = getDirectories(datasourcesPath);
+        let paths = getDirectories(datasourcesPath);
+        paths.push(...(getDirectories(pluginsPath)));
         for (const path of paths){
             this._addDatasourceConfigurationSchema(path);
         }
