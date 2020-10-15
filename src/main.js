@@ -1,8 +1,10 @@
 const { app, BrowserWindow, Menu, globalShortcut, protocol } = require("electron");
-import path from 'path'
+import Path from 'path'
 import { ipcMain } from "electron";
-import config from './config.main'
+import Config from './config.main'
 import "./main-process/ipcMain";
+const homedir = require('os').homedir();
+let config;
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   // eslint-disable-line global-require
@@ -10,6 +12,7 @@ if (require("electron-squirrel-startup")) {
 }
 
 import { Command } from 'commander';
+const isDevelopment = process.env.NODE_ENV !== 'production';
 const program = new Command()
 program.version(require('../package.json').version);
 
@@ -19,19 +22,20 @@ program
   .option('-p, --profile-dir <directory>', 'Custom profile directory')
   .option('-D, --dev', 'Enable the use of Dev Profile (.hurry-dev)');
 
-
 program.parse(process.argv);
-console.log('program=',program);
+program.dev = program.dev || isDevelopment;
+if (program.profileDir){ config = Config(program.profileDir) }
+else if (program.dev || isDevelopment){ config = Config(Path.join(homedir, '.hurry-dev')) }
+else { config = Config(Path.join(homedir, '.hurry')) }
 
 ipcMain.on("getCommandLineParameters", (event, arg) => {
   console.log('GetCLIParameters ==> ', program, program.dev, program.debug)
   event.returnValue = program;
 });
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.yarn 
+
 let mainWindow;
 Menu.setApplicationMenu(false);
 const createWindow = () => {
@@ -77,7 +81,7 @@ app.on('ready', registerShortcut);
 app.on('ready', () => {
   protocol.registerFileProtocol('plugin', (request, callback) => {
     const url = request.url.substr(9)
-    callback({ path: path.normalize(`${config.pluginsPath}/${url}`) })
+    callback({ path: Path.normalize(`${config.pluginsPath}/${url}`) })
   })
 })
 
