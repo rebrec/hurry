@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu, globalShortcut, protocol } = require("electron");
 import path from 'path'
+import { ipcMain } from "electron";
 import config from './config.main'
 import "./main-process/ipcMain";
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -8,10 +9,29 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
+import { Command } from 'commander';
+const program = new Command()
+program.version(require('../package.json').version);
+
+console.log('ARGV=', process.argv);
+program
+  .option('-d, --debug', 'enable debugging')
+  .option('-p, --profile-dir <directory>', 'Custom profile directory')
+  .option('-D, --dev', 'Enable the use of Dev Profile (.hurry-dev)');
+
+
+program.parse(process.argv);
+console.log('program=',program);
+
+ipcMain.on("getCommandLineParameters", (event, arg) => {
+  console.log('GetCLIParameters ==> ', program, program.dev, program.debug)
+  event.returnValue = program;
+});
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+// be closed automatically when the JavaScript object is garbage collected.yarn 
 let mainWindow;
 Menu.setApplicationMenu(false);
 const createWindow = () => {
@@ -32,9 +52,10 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-  if (isDevelopment) {
+  console.log("Debug Mode:", program.debug);
+  if (isDevelopment || program.debug) {
     // Open the DevTools.
+    console.log("Enable Dev Tools");
     mainWindow.webContents.openDevTools();
   }
 

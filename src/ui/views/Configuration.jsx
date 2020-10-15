@@ -27,7 +27,7 @@ export default class Configuration extends React.Component {
   }
 
   onSubmitted(data){
-    saveConfig(data.formData);
+    saveConfig(api.config.profilePath, data.formData);
     api.reloadBrowserWindow();
 
   }

@@ -1,5 +1,14 @@
 import Path from 'path';
+const { ipcRenderer } = require("electron");
 import { existsSync, writeFileSync, mkdirSync} from 'fs'
+
+const program = ipcRenderer.sendSync('getCommandLineParameters')
+console.log('Program parameters', program);
+
+if (program.debug) { console.log('Debug Mode Enabled')}
+if (program.profileDir) { console.log('Custom Profile directory to use:', program.profileDir)}
+if (program.dev) { console.log('Dev Profile enabled')}
+
 const defaultConfig = require('./example/config');
 const exampleMenuData = require('./example/menuConfig.json');
 const isProd = process.env.NODE_ENV === 'production';
@@ -14,7 +23,17 @@ config.isValid = false;
 
 const defaultConfigPath = Path.join(__dirname, 'example', 'config.js');
 
-const profilePath = Path.join(homedir, '.hurry');
+let profilePath = Path.join(homedir, '.hurry');
+if (program.profileDir) { 
+    console.log('Custom Profile directory to use:', program.profileDir)
+    profilePath = program.profileDir;
+}
+if (program.dev) {
+     console.log('Dev Profile enabled')
+     profilePath = Path.join(homedir, '.hurry-dev');
+}
+
+
 const examplePath = Path.join(__dirname, 'example');
  
 const configPath = Path.join(profilePath, 'config.js');
@@ -82,7 +101,8 @@ Object.assign(config, {
     datasourcesPath: Path.join(modulesRoot, "datasources"),
     viewsPath:  Path.join(config.projectRoot, "ui", "views"),
     historyFilePath:  historyFilePath,
-    builtinsPath: Path.join(config.projectRoot, 'builtins')
+    builtinsPath: Path.join(config.projectRoot, 'builtins'),
+    profilePath: profilePath
     
 });
 

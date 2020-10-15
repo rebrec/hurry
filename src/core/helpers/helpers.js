@@ -56,13 +56,8 @@ export const pingHost = (target, options) => {
   });
 }
 
-export const saveConfig = data => {
-  const homedir = require('os').homedir();
-  const configDir = Path.join(homedir, '.hurry');
-  if (!existsSync(configDir)){
-      mkdirSync(configDir);
-  }
-  const configPath = Path.join(configDir, 'config.js');
+export const saveConfig = (profilePath, data) => {
+  const configPath = Path.join(profilePath, 'config.js');
   writeFileSync(configPath, "module.exports = " + JSON.stringify(data));
 }
 
