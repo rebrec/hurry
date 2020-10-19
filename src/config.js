@@ -17,7 +17,7 @@ const exampleMenuData = require('./example/menuConfig.json');
 const isProd = process.env.NODE_ENV === 'production';
 
 if (isProd) {
-    basepath = path.join(app.getAppPath(), '.webpack', 'renderer') 
+    basepath = Path.join(app.getAppPath(), '.webpack', 'renderer') 
  } else {
     basepath = __dirname.split('node_modules')[0] + 'src';
  } 
