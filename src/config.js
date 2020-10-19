@@ -1,4 +1,7 @@
 import Path from 'path';
+const app = require('electron').remote.app
+let basepath;
+
 const { ipcRenderer } = require("electron");
 import { existsSync, writeFileSync, mkdirSync} from 'fs'
 
@@ -12,6 +15,12 @@ if (program.dev) { console.log('Dev Profile enabled')}
 const defaultConfig = require('./example/config');
 const exampleMenuData = require('./example/menuConfig.json');
 const isProd = process.env.NODE_ENV === 'production';
+
+if (isProd) {
+    basepath = path.join(app.getAppPath(), '.webpack', 'renderer') 
+ } else {
+    basepath = __dirname.split('node_modules')[0] + 'src';
+ } 
 
 const homedir = require('os').homedir();
 
@@ -58,6 +67,8 @@ if (existsSync(configPath)){
 delete customSettings.isValid;
 
 Object.assign(config, customSettings);
+
+config.projectRoot = basepath;
 
 if (newProfile){
     // create an initial menu from example folder
