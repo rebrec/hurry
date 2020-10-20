@@ -51,11 +51,12 @@ class UiState {
         this.rootStore = rootStore;
         this.initViews();
         this.setSearchedText(config.defaultSearch);
-        const ds = rootStore.datasourceManager.getDefaultDatasource();
+        
+    }
+
+    _init(){
+        const ds = this.rootStore.datasourceManager.getDefaultDatasource();
         this.setDatasource(ds);
-        setTimeout(_=>{
-            this.startSearch()
-        },2000);
     }
 
     getModalView(){

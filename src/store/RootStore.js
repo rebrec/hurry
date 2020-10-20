@@ -36,7 +36,7 @@ class RootStore {
     _init() {
         this.shellManager.start();
         this.pluginManager._init();
-
+        this.uiState._init();
     }
 
 }
