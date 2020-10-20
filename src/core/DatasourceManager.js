@@ -2,7 +2,7 @@ import  Path from  'path'
 import  Shell from './Shell';
 import { getDirectories } from './helpers/helpers'
 import Datasource from './Datasource'
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 import { cpus } from 'os';
 
 const { platform } = require('os');
@@ -36,7 +36,7 @@ export default class DatasourceManager{
         return this.addDatasourceDefinition(datasourceDefinition, path);
     }
 
-    addDatasourceDefinition(datasourceDefinition, modulePath){
+    @action.bound addDatasourceDefinition(datasourceDefinition, modulePath){
         if (datasourceDefinition.hasOwnProperty('platform') && datasourceDefinition.platform.indexOf(platform())<0){
             console.log('DatasourceManager.addDatasource : Skipping incompatible Datasource', datasourceDefinition.name);
             return;
@@ -46,7 +46,7 @@ export default class DatasourceManager{
         
         const config = this.config.hasOwnProperty(datasourceDefinition.name) ? this.config[datasourceDefinition.name] : {};
         const datasource = new Datasource(datasourceDefinition, config, shell, modulePath);
-        this._datasources[datasource.name] = datasource;
+        this._datasources[datasource.getName()] = datasource;
     }
 
     getDefaultDatasource(){
