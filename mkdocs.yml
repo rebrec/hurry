@@ -10,5 +10,7 @@ nav:
       - Install and configure: guides/getting-started/install-and-configure.md
       - Install a plugin: guides/getting-started/install-a-plugin.md
     - Setup your build environment: guides/setup-the-build-environment/setup-the-build-environment.md
+    - Plugins:
+      - First Plugin: guides/plugins/first-plugin.md
 theme:
   name: 'material'
