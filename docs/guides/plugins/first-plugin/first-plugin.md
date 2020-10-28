@@ -28,7 +28,7 @@ During development, you will create your custom plugins within the *plugin-src* 
 
 Each plugin is self-contained within a folder named as the plugin name.
 
-![First_Configuration_Screen](/_images/hurry_plugin-src-location.png)
+![First_Configuration_Screen](hurry_plugin-src-location.png)
 
 ### Choose a plugin Name
 
@@ -60,13 +60,13 @@ mkdir hurry-hello-world-plugin
 cd hurry-hello-world-plugin
 ```
 
-![Plugin Folder Creation](/_images/hurry_plugin-folder-creation.png)
+![Plugin Folder Creation](hurry_plugin-folder-creation.png)
 
 ### GitHub Repository
 
 Now create a repository to track our plugin's source code by going to [this link](https://github.com/new):
 
-![Plugin Repo Creation](/_images/hurry_plugin-repo-creation.png)
+![Plugin Repo Creation](hurry_plugin-repo-creation.png)
 
 Enter the name of your plugin as a **Repository name** and click on **Create repository** button.
 
@@ -89,12 +89,12 @@ git push -u origin master
 
 Then initialize the npm package by using the command `npm init`
 
-You can answer most questions by just hittint *Enter* to choose default choice. **Except** for the below ones:
+You can answer most questions by just hitting *Enter* to choose default choice. **Except** for the below ones:
 
 - Test: you must provide a test command whose return code is 0 when success. If you don't have unit tests yet, you can type `exit 0`
 - Keywords: you **must** provide at least the keyword **hurry-admin-plugin**. This required so that hurry's plugin install will be able to list this plugin as an available hurry plugin.
 
-![Plugin Repo Creation](/_images/hurry_plugin-npm-init.png)
+![Plugin NPM Init](hurry_plugin-npm-init.png)
 
 ### Add the necessary node modules
 
@@ -178,4 +178,4 @@ yarn np --no-2fa
 ```
 
 
-![Plugin Np Publish package](/_images/hurry_plugin-np-publish-package.png)
+![Plugin Np Publish package](hurry_plugin-np-publish-package.png)
