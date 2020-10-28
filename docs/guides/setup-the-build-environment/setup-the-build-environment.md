@@ -50,4 +50,4 @@ yarn start
 
 ## Create your first plugin
 
-You may now try to [create your first plugin](/guides/getting-started/plugins/first-plugin/)
+You may now try to [create your first plugin](../plugins/first-plugin/first-plugin.md)
