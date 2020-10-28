@@ -17,15 +17,6 @@ The (cross-platform) SysAdmin's tool to get repetitive things done Fast.
 - [Windows Release](https://github.com/rebrec/hurry/releases)
 - Linux Release (Not available yet. Fill an issue if interested or ask on [Discord](https://discord.com/invite/7cEWVvC))
 
-## Download plugins
-
-To be able to work with some data **you need plugins**.
-
-Only manual installation of plugins is currently available. You will have to download
-a zip file containing plugins, and then extract it's content to the *hurry plugin directory* (see *Configuration*).
-
-You can download the plugin release from [here](https://github.com/rebrec/hurry-plugins/releases/download/1.0.1/plugins.tar.gz)
-The latest release is always available from [this page](https://github.com/rebrec/hurry-plugins/releases/latest/)
 
 ## Initial Configuration
 
@@ -33,14 +24,29 @@ Run the freshly downloaded Hurry setup and then start Hurry.
 
 It will prompt you with a *First Configuration* screen.
 
-![First_Configuration_Screen](https://raw.githubusercontent.com/rebrec/hurry/master/docs/hurry_initial_setup_plugin_dir.png)
+![First_Configuration_Screen](_images/hurry_first-run-wizard.png)
 
-Note the path written within the *Plugin Directory* text area (see the red arrow in the above screenshot) and extract the content of the plugins' archive file into that folder:
+Click on the *Submit* button at the bottom of the configuration screen and you are done.
 
-- For Windows, you can use [7zip](https://www.7-zip.org/download.html)
-- Under Linux, you may type from a terminal something like `cd $HOME/.hurry/plugins;tar zxvf <THE_PATH_TO_YOUR_plugins.tar.gz_FILE>`
+## Install plugins
 
-Then, click on the *Submit* button at the bottom of the configuration screen and you are done !
+To be able to work with some data **you need plugins**.
+
+For this purpose, use the **Plugin Installer** from *File > Install Plugin*
+
+![Install Plugins](/_images/hurry_install_plugins.png)
+
+After searching for a plugin name or hitting *Enter*, a list of available plugins will be displayed.
+
+To practice with an example dataset, you can install *hurry-json-array-datasource* by selecting it and click on the **Download** button.
+
+When the installation is done, click on the *Reload* application Menu so the plugin get initialized or restart the application.
+
+You should now be able to do a search against this new datasource by selecting it from the search button arrow button
+
+![Install Plugins](/_images/hurry_select_json_ds.png)
+
+
 
 # Manual builds
 
