@@ -18,12 +18,14 @@ The goal of the plugin system is to let everyone improve Hurry by adding new fea
 
 Plugin installation is made by using the **Plugin Installer**.
 
-This feature allow you to :
+This feature allows you to :
 
 - Search for available plugins
 - Download them and install them
 
 To launch it, click on the **File** menu and select **Install plugin**
+
+![hurry_install_plugins](/_images/hurry_install_plugins.png)
 
 Enter a search keyword and click on the magnifying glass button to start listing plugins.
 
