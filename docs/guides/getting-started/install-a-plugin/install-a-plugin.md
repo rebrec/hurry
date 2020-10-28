@@ -25,7 +25,7 @@ This feature allows you to :
 
 To launch it, click on the **File** menu and select **Install plugin**
 
-![hurry_install_plugins](/_images/hurry_install_plugins.png)
+![hurry_install_plugins](hurry_install_plugins.png)
 
 Enter a search keyword and click on the magnifying glass button to start listing plugins.
 

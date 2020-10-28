@@ -7,11 +7,11 @@ repo_url: 'https://github.com/rebrec/hurry'
 nav:
     - Home: README.md
     - Getting Started:
-      - Install and configure: guides/getting-started/install-and-configure.md
-      - Install a plugin: guides/getting-started/install-a-plugin.md
+      - Install and configure: guides/getting-started/install-and-configure/install-and-configure.md
+      - Install a plugin: guides/getting-started/install-a-plugin/install-a-plugin.md
     - Setup your build environment: guides/setup-the-build-environment/setup-the-build-environment.md
     - Plugins:
-      - First Plugin: guides/plugins/first-plugin.md
+      - First Plugin: guides/plugins/first-plugin/first-plugin.md
 theme:
   name: 'material'
 markdown_extensions:
