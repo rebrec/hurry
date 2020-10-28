@@ -5,15 +5,15 @@ a build environment.
 
 For this purpose, you will have to install differents elements that you may partially already have:
 
-- Git: This is the tool in charge of handling code versioning on our project.
-- Node.JS: this is the Javascript engine that will be in charge of running the core components
+- **Git**: This is the tool in charge of handling code versioning on our project.
+- **Node.JS**: this is the Javascript engine that will be in charge of running the core components
 of Hurry.
-- Yarn package manager 
-- A recent version of Powershell: even if it's not mandatory, most actions performed by Hurry will
+- **Yarn** package manager 
+- A recent version of **Powershell**: even if it's not mandatory, most actions performed by Hurry will
  execute Powershell scripts. If you don't have Powershell, most plugins you may try to use won't work
  properly.
-- An IDE: even if it is not mandatory, most of us use an IDE, if you don't have one yet, you
-may give a try to Visual Studio Code (it's free, it's OpenSource, it looks pretty and it just work
+- An **IDE**: even if it is not mandatory, most of us use an IDE, if you don't have one yet, you
+may give a try to **Visual Studio Code** (it's free, it's OpenSource, it looks pretty and it just work
 for coding in Node.js)
 
 ## Download Tools
@@ -47,3 +47,7 @@ yarn install
 ```cmd
 yarn start
 ```
+
+## Create your first plugin
+
+You may now try to [create your first plugin](/guides/getting-started/plugins/first-plugin/)
