@@ -39,7 +39,7 @@ export default class MenuEditorView extends React.Component {
 
   saveMenu(){
     this.saveMenuAs(null, config.menu.menuPath);
-    store.loadMenu();
+    store.contextMenu.reload();
   }
 
   saveMenuAs(e, filePath){
