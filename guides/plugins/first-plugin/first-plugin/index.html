@@ -1,0 +1,791 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation about Hurry IT Admin Tool">
+      
+      
+      
+        <link rel="canonical" href="https://rebrec.github.io/hurry/guides/plugins/first-plugin/first-plugin/">
+      
+      
+        <meta name="author" content="rebrec">
+      
+      <link rel="shortcut icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.4">
+    
+    
+      
+        <title>First Plugin - Hurry Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.358818c7.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.f0267088.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creation-of-your-first-plugin" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://rebrec.github.io/hurry/" title="Hurry Documentation" class="md-header-nav__button md-logo" aria-label="Hurry Documentation">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Hurry Documentation
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              First Plugin
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/rebrec/hurry/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rebrec/hurry
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://rebrec.github.io/hurry/" title="Hurry Documentation" class="md-nav__button md-logo" aria-label="Hurry Documentation">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Hurry Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/rebrec/hurry/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rebrec/hurry
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../.." class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Getting Started
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Getting Started" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Getting Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../getting-started/install-and-configure/install-and-configure/" class="md-nav__link">
+      Install and configure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../getting-started/install-a-plugin/install-a-plugin/" class="md-nav__link">
+      Install a plugin
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../setup-the-build-environment/setup-the-build-environment/" class="md-nav__link">
+      Setup your build environment
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Plugins
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Plugins" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Plugins
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        First Plugin
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      First Plugin
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisite" class="md-nav__link">
+    Prerequisite
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-location" class="md-nav__link">
+    Plugin location
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugin location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choose-a-plugin-name" class="md-nav__link">
+    Choose a plugin Name
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structure-creation" class="md-nav__link">
+    Structure creation
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#folder" class="md-nav__link">
+    Folder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-repository" class="md-nav__link">
+    GitHub Repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initialize-the-npm-package" class="md-nav__link">
+    Initialize the npm package
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-the-necessary-node-modules" class="md-nav__link">
+    Add the necessary node modules
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-write-the-code" class="md-nav__link">
+    Let's write the code!
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-it" class="md-nav__link">
+    Build it
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-it" class="md-nav__link">
+    Run it
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-and-publish" class="md-nav__link">
+    Save and Publish!
+  </a>
+  
+    <nav class="md-nav" aria-label="Save and Publish!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#save" class="md-nav__link">
+    Save
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publish" class="md-nav__link">
+    Publish
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisite" class="md-nav__link">
+    Prerequisite
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin-location" class="md-nav__link">
+    Plugin location
+  </a>
+  
+    <nav class="md-nav" aria-label="Plugin location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choose-a-plugin-name" class="md-nav__link">
+    Choose a plugin Name
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structure-creation" class="md-nav__link">
+    Structure creation
+  </a>
+  
+    <nav class="md-nav" aria-label="Structure creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#folder" class="md-nav__link">
+    Folder
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-repository" class="md-nav__link">
+    GitHub Repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initialize-the-npm-package" class="md-nav__link">
+    Initialize the npm package
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-the-necessary-node-modules" class="md-nav__link">
+    Add the necessary node modules
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-write-the-code" class="md-nav__link">
+    Let's write the code!
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-it" class="md-nav__link">
+    Build it
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-it" class="md-nav__link">
+    Run it
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#save-and-publish" class="md-nav__link">
+    Save and Publish!
+  </a>
+  
+    <nav class="md-nav" aria-label="Save and Publish!">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#save" class="md-nav__link">
+    Save
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publish" class="md-nav__link">
+    Publish
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/rebrec/hurry/docs/guides/plugins/first-plugin/first-plugin.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="creation-of-your-first-plugin">Creation of your First plugin</h1>
+<p>We will create a very simple Hello World plugin which will display <strong>Hello World</strong> when hurry start.</p>
+<p>The goal is mainly to demonstrate where to create the plugin, where to put the code and how to build the plugin.</p>
+<p>more complex examples will follow in this documentation.</p>
+<p>Plugin's ultimate goal is to be shareable. They can be published to the npm registry so that Hurry can easily
+find and install them.</p>
+<p>For a plugin to be published you will have to host it on a public git repository.</p>
+<p>We consider that you will know how to create a GitHub account and a new GitHub repository.</p>
+<h2 id="prerequisite">Prerequisite</h2>
+<p>To ease the publishing of plugins, we are used to use a command line tool used to interact with GitHub's API.</p>
+<p>This tool is called <strong>hub</strong> and can be downloaded from <a href="https://github.com/github/hub">here</a></p>
+<p>It is not necessary to use it but will ease your daily life if you want to often create new GitHub repositories
+to hold your plugins's source code.</p>
+<h2 id="plugin-location">Plugin location</h2>
+<p>During development, you will create your custom plugins within the <em>plugin-src</em> subfolder at the root of Hurry source code.</p>
+<p>Each plugin is self-contained within a folder named as the plugin name.</p>
+<p><img alt="First_Configuration_Screen" src="../hurry_plugin-src-location.png" /></p>
+<h3 id="choose-a-plugin-name">Choose a plugin Name</h3>
+<p>You will first have to <strong>choose a plugin name</strong>. </p>
+<p>Published plugins are stored on the <a href="https://www.npmjs.com/search?q=keywords%3Ahurry-admin-plugin">npmjs registry</a>.</p>
+<p>Since this registry has a huge list of packages already available you may encounter a conflict when trying to publish your first plugin.</p>
+<p>To be able to share it with others, you will have to choose a unique name.
+For this purpose, a good idea is to <strong>prefix your plugin name with 'hurry-'</strong>.</p>
+<p>To have a list of already used plugins you can get a list from <a href="https://www.npmjs.com/search?q=keywords%3Ahurry-admin-plugin">npmjs search engine</a></p>
+<p>For the current exercise we will name our plugin <strong>hurry-hello-world-plugin</strong></p>
+<h2 id="structure-creation">Structure creation</h2>
+<h3 id="folder">Folder</h3>
+<p>First, let's create our plugin's folder.</p>
+<p>From a command prompt, create a folder named <strong>hurry-hello-world-plugin</strong> within the <strong>plugin-src</strong> folder</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span> &lt;HURRY_PROJECT_ROOT&gt;
+<span class="nb">cd</span> plugin-src
+mkdir hurry-hello-world-plugin
+<span class="nb">cd</span> hurry-hello-world-plugin
+</code></pre></div>
+
+<p><img alt="Plugin Folder Creation" src="../hurry_plugin-folder-creation.png" /></p>
+<h3 id="github-repository">GitHub Repository</h3>
+<p>Now create a repository to track our plugin's source code by going to <a href="https://github.com/new">this link</a>:</p>
+<p><img alt="Plugin Repo Creation" src="../hurry_plugin-repo-creation.png" /></p>
+<p>Enter the name of your plugin as a <strong>Repository name</strong> and click on <strong>Create repository</strong> button.</p>
+<p>Then initialize your empty repository and add the remote repository address </p>
+<div class="codehilite"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;# hurry-hello-world-plugin&quot;</span> &gt;&gt; README.md
+git init
+<span class="nb">echo</span> <span class="s2">&quot;node_modules&quot;</span> &gt;&gt; .gitignore
+<span class="nb">echo</span> <span class="s2">&quot;.npm&quot;</span> &gt;&gt; .gitignore
+<span class="nb">echo</span> <span class="s2">&quot;.config&quot;</span> &gt;&gt; .gitignore
+git add README.md .gitignore
+git commit -m <span class="s2">&quot;first commit&quot;</span>
+git branch -M master
+git remote add origin git@github.com:rebrec/hurry-hello-world-plugin.git
+git push -u origin master
+</code></pre></div>
+
+<h3 id="initialize-the-npm-package">Initialize the npm package</h3>
+<p>Then initialize the npm package by using the command <code>npm init</code></p>
+<p>You can answer most questions by just hitting <em>Enter</em> to choose default choice. <strong>Except</strong> for the below ones:</p>
+<ul>
+<li>Test: you must provide a test command whose return code is 0 when success. If you don't have unit tests yet, you can type <code>exit 0</code></li>
+<li>Keywords: you <strong>must</strong> provide at least the keyword <strong>hurry-admin-plugin</strong>. This required so that hurry's plugin install will be able to list this plugin as an available hurry plugin.</li>
+</ul>
+<p><img alt="Plugin NPM Init" src="../hurry_plugin-npm-init.png" /></p>
+<h3 id="add-the-necessary-node-modules">Add the necessary node modules</h3>
+<p>A few mandatory modules need to be added:</p>
+<ul>
+<li><strong>hurry-plugin-definition</strong>: it will provide some necessary classes that your plugin will inherits.</li>
+<li><strong>np</strong>: this package will make publishing your module easy. While not mandatory, you may consider installing it as a dev dependency even if you don't need it yet. Later you will be happy to have it already available. To read more about it have a look at the <a href="https://github.com/sindresorhus/np">official page</a></li>
+</ul>
+<p>To install both of them, simply type the following :</p>
+<div class="codehilite"><pre><span></span><code><span class="err">yarn add -D np</span>
+<span class="err">yarn add hurry-plugin-definition</span>
+</code></pre></div>
+
+<h2 id="lets-write-the-code">Let's write the code!</h2>
+<p>It's time to write the plugin's code.</p>
+<p>Create a file <strong>index.js</strong> within the plugin directory and write the following inside it:</p>
+<div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="nx">Plugin</span> <span class="nx">from</span> <span class="s1">&#39;hurry-plugin-definition&#39;</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="kr">class</span> <span class="nx">HelloWorldPlugin</span> <span class="kr">extends</span> <span class="nx">Plugin</span><span class="p">{</span>
+    <span class="nx">constructor</span><span class="p">(</span><span class="nx">api</span><span class="p">,</span> <span class="nx">context</span><span class="p">){</span>
+        <span class="kr">super</span><span class="p">(</span><span class="nx">api</span><span class="p">,</span> <span class="nx">context</span><span class="p">);</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span> 
+</code></pre></div>
+
+<h2 id="build-it">Build it</h2>
+<p>To test our freshly created plugin we will have to build it.</p>
+<p>We provide a script to build plugins. This script will rebuilt plugins each time a file is modified so you can do live code.</p>
+<p>To run the script type the following <strong>from Hurry root folder</strong> (Please note that you must not type this command from the plugin directory!)</p>
+<div class="codehilite"><pre><span></span><code>yarn buildplugins
+</code></pre></div>
+
+<p><strong>There is currently no other way to stop this script so feel free to terminate it when needed by hitting Ctrl+C !</strong></p>
+<h2 id="run-it">Run it</h2>
+<p>It's time to run Hurry and test our new plugin.</p>
+<p>To run Hurry by typing <code>yarn start</code> <strong>from Hurry root folder</strong> (Please note again, that you must not type this command from the plugin directory!)</p>
+<p>After building it's stuff, Hurry will start and display a nice "Hello World!" alert message !</p>
+<p>Congratulation! Your first Plugin works!.</p>
+<h2 id="save-and-publish">Save and Publish!</h2>
+<h3 id="save">Save</h3>
+<p>Now that your plugin works, you may consider commiting your changes to your git repository. So from the plugin's directory enter:</p>
+<div class="codehilite"><pre><span></span><code>git add .
+git commit -m <span class="s2">&quot;&lt;ENTER HERE YOUR COMMIT MESSAGE&quot;</span>
+git push origin master
+</code></pre></div>
+
+<h3 id="publish">Publish</h3>
+<p>Run <code>yarn np --no-2fa</code> from the plugin's directory and follow the instructions.</p>
+<p>The first time you run this command, you will have to login to the npm registry. If not done yet, you will need to <a href="https://www.npmjs.com/signup">create an account</a></p>
+<p>Each time you want to publish a new release of your plugin, you will just have to type the following commands:</p>
+<div class="codehilite"><pre><span></span><code>git add .
+git commit -m <span class="s2">&quot;&lt;ENTER HERE YOUR COMMIT MESSAGE&quot;</span>
+git push origin master
+yarn np --no-2fa
+</code></pre></div>
+
+<p><img alt="Plugin Np Publish package" src="../hurry_plugin-np-publish-package.png" /></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../../../setup-the-build-environment/setup-the-build-environment/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Setup your build environment
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../../assets/javascripts/vendor.7e0ee788.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.b3a72adc.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../../..",
+          features: [],
+          search: Object.assign({
+            worker: "../../../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
