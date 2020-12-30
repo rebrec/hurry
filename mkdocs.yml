@@ -5,7 +5,7 @@ site_url: 'https://rebrec.github.io/hurry/'
 docs_dir: docs/
 repo_name: 'rebrec/hurry'
 repo_url: 'https://github.com/rebrec/hurry'
-edit_uri: 'docs/'
+edit_uri: 'edit/main/docs/'
 nav:
     - Home: README.md
     - Getting Started:
