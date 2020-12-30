@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://rebrec.github.io/hurry/</loc>
-     <lastmod>2020-11-29</lastmod>
+     <lastmod>2020-12-30</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://rebrec.github.io/hurry/guides/getting-started/install-and-configure/install-and-configure/</loc>
-     <lastmod>2020-11-29</lastmod>
+     <lastmod>2020-12-30</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://rebrec.github.io/hurry/guides/getting-started/install-a-plugin/install-a-plugin/</loc>
-     <lastmod>2020-11-29</lastmod>
+     <lastmod>2020-12-30</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://rebrec.github.io/hurry/guides/setup-the-build-environment/setup-the-build-environment/</loc>
-     <lastmod>2020-11-29</lastmod>
+     <lastmod>2020-12-30</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://rebrec.github.io/hurry/guides/plugins/first-plugin/first-plugin/</loc>
-     <lastmod>2020-11-29</lastmod>
+     <lastmod>2020-12-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
