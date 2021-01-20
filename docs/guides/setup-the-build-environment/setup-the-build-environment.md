@@ -33,7 +33,7 @@ Click on the start menu and type *Git CMD*. This will open a command prompt wher
 Go into your desired project's folder and type :
 
 ```cmd
-git clone https://github.com/rebrec
+git clone https://github.com/rebrec/hurry.git
 ```
 
 ## Install project's dependencies
