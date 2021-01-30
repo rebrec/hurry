@@ -20,7 +20,8 @@ console.log('ARGV=', process.argv);
 program
   .option('-d, --debug', 'enable debugging')
   .option('-p, --profile-dir <directory>', 'Custom profile directory')
-  .option('-D, --dev', 'Enable the use of Dev Profile (.hurry-dev)');
+  .option('-D, --dev', 'Enable the use of Dev Profile (.hurry-dev)')
+  .option('--no-sandbox', 'Neede to run as root under linux');
 
 program.parse(process.argv);
 program.dev = program.dev || isDevelopment;
