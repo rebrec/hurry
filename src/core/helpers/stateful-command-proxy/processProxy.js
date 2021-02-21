@@ -650,7 +650,7 @@ ProcessProxy.prototype.initialize = function(initCommands) {
 
 
             // run all initCommands if provided
-            if (initCommands) {
+            if (initCommands && initCommands.length) {
 
                 self._executeCommands(initCommands,false) // skip black/whitelists
 
@@ -979,7 +979,7 @@ ProcessProxy.prototype.shutdown = function(shutdownCommands) {
 
         try {
             // run all shutdownCommands if provided
-            if (shutdownCommands) {
+            if (shutdownCommands && shutdownCommands.length) {
 
                 self._executeCommands(shutdownCommands,false) // skip black/whitelists
 
