@@ -39,12 +39,13 @@ export default class Shell{
     this.registerPreDestroyCommands(preDestroyCommands);
     this.config = {};
     Object.assign(this.config, defaultConfig, config);
+    if (!this.config.verboseLogging) { this.config.verboseLogging = true }
     this.monitorManager = new MonitorManager(config);
     this.config.monitorMgr = this.monitorManager;
     // this.config.monitorMgr = new MonitorManager(config);;
     
     this.config.logFunction = (severity,origin,msg) => {
-      console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
+      this.config.verboseLogging && console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
     };
   }
   
@@ -54,6 +55,10 @@ export default class Shell{
     this.runner = new StatefulProcessCommandProxy(this.config);
   }
 
+  shutdown(){
+    return this.runner.shutdown();
+  }
+  
   addFeature(feature){
     const { name, shell, initCommands, preDestroyCommands } = feature;
     if (this.name !== shell) { throw `Error trying to add feature ${name} shell mismatch (${this.name} != ${shell})`}
