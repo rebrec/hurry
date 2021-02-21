@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+    
 
       {
         "name": "Debug Main Process",
@@ -30,5 +31,23 @@
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
        
       },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Mocha All",
+        "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+        "args": [
+            "-r",
+            "@babel/register",
+            "--timeout",
+            "999999",
+            "--colors",
+            "${workspaceFolder}/test/**/*.js",
+        ],
+        "console": "integratedTerminal",
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
+        "internalConsoleOptions": "neverOpen",
+        "protocol": "inspector"
+    },
     ]
   }
