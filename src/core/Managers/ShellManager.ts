@@ -1,11 +1,25 @@
 import  Path from  'path'
-import  Shell from './Shell';
-import { getDirectories } from './helpers/helpers'
+import  Shell from '../Shell/Shell';
+import { getDirectories } from '../helpers/helpers'
 import { observable, computed, action, extendObservable } from 'mobx'
-import ShellJS from './ShellJS';
+
+if (process.env.NODE_ENV === 'test') {
+    (global as any)['__non_webpack_require__'] = require;
+}
 const { platform } = require('os');
 
+type CommandElement = {}
+type ContextObject = {}
 
+interface HistoryStore {
+    addCommand: (commandElement: CommandElement, context: ContextObject) => void;
+}
+
+type ShellSettings = {
+    shellsPath: string,
+    shellFeaturesPath: string,
+    isValid: boolean
+}
 
 // const shellPath = [
 //     'powershell.js'
@@ -14,9 +28,11 @@ const { platform } = require('os');
 
 export default class ShellManager{
 
-    @observable _shells = {};
+    @observable _shells: {[key: string]: Shell} = {};
+    historyStore: HistoryStore;
+    _shellFeatures: {};
 
-    constructor(settings, historyStore){
+    constructor(settings: ShellSettings, historyStore: HistoryStore){
         const { shellsPath, shellFeaturesPath } = settings;
         this.historyStore = historyStore;
         this._shellFeatures = {};
@@ -26,7 +42,6 @@ export default class ShellManager{
         const featuresPaths = getDirectories(shellFeaturesPath);
         
         this._shellFeatures = {};
-        this.addShell(new ShellJS());
         for (const path of shellsPaths){
             const config = __non_webpack_require__(path);
             if (config.platform.indexOf(platform())<0) {
@@ -42,7 +57,7 @@ export default class ShellManager{
         }
     }
 
-    @action.bound addShell(shell){
+    @action.bound addShell(shell: Shell){
         this._shells[shell.name] = shell; 
     }
 
@@ -77,10 +92,12 @@ export default class ShellManager{
 
     }
 
-    start(){
+    async start(){
+        const promises = [];
         for (let [shellName, shell] of Object.entries(this._shells)){
             console.log('Starting shell : ', shellName);
-            shell.start();
+            promises.push(shell.start());
         }
+        return await Promise.all(promises);
     }
 }

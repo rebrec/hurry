@@ -1,9 +1,12 @@
 const { platform } = require('os');
-const { parseTemplate } = require('./helpers/helpers');
-const StatefulProcessCommandProxy = require("./helpers/stateful-command-proxy/statefulProcessCommandProxy");
+const { parseTemplate } = require('../helpers/helpers');
+const StatefulProcessCommandProxy:any = require("../helpers/stateful-command-proxy/statefulProcessCommandProxy");
 import { observable, computed, action, extendObservable } from 'mobx'
-import MonitorManager from "./MonitorManager";
+import MonitorManager from "../MonitorManager";
+import { ProcessExecutionResult, ShellOutputType, ShellConfigDefinition, ShellFeature, ShellConfigInternal, ShellExecutionResult } from './Shell.types'
 const path = require('path');
+
+
 
 const defaultConfig = {
     min: 1,
@@ -21,23 +24,33 @@ const defaultConfig = {
     processEnvMap : null,
     processUid : null,
     processGid : null,
-    validateFunction: (processProxy) => { return processProxy.isValid()},
+    validateFunction: (processProxy: any) => { return processProxy.isValid()},
     initCommands: null,
     preDestroyCommands: null
 };
 
+
+const emptyShellConfig: ShellConfigInternal = { 
+  name: "", initCommands: [], preDestroyCommands: [], verboseLogging: false,
+  monitorMgr: new MonitorManager({name: "empty"}),
+  logFunction: (s: string, o: string, m: string) => {}
+}
 export default class Shell{
   
-  @observable runner;
-  
-  constructor(config){
+  @observable runner:any;
+  name: string;
+  initCommands: Array<string> = [];
+  preDestroyCommands: Array<string> = [];
+  config!: ShellConfigInternal;
+  monitorManager: MonitorManager;
+
+  constructor(config: ShellConfigDefinition){
     this.name = config.name;
     const {initCommands, preDestroyCommands} = config;
-    this.initCommands = [];
-    this.preDestroyCommands = [];
+
     this.registerInitCommands(initCommands);
     this.registerPreDestroyCommands(preDestroyCommands);
-    this.config = {};
+    this.config = emptyShellConfig;
     Object.assign(this.config, defaultConfig, config);
     if (!this.config.verboseLogging) { this.config.verboseLogging = true }
     this.monitorManager = new MonitorManager(config);
@@ -55,43 +68,70 @@ export default class Shell{
     this.runner = new StatefulProcessCommandProxy(this.config);
   }
 
+  isRunning(){
+    return this.runner !== undefined;
+  }
+
+
   shutdown(){
     return this.runner.shutdown();
   }
   
-  addFeature(feature){
+  
+  addFeature(feature: ShellFeature){
     const { name, shell, initCommands, preDestroyCommands } = feature;
     if (this.name !== shell) { throw `Error trying to add feature ${name} shell mismatch (${this.name} != ${shell})`}
     this.registerInitCommands(initCommands);
     this.registerPreDestroyCommands(preDestroyCommands);
   }
 
-  registerInitCommands(commands = []){
+  async registerInitCommands(commands: string[] = []){
     Array.prototype.push.apply(this.initCommands, commands);
+    const promises: Array<any> = [];
+    if (this.isRunning()) {
+      for (const command of commands){
+        promises.push(this._run(command));
+      }
+
+    }
+    // for (const command of this.initCommands){
+    //   promises.push(this._run(command));
+    // }
+    return await Promise.all(promises);
   }
-  registerPreDestroyCommands(commands = []){
+  registerPreDestroyCommands(commands: string[] = []){
     Array.prototype.push.apply(this.preDestroyCommands, commands);
   }
-  _run(command) {
+  async _run(command: string): Promise<ProcessExecutionResult> {
+      if (!this.runner) throw new Error("You must call start() before trying to execute commands using _run()")
       return this.runner.executeCommand(command);
   }
-
-  run(command, context={}, output="json") {
-    output = output.toLowerCase();
-    const processJSON = (output === 'json');
+  executeAsync(command: string, context={}, output: ShellOutputType = ShellOutputType.Json) {
+    return this.run(command, context, output);
+  }
+  async run(command: string, context={}, output: ShellOutputType = ShellOutputType.Json) {
+    //output = output.toLowerCase();
+    const processJSON = (output === ShellOutputType.Json);
     command = parseTemplate(command, context);
     return this._run(command)
-      .then((res) => {
+      .then((res: ProcessExecutionResult) => {
         let obj;
         // console.log(`received res : `, res);
         // this.ps.streams
-        if (processJSON){
-          let res1 = {success: false, data: {}};
+        let res1: ShellExecutionResult = {success: true, data: res.stdout };
+        if (res.stderr !== ''){
+          res1.errorMessage = res.stderr;
+          res1.success = false;
+        } else if (processJSON){        
+          let tmp;
           try {
             obj = JSON.parse(res.stdout);
-            if (obj === null) { return []; }
-            if (!obj.length) { obj = [obj]; }
+            if (obj === '') { obj = null }
+            if (obj === null) { tmp = []; }
+            else if (!obj.length) { tmp = [obj]; }
+            else if (obj.length) { tmp = obj; }
             res1.success = true;
+            res1.data = tmp;
           }
           catch (err){
             obj = {}
@@ -99,19 +139,14 @@ export default class Shell{
             res1.errorMessage = err;
             res1.res = res;
           }
-          res1.data = obj;
-          return res1;
         }
-        return res;
+        return res1;
       })
-      .catch((err) => {
+      .catch((err: ExceptionInformation) => {
         console.error(`Runner ERROR while trying to run command ${command}`);
         console.error(err);
-        if (processJSON){
-          let res1 = {success: false, errorMessage: err};
-          return res1;
-        }
-        return err;
+        let res1: ShellExecutionResult = {success: false, errorMessage: `${err}`};
+        return res1;
       });
   }
 

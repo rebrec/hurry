@@ -1,0 +1,68 @@
+import { autorun } from "mobx";
+import { mkdtemp } from 'fs';
+import path from 'path'
+
+
+import { rmdirs, mkTmpDir } from '../helpers/helpers';
+import { DatasourceBase, DatasourceShell, DatasourceJS } from './DatasourceBase'
+import MonitorManager from '../MonitorManager'
+
+import Shell from '../Shell/Shell'
+// import { ProcessExecutionResult, ShellExecutionResult, ShellOutputType } from './Shell.types'
+import poshConfig from '../../modules/shells/powershell'
+Object.assign(poshConfig, {monitorMgr: new MonitorManager({name: 'spy'})});
+
+import { Data } from 'popper.js';
+import { DatasourceDefinition, Config } from './Datasource.types';
+import DemoDatasourceShellDefinition from './tests/DemoDatasourceShellDefinition';
+import DemoDatasourceJSDefinition from './tests/DemoDatasourceJSDefinition';
+import { ShellOutputType } from "../Shell/Shell.types";
+
+const shell = new Shell(poshConfig);
+shell.config.verboseLogging = false;
+shell.start()
+                    
+let tmpFolder = "";
+
+
+const dsConfig = {disabled: false};
+class DemoDatasourceShell extends DatasourceShell { 
+    constructor(){ super(DemoDatasourceShellDefinition,{disabled:false},__dirname + path.sep + 'tests'); }
+    _getShellSearchString(kw: string){return `search_#{instanceId}("${kw}") | ConvertTo-Json`}
+}
+
+class DemoDatasourceJS extends DatasourceJS { 
+    constructor(){ super(DemoDatasourceJSDefinition,{disabled:false},tmpFolder); }
+    
+    _nativeSearch(kw: string){return Promise.resolve({success: true, data: [{column1:"Search - " + this.getVariable('instanceId'), column2: kw}]})}}
+
+beforeAll(async ()=>{
+    tmpFolder = await mkTmpDir("hurrytests-");
+    tmpFolder += path.sep;
+})
+
+afterAll(async ()=>{
+    if (tmpFolder !== ''){
+        await rmdirs(tmpFolder);
+    }
+    shell.shutdown();
+});
+
+describe ("Datasource Implementations", () => {
+  
+    describe("Derived DatasourceShell", () => {
+        describe ("Shell", () => {
+                test('should output stdout when no error', async()=>{
+                    const ds1 = new DemoDatasourceShell();
+                    ds1.setShell(shell);
+                    const res = await ds1.search("test")
+                    expect(res).toEqual("command");
+                    expect(res.stderr).toEqual('');
+                });
+
+        });
+        
+    });
+});
+
+

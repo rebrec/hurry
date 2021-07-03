@@ -1,17 +1,13 @@
 import  Path from  'path'
-import  Shell from './Shell';
-import { getDirectories } from './helpers/helpers'
-import Datasource from './Datasource'
+import { getDirectories } from '../helpers/helpers'
+import { DatasourceBase, DatasourceShell, DatasourceJS } from '../Datasource/DatasourceBase'
+import DatasourceLegacy from '../Datasource/DatasourceLegacy'
+// import * from '../Datasource/Datasource.types'
 import { action, observable } from 'mobx';
 import { cpus } from 'os';
 
 const { platform } = require('os');
 
-
-// const shellPath = [
-//     'powershell.js'
-// ];
-// const moduleRoot = Path.join(__dirname, '..', 'modules');
 
 export default class DatasourceManager{
     @observable _datasources = {};
@@ -37,16 +33,32 @@ export default class DatasourceManager{
     }
 
     @action.bound addDatasourceDefinition(datasourceDefinition, modulePath){
-        if (datasourceDefinition.hasOwnProperty('platform') && datasourceDefinition.platform.indexOf(platform())<0){
-            console.log('DatasourceManager.addDatasource : Skipping incompatible Datasource', datasourceDefinition.name);
+        if (datasourceDefinition.hasOwnProperty('platforms') && datasourceDefinition.platforms.indexOf(platform())<0){
+            console.log('DatasourceManager.addDatasourceDefinition : Skipping incompatible Datasource', datasourceDefinition.name);
             return;
         }
         const shell = this.shellManager.getShell(datasourceDefinition.shell);
-        if (!shell) { return console.log(`'DatasourceManager.addDatasource : Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
+        if (!shell) { return console.log(`'DatasourceManager.addDatasourceDefinition : Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
         
         const config = this.config.hasOwnProperty(datasourceDefinition.name) ? this.config[datasourceDefinition.name] : {};
-        const datasource = new Datasource(datasourceDefinition, config, shell, modulePath);
+        const datasource = new DatasourceLegacy(datasourceDefinition, config, shell, modulePath);
         this._datasources[datasource.getName()] = datasource;
+    }
+
+    @action.bound async addDatasource(datasourceInstance: DatasourceBase) {
+        if (datasourceInstance.hasOwnProperty('platforms') && datasourceInstance.platforms.indexOf(platform())<0){
+            console.log('DatasourceManager.addDatasource : Skipping incompatible Datasource', datasourceInstance.name);
+            return;
+        }
+        if (datasourceInstance.shellName !== 'js'){
+            const shell = this.shellManager.getShell(datasourceInstance.shellName);
+            if (!shell) { return console.log(`'DatasourceManager.addDatasource : Skipping datasource ${datasourceInstance.name} because shell "${datasourceInstance.shellName}" is unavailable`)}
+            await datasourceInstance.setShell(shell);
+        }
+
+        const config = this.config.hasOwnProperty(datasourceInstance.name) ? this.config[datasourceInstance.name] : {};
+        this._datasources[datasourceInstance.name] = datasourceInstance;
+        
     }
 
     getDefaultDatasource(){
@@ -63,7 +75,7 @@ export default class DatasourceManager{
             const datasource = this._datasources[props];
             if (datasource.getName() === caption) return datasource;
         }
-        return false;
+        return null;
     }
     getDatasources(){
         return this._datasources;

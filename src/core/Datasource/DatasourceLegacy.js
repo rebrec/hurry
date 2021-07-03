@@ -1,5 +1,5 @@
 import Path from 'path' 
-import { parseTemplate, parseTemplateArray } from './helpers/helpers';
+import { parseTemplate, parseTemplateArray } from '../helpers/helpers';
 import Fs from 'fs'
 
 let globalObjects = {
@@ -52,7 +52,7 @@ export default class Datasource {
                     };
                     result._pingableProperty = this.pingableProperty;
                     for (const column of this.columns){
-                        if (column.variableName !== null){
+                        if (column.hasOwnProperty('variableName')){
                             result[column.variableName] = result[column.property];
                         }
                     }

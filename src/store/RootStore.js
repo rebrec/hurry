@@ -4,15 +4,13 @@ import { observable, action } from 'mobx'
 import UiState from './UiState'
 import Settings from './Settings'
 import ContextMenuManager from '../core/ContextMenuManager';
-import ShellManager from '../core/ShellManager';
+import ShellManager from '../core/Managers/ShellManager';
 import PluginManager from '../core/PluginManager';
-import DatasourceManager from '../core/DatasourceManager';
+import DatasourceManager from '../core/Managers/DatasourceManager';
 import HistoryStore from './HistoryStore'
 import config from '../config'
 // import PowershellRunner from '../modules/runner';
 const { platform } = require('os');
-
-
 configure({ enforceActions: "always" });
 
 class RootStore {
