@@ -77,6 +77,7 @@ module.exports = {
     ],
     pingableProperty: 'ipaddress',
     mainColumnProperty: 'hostname',
+    platforms: ['win32', 'linux'],
     searchFunc: keyword => {
         return function (kw) {
             return Promise.resolve()

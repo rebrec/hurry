@@ -1,4 +1,4 @@
-import config from '../config'
+import { config } from '../config'
 import api from '../core/api'
 import {getDirectories} from '../core/helpers/helpers'
 import { existsSync } from 'fs';

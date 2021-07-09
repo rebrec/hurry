@@ -23,7 +23,7 @@ export type ShellExecutionResult = {
 export interface Shell { // dummy interface for now
     name: string,
     registerInitCommands: (initcommands: InitCommands) => void;
-    executeAsync:(command: string, output: ShellOutputType) => Promise<any>  // <== ANY May be improved here
+    executeAsync:(command: string, context?: {[key: string]: any}, output?: ShellOutputType) => Promise<any>  // <== ANY May be improved here
 } 
 
 export type ShellConfigDefinition = {

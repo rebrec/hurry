@@ -1,19 +1,27 @@
 import  Path from  'path'
 import { getDirectories } from '../helpers/helpers'
-import { DatasourceBase, DatasourceShell, DatasourceJS } from '../Datasource/DatasourceBase'
-import DatasourceLegacy from '../Datasource/DatasourceLegacy'
+import { DatasourceBase, DatasourceShell, DatasourceJS, LegacyDatasourceJS, LegacyDatasourceShell } from '../Datasource/DatasourceBase'
+import { LegacyDatasourceDefinition } from '../Datasource/Datasource.types'
+import { ShellManager } from './ShellManager'
 // import * from '../Datasource/Datasource.types'
 import { action, observable } from 'mobx';
 import { cpus } from 'os';
+import HistoryStore from '../../store/HistoryStore'
 
 const { platform } = require('os');
 
+type GenericConfig = {[key: string]: any}
 
-export default class DatasourceManager{
-    @observable _datasources = {};
+export class DatasourceManager{
+    @observable _datasources!: {[key: string]: DatasourceBase};
+    shellManager: ShellManager;
+    historyStore: HistoryStore;
+    config: GenericConfig;
+    _defaultDataSource: string;
 
-    constructor(shellManager, config, historyStore){
+    constructor(shellManager: ShellManager, config: GenericConfig, historyStore: HistoryStore){
         const { datasourcesPath, defaultDataSource } = config;
+        this._initDatasources();
         this.config = config.datasources || {};
         this.shellManager = shellManager;
         this.historyStore = historyStore;
@@ -26,23 +34,31 @@ export default class DatasourceManager{
             this.addDatasourcePath(path);
         }
     }
-    addDatasourcePath(path){
-        console.log('DatasourceManager.addDatasource : Processing file :', path);
-        const datasourceDefinition = __non_webpack_require__(path);
-        return this.addDatasourceDefinition(datasourceDefinition, path);
+
+    @action.bound _initDatasources(){
+        this._datasources = {};
     }
 
-    @action.bound addDatasourceDefinition(datasourceDefinition, modulePath){
-        if (datasourceDefinition.hasOwnProperty('platforms') && datasourceDefinition.platforms.indexOf(platform())<0){
-            console.log('DatasourceManager.addDatasourceDefinition : Skipping incompatible Datasource', datasourceDefinition.name);
-            return;
-        }
-        const shell = this.shellManager.getShell(datasourceDefinition.shell);
-        if (!shell) { return console.log(`'DatasourceManager.addDatasourceDefinition : Skipping datasource ${datasourceDefinition.name} because shell ${datasourceDefinition.shell} is unavailable`)}
+    addDatasourcePath(path: string){
+        console.log('DatasourceManager.addDatasource : Processing file :', path);
+        const datasourceDefinition = __non_webpack_require__(path);
+        return this.addLegacyDatasourceDefinition(datasourceDefinition, path);
+    }
+
+    @action.bound async addDatasourceDefinition(definition: LegacyDatasourceDefinition, modulePath: string){
+        return this.addLegacyDatasourceDefinition(definition, modulePath);
+    }
+
+
+    @action.bound async addLegacyDatasourceDefinition(definition: LegacyDatasourceDefinition, modulePath: string){
+        definition.shellName = definition.shell as string;
+        delete definition.shell
+        if (!definition.hasOwnProperty('platforms')) { definition.platforms = ['win32', 'linux']; }
+        const config = this.config.hasOwnProperty(definition.name) ? this.config[definition.name] : {};
+        const datasource = (definition.shellName === 'js') ? 
+            new LegacyDatasourceJS(definition, config, modulePath) : new LegacyDatasourceShell(definition, config, modulePath)
         
-        const config = this.config.hasOwnProperty(datasourceDefinition.name) ? this.config[datasourceDefinition.name] : {};
-        const datasource = new DatasourceLegacy(datasourceDefinition, config, shell, modulePath);
-        this._datasources[datasource.getName()] = datasource;
+        return this.addDatasource(datasource);
     }
 
     @action.bound async addDatasource(datasourceInstance: DatasourceBase) {
@@ -67,10 +83,10 @@ export default class DatasourceManager{
         return this.getDatasource(this._defaultDataSource)
     }
 
-    getDatasourceId(name){
+    getDatasourceId(name: string){
         return this._datasources[name];
     }
-    getDatasource(caption){
+    getDatasource(caption: string){
         for (const props in this._datasources){
             const datasource = this._datasources[props];
             if (datasource.getName() === caption) return datasource;

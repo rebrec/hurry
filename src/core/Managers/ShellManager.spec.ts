@@ -1,9 +1,8 @@
 import  path from  'path'
-import  ShellManager from './ShellManager';
+import  {ShellManager} from './ShellManager';
 import { observable, computed, action, extendObservable } from 'mobx'
 import { platform } from 'os'
 
-const { platform } = require('os');
 const moduleRoot = path.join(__dirname, '..', '..', 'modules')
 const settings = {
     shellsPath: path.join(moduleRoot, 'shells'), 
@@ -11,9 +10,7 @@ const settings = {
     isValid: true
 }
 const historyStore = {
-    addCommand: (commandElement, context)=>{
-
-    };
+    addCommand: (commandElement: any, context: any)=>{}
 }
 
 describe('ShellManager', function (){

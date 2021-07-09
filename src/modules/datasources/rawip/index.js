@@ -8,6 +8,7 @@ module.exports = {
     ],
     mainColumnProperty: 'hostname',
     pingableProperty: 'hostname',
+    platforms: ['win32', 'linux'],
     searchFunc: keyword => {
         return '@(@{hostname = "' + keyword + '"}) | ConvertTo-Json -Compress';
     },

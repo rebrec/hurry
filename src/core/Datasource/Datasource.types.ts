@@ -12,13 +12,28 @@ export interface DatasourceDefinition {
     initCommands: InitCommands,
     platforms: Platforms
 }
+
+export interface LegacyDatasourceDefinition extends DatasourceDefinition {
+    shell?: string,
+    searchFunc: LegacyDatasourceDefinitionJS | LegacyDatasourceDefinitionShell
+}
+
+
+export interface LegacyDatasourceDefinitionShell extends DatasourceDefinition {
+    searchFunc: (keyword: string) => string
+}
+export interface LegacyDatasourceDefinitionJS extends DatasourceDefinition {
+    searchFunc: (keyword: string) => Promise<SearchResults>
+}
+
 export interface TemplateContext {
     disabled?: boolean | undefined;
     instanceId: number,
     modulePath: string
 }
+export type GenericConfig = { [key: string]: any }
 
-export interface Config { 
+export interface Config extends GenericConfig { 
     disabled: boolean | undefined;
 }
 

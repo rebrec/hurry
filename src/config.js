@@ -119,4 +119,4 @@ Object.assign(config, {
 
 //Object.assign(config, customSettings);
 
-export default config;
+export { config };

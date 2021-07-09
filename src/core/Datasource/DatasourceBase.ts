@@ -2,7 +2,7 @@ import { existsSync } from 'fs'
 import Path from 'path' 
 import { parseTemplate, parseTemplateArray } from '../helpers/helpers';
 
-import { DatasourceDefinition, SearchResults, Column, InitCommands, TemplateContext, TemplateContextElement, Config, Platforms } from './Datasource.types'
+import { DatasourceDefinition, LegacyDatasourceDefinition, LegacyDatasourceDefinitionShell, LegacyDatasourceDefinitionJS, SearchResults, Column, InitCommands, TemplateContext, TemplateContextElement, Config, Platforms } from './Datasource.types'
 import { Shell, ShellOutputType } from '../Shell/Shell.types';
 import { ThemeProvider } from 'react-bootstrap';
 import { platform } from 'custom-electron-titlebar/lib/common/platform';
@@ -170,7 +170,7 @@ export abstract class DatasourceBase implements DatasourceDefinition {
                 result._pingableProperty = this.pingableProperty;
                 for (const column of this.columns){
                     if (column.hasOwnProperty('variableName')){
-                        result[column.variableName] = result[column.property];
+                        result[column.variableName!] = result[column.property];
                     }
                 }
             }
@@ -192,3 +192,40 @@ export abstract class DatasourceJS extends DatasourceBase{
     }
     abstract _nativeSearch(keyword: string): Promise<SearchResults>;
 }
+
+
+export class LegacyDatasourceShell extends DatasourceBase{
+    _searchFunc: (keyword: string) => string
+
+    constructor(definition: LegacyDatasourceDefinition, config: Config, modulePath: string){
+        if (!definition.hasOwnProperty('platforms')) { definition.platforms = ['win32', 'linux']}
+        super(definition, config, modulePath);
+        if (!definition.hasOwnProperty('searchFunc')) throw new Error('missing Shell DatasourceDefinition property : searchFunc');
+        const shellDefinition = (definition as unknown) as LegacyDatasourceDefinitionShell
+        this._searchFunc = shellDefinition.searchFunc;
+    }
+        
+    _getShellSearchString(keyword: string){
+        return this._searchFunc(keyword)
+    }
+}
+
+
+export class LegacyDatasourceJS extends DatasourceBase{
+    _searchFunc: (keyword: string) => Promise<SearchResults>
+
+    constructor(definition: LegacyDatasourceDefinition, config: Config, modulePath: string){
+        definition.shellName = 'js';
+        if (!definition.hasOwnProperty('platforms')) { definition.platforms = ['win32', 'linux']}
+        super(definition, config, modulePath);
+        this.setShell({name: 'js', registerInitCommands: ()=>{}, executeAsync: async()=>{}})
+        if (!definition.hasOwnProperty('searchFunc')) throw new Error('missing JS DatasourceDefinition property : searchFunc');
+        const jsDefinition = (definition as unknown) as LegacyDatasourceDefinitionJS
+        this._searchFunc = jsDefinition.searchFunc;
+    }
+    
+    _nativeSearch(keyword: string){
+        return this._searchFunc(keyword)
+    };
+}
+

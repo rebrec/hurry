@@ -17,5 +17,6 @@
     "jsx": "react",
     "types": ["jest", "node", "webpack-env"]
   },
-  "include": ["src/**/*", "jest.setup.js"]
+  "include": ["src/**/*", "jest.setup.js"],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/__tests__/**", "**/tests/**"]
 }

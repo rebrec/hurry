@@ -1,4 +1,4 @@
-import config from '../../config'
+import { config } from '../../config'
 import store from '../../store/RootStore'
 import MenuManager from '../../core/MenuManager'
 import {remote} from "electron"

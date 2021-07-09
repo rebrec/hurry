@@ -2,7 +2,7 @@ import { existsSync } from 'fs'
 import { getFiles, getDirectories } from './helpers/helpers'
 import { observable, action } from 'mobx';
 import api from './api';
-import config from '../config'
+import { config } from '../config'
 
 import Path from 'path';
 

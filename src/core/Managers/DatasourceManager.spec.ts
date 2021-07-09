@@ -1,11 +1,11 @@
 import { mkdtemp } from 'fs';
 import path from 'path'
-import  ShellManager from './ShellManager';
+import  {ShellManager} from './ShellManager';
 
 import { rmdirs, mkTmpDir } from '../helpers/helpers';
-import DatasourceManager from './DatasourceManager'
+import { DatasourceManager } from './DatasourceManager'
 import { createPortal } from 'react-dom';
-import Datasource from '../Datasource/DatasourceLegacy';
+import HistoryStore from '../../store/HistoryStore'
 
 const moduleRoot = path.join(__dirname, '..', '..', 'modules')
 const shellSettings = {
@@ -13,9 +13,8 @@ const shellSettings = {
     shellFeaturesPath: path.join(moduleRoot, 'shellfeatures'),
     isValid: true
 }
-const historyStore = {
-    addCommand: (commandElement: any, context: any)=>{}
-}
+const historyStore = new HistoryStore();
+
 let shellMgr:ShellManager;
 const dsMgrConfig = {
     datasources: {
@@ -41,19 +40,19 @@ afterAll(async ()=>{
 
 describe ("DatasourceManager", () => {
     test("constructor", () => {
-        const mgr = new DatasourceManager(shellMgr, dsMgrConfig, historyStore)
+        const mgr = new DatasourceManager(shellMgr, dsMgrConfig, historyStore )
         expect(mgr).not.toBe(undefined);
     });
     
-    test("can use legacy Datasource Definition", () => {
+    test("can use legacy Datasource Definition", async() => {
         const mgr = new DatasourceManager(shellMgr, dsMgrConfig, historyStore)
         const def = require('../Datasource/tests/DemoJSONDatasource.datasource.definition');
-        mgr.addDatasourceDefinition(def, path.join(__dirname, '..', 'Datasource', 'tests'));
-        const ds = mgr.getDatasource(def.caption);
+        await mgr.addLegacyDatasourceDefinition(def, path.join(__dirname, '..', 'Datasource', 'tests'));
+        const ds = mgr.getDatasource(def.caption + "_1");
         expect(ds).not.toEqual(null);
         return ds.search("host3")
         .then((res: DatasourceBase) =>{
-            expect(res).toStrictEqual({"success":true,"data":[{"hostname":"host3","username":"user3","something":"else3","datasource":{"name":"demo-json-array-datasource","mainColumnProperty":"hostname","columns":[{"columnName":"Hostname","property":"hostname"},{"columnName":"Username","property":"username"},{"columnName":"Whatever","property":"something"}]},"_pingableProperty":"hostname"}]});
+            expect(res).toStrictEqual({"success":true,"data":[{"hostname":"host3","username":"user3","something":"else3","datasource":{"name":"demo-json-array-datasource_1","mainColumnProperty":"hostname","columns":[{"columnName":"Hostname","property":"hostname"},{"columnName":"Username","property":"username"},{"columnName":"Whatever","property":"something"}]},"_pingableProperty":"hostname"}]});
         })
     });
 
