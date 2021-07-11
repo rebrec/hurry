@@ -9,6 +9,8 @@ import PluginManager from '../core/PluginManager';
 import { DatasourceManager } from '../core/Managers/DatasourceManager';
 import HistoryStore from './HistoryStore'
 import { config } from '../config'
+import Logger from '../core/helpers/logging';
+const logger = Logger('RootStore');
 // import PowershellRunner from '../modules/runner';
 const { platform } = require('os');
 configure({ enforceActions: "always" });

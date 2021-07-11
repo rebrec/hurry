@@ -17,7 +17,7 @@ export const searchPlugin = function searchPlugin(keyword){
 
 export const getDownloadURL = function getDownloadURL(packageName){
     const downloadURL = `https://registry.npmjs.org/${packageName}`;
-    console.log('downloading ' + downloadURL);
+    logger('downloading ' + downloadURL);
     return fetch(downloadURL)
     .then(response => {
         return response.json();

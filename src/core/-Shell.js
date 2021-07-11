@@ -1,14 +1,9 @@
 const { platform } = require('os');
-const { parseTemplate } = require('../helpers/helpers');
-import StatefulProcessCommandProxy from "../helpers/stateful-command-proxy/statefulProcessCommandProxy";
+const { parseTemplate } = require('./helpers/helpers');
+const StatefulProcessCommandProxy = require("./helpers/stateful-command-proxy/statefulProcessCommandProxy");
 import { observable, computed, action, extendObservable } from 'mobx'
-import MonitorManager from "../MonitorManager";
-import { ProcessExecutionResult, ShellOutputType, ShellConfigDefinition, ShellFeature, ShellConfigInternal, ShellExecutionResult } from './Shell.types'
-import Logger from '../helpers/logging';
-const logger = Logger('Shell');
+import MonitorManager from "./MonitorManager";
 const path = require('path');
-
-
 
 const defaultConfig = {
     min: 1,
@@ -26,33 +21,23 @@ const defaultConfig = {
     processEnvMap : null,
     processUid : null,
     processGid : null,
-    validateFunction: (processProxy: any) => { return processProxy.isValid()},
+    validateFunction: (processProxy) => { return processProxy.isValid()},
     initCommands: null,
     preDestroyCommands: null
 };
 
-
-const emptyShellConfig: ShellConfigInternal = { 
-  name: "", initCommands: [], preDestroyCommands: [], verboseLogging: false,
-  monitorMgr: new MonitorManager({name: "empty"}),
-  logFunction: (s: string, o: string, m: string) => {}
-}
 export default class Shell{
   
-  @observable runner:any;
-  name: string;
-  initCommands: Array<string> = [];
-  preDestroyCommands: Array<string> = [];
-  config!: ShellConfigInternal;
-  monitorManager: MonitorManager;
-
-  constructor(config: ShellConfigDefinition){
+  @observable runner;
+  
+  constructor(config){
     this.name = config.name;
     const {initCommands, preDestroyCommands} = config;
-
+    this.initCommands = [];
+    this.preDestroyCommands = [];
     this.registerInitCommands(initCommands);
     this.registerPreDestroyCommands(preDestroyCommands);
-    this.config = emptyShellConfig;
+    this.config = {};
     Object.assign(this.config, defaultConfig, config);
     if (!this.config.verboseLogging) { this.config.verboseLogging = true }
     this.monitorManager = new MonitorManager(config);
@@ -60,7 +45,7 @@ export default class Shell{
     // this.config.monitorMgr = new MonitorManager(config);;
     
     this.config.logFunction = (severity,origin,msg) => {
-      this.config.verboseLogging && logger.debug(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
+      this.config.verboseLogging && console.log(this.name + '                ' + severity.toUpperCase() + " " +origin+" "+ msg);
     };
   }
   
@@ -70,64 +55,50 @@ export default class Shell{
     this.runner = new StatefulProcessCommandProxy(this.config);
   }
 
-  isRunning(){
-    return this.runner !== undefined;
-  }
-
 
   shutdown(){
     return this.runner.shutdown();
   }
   
-  
-  addFeature(feature: ShellFeature){
+  addFeature(feature){
     const { name, shell, initCommands, preDestroyCommands } = feature;
     if (this.name !== shell) { throw `Error trying to add feature ${name} shell mismatch (${this.name} != ${shell})`}
     this.registerInitCommands(initCommands);
     this.registerPreDestroyCommands(preDestroyCommands);
   }
 
-  async registerInitCommands(commands: string[] = []){
+  async registerInitCommands(commands = []){
     Array.prototype.push.apply(this.initCommands, commands);
-    const promises: Array<any> = [];
-    if (this.isRunning()) {
-      for (const command of commands){
-        promises.push(this._run(command));
-      }
-
+    if (!this.isRunning()) return;
+    const promises;
+    for (const command of this.initCommands){
+      promises.push(this._run(command));
     }
-    // for (const command of this.initCommands){
-    //   promises.push(this._run(command));
-    // }
     return await Promise.all(promises);
   }
-  registerPreDestroyCommands(commands: string[] = []){
+  registerPreDestroyCommands(commands = []){
     Array.prototype.push.apply(this.preDestroyCommands, commands);
   }
-  async _run(command: string): Promise<ProcessExecutionResult> {
-      logger.silly('_run: ' + command)
-      if (!this.runner) throw new Error("You must call start() before trying to execute commands using _run()")
+  _run(command) {
       return this.runner.executeCommand(command);
   }
-  executeAsync(command: string, context={}, output: ShellOutputType = ShellOutputType.Json) {
-    return this.run(command, context, output);
-  }
-  async run(command: string, context={}, output: ShellOutputType = ShellOutputType.Json) {
-    logger.silly('run: ' + command, {context: context, output: output});
-    //output = output.toLowerCase();
-    const processJSON = (output === ShellOutputType.Json);
 
+  run(command, context={}, output="json") {
+    if (!output) output = 'none'
+    output = output.toLowerCase();
+    const processJSON = (output === 'json');
     command = parseTemplate(command, context);
     return this._run(command)
-      .then((res: ProcessExecutionResult) => {
+      .then((res) => {
         let obj;
         // console.log(`received res : `, res);
         // this.ps.streams
-        let res1: ShellExecutionResult = {success: true, data: res.stdout };
+        let res1 = {success: true, data: res.stdout };
         if (res.stderr !== ''){
           res1.errorMessage = res.stderr;
           res1.success = false;
-        } else if (processJSON){        
+        }
+        if (processJSON){        
           let tmp;
           try {
             obj = JSON.parse(res.stdout);
@@ -147,10 +118,10 @@ export default class Shell{
         }
         return res1;
       })
-      .catch((err: ExceptionInformation) => {
+      .catch((err) => {
         console.error(`Runner ERROR while trying to run command ${command}`);
         console.error(err);
-        let res1: ShellExecutionResult = {success: false, errorMessage: `${err}`};
+        let res1 = {success: false, errorMessage: err};
         return res1;
       });
   }

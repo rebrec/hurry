@@ -1,4 +1,7 @@
 import Path from 'path';
+import Logger from './core/helpers/logging';
+const logger = Logger('Config');
+
 const app = require('electron').remote.app
 let basepath;
 
@@ -6,11 +9,11 @@ const { ipcRenderer } = require("electron");
 import { existsSync, writeFileSync, mkdirSync} from 'fs'
 
 const program = ipcRenderer.sendSync('getCommandLineParameters')
-console.log('Program parameters', program);
+logger.verbose('Program parameters', program);
 
-if (program.debug) { console.log('Debug Mode Enabled')}
-if (program.profileDir) { console.log('Custom Profile directory to use:', program.profileDir)}
-if (program.dev) { console.log('Dev Profile enabled')}
+if (program.debug) { logger.verbose('Debug Mode Enabled')}
+if (program.profileDir) { logger.verbose('Custom Profile directory to use:', program.profileDir)}
+if (program.dev) { logger.verbose('Dev Profile enabled')}
 
 const defaultConfig = require('./example/config');
 const exampleMenuData = require('./example/menuConfig.json');
@@ -34,11 +37,11 @@ const defaultConfigPath = Path.join(__dirname, 'example', 'config.js');
 
 let profilePath = Path.join(homedir, '.hurry');
 if (program.profileDir) { 
-    console.log('Custom Profile directory to use:', program.profileDir)
+    logger.verbose('Custom Profile directory to use:', program.profileDir)
     profilePath = program.profileDir;
 }
 if (program.dev) {
-     console.log('Dev Profile enabled')
+    logger.verbose('Dev Profile enabled')
      profilePath = Path.join(homedir, '.hurry-dev');
 }
 
@@ -56,11 +59,11 @@ const menuPath = Path.join(profilePath, 'menuConfig.json');
 
 
 if (existsSync(configPath)){
-    console.log('Importing custom configuration');
+    logger.verbose('Importing custom configuration');
     customSettings = __non_webpack_require__(configPath);
 } else {
     newProfile = true;
-    console.log('No custom configuration file found at ' + configPath);
+    logger.verbose('No custom configuration file found at ' + configPath);
     customSettings = defaultConfig;
 }
 
@@ -98,8 +101,8 @@ if (newProfile){
 
 
 // Check a few valid things before considering the config is valid
-console.log('projectRoot exist : ', existsSync(config.projectRoot));
-console.log('menuPath exist : ', existsSync(config.menu.menuPath));
+logger.verbose('projectRoot exist : ', existsSync(config.projectRoot));
+logger.verbose('menuPath exist : ', existsSync(config.menu.menuPath));
 if (!newProfile && existsSync(config.projectRoot) && existsSync(config.menu.menuPath)){
     config.isValid = true;
 }

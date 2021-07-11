@@ -3,8 +3,10 @@ import { getFiles, getDirectories } from './helpers/helpers'
 import { observable, action } from 'mobx';
 import api from './api';
 import { config } from '../config'
-
 import Path from 'path';
+import Logger from './helpers/logging';
+const logger = Logger('PluginManager');
+
 
 const { platform } = require('os');
 
@@ -29,7 +31,7 @@ export default class PluginManager{
         for (const pluginsPath of [builtinsPath, pluginsPath]) {
             const pluginDirs = getDirectories(pluginsPath);
             for (const pluginDirPath of pluginDirs){
-                console.log('scanning ', pluginDirPath);
+                logger.verbose('scanning ' + pluginDirPath);
                 const pluginRoot = Path.join(pluginDirPath, 'dist')
                 const pluginFullPath = Path.join(pluginRoot, 'main.bundle.js');
                 if (existsSync(pluginFullPath)){
@@ -40,7 +42,7 @@ export default class PluginManager{
                         pluginDir: pluginRoot
                     }
                     pluginInfos.push(pluginInfo);
-                    console.log('Found plugin !', pluginFullPath);
+                    logger.verbose('Found plugin ' + pluginFullPath);
                 }
             }
         }
@@ -56,13 +58,13 @@ export default class PluginManager{
 
     _initPlugin(pluginContext){
         const {pluginNAme, pluginPath, pluginDir} = pluginContext
-        console.log('PluginManager.loadPlugin : Processing file :', pluginPath);
+        logger.verbose('loadPlugin : Processing file: ', pluginPath);
         try {
             const Plugin = __non_webpack_require__(pluginPath).default;
             const plugin = new Plugin(api, pluginContext);
             this.addPlugin(plugin);
         } catch (e) {
-            console.warn('Failed to load plugin', pluginPath, e);            
+            console.warn('Failed to load plugin ' + pluginPath, e);            
         }
     }
 

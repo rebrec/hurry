@@ -7,6 +7,8 @@ import { ShellManager } from './ShellManager'
 import { action, observable } from 'mobx';
 import { cpus } from 'os';
 import HistoryStore from '../../store/HistoryStore'
+import Logger from '../helpers/logging';
+const logger = Logger('DatasourceManager');
 
 const { platform } = require('os');
 
@@ -40,7 +42,7 @@ export class DatasourceManager{
     }
 
     addDatasourcePath(path: string){
-        console.log('DatasourceManager.addDatasource : Processing file :', path);
+        logger.verbose('addDatasource : Processing file :', path);
         const datasourceDefinition = __non_webpack_require__(path);
         return this.addLegacyDatasourceDefinition(datasourceDefinition, path);
     }

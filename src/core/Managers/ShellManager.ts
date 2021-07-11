@@ -1,9 +1,12 @@
+import Logger from '../helpers/logging';
 import  Path from  'path'
 import  Shell from '../Shell/Shell';
 import { ShellFeature, ShellOutputType } from '../Shell/Shell.types'
 import { getDirectories } from '../helpers/helpers'
 import { observable, computed, action, extendObservable } from 'mobx'
 import HistoryStore from '../../store/HistoryStore'
+
+const logger = Logger('ShellManager');
 
 if (process.env.NODE_ENV === 'test') {
     (global as any)['__non_webpack_require__'] = require;
@@ -54,7 +57,7 @@ export class ShellManager{
         for (const path of shellsPaths){
             const config = __non_webpack_require__(path);
             if (config.platform.indexOf(platform())<0) {
-                console.log('ShellManager : Skipping incompatible Shell ', config.name);
+                logger.info('ShellManager : Skipping incompatible Shell ', config.name);
                 continue;
             }
             const shell = new Shell(config);
@@ -71,9 +74,9 @@ export class ShellManager{
     }
 
     @action.bound addShell(shell: Shell){
-        console.log('start of adding Shell', shell.name)
+        logger.info('start of adding Shell', shell.name)
         this._shells[shell.name] = shell; 
-        console.log('end of adding Shell', shell.name)
+        logger.info('end of adding Shell', shell.name)
     }
 
 
@@ -87,7 +90,7 @@ export class ShellManager{
 
     addFeature(shellName: string, shellFeature: ShellFeature ){
         if (!this._shells.hasOwnProperty(shellName)) {
-            console.log(`Skipping feature ${shellFeature.name} for shell ${shellName} which is not available.`)
+            logger.info(`Skipping feature ${shellFeature.name} for shell ${shellName} which is not available.`)
             return;
         }
         const shell = this.getShell(shellName);
@@ -101,7 +104,7 @@ export class ShellManager{
         const shellObj = this.getShell(shellName);
         const output = commandElement.output || 'none';
         for (const command of commandElement.commands){
-          console.log('Running command : ', command);
+          logger.info('Running command : ', command);
           shellObj.run(command, context, output);
         }
 
@@ -110,7 +113,7 @@ export class ShellManager{
     async start(){
         const promises = [];
         for (let [shellName, shell] of Object.entries(this._shells)){
-            console.log('Starting shell : ', shellName);
+            logger.info('Starting shell : ', shellName);
             promises.push(shell.start());
         }
         return await Promise.all(promises);

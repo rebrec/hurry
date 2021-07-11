@@ -81,12 +81,14 @@
     "bluebird": "^3.7.2",
     "bootstrap": "^4.4.0",
     "buffer-builder": "^0.2.0",
+    "chalk": "^4.1.1",
     "commander": "^6.1.0",
     "custom-electron-titlebar": "^3.1.0",
     "electron-react-devtools": "^0.5.3",
     "electron-squirrel-startup": "^1.0.0",
     "fifo": "^2.3.0",
     "generic-pool": "2.4.4",
+    "has-ansi": "^5.0.0",
     "hurry-plugin-definition": "^1.0.2",
     "jquery": "^3.4.1",
     "lodash": "^4.17.20",
@@ -104,7 +106,8 @@
     "react-jsonschema-form": "^1.8.1",
     "react-split-pane": "^0.1.89",
     "sass-loader": "^8.0.0",
-    "targz": "^1.0.1"
+    "targz": "^1.0.1",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",

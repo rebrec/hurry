@@ -1,6 +1,9 @@
 import { observable, computed, action, extendObservable } from 'mobx'
 // import ping from 'ping'
 import { pingHost } from '../core/helpers/helpers';
+import Logger from '../core/helpers/logging';
+const logger = Logger('UiState');
+
 
 const APP_STATUS = {
     WAITING_FOR_SEARCH: 1,

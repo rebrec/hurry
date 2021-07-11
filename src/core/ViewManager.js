@@ -3,6 +3,9 @@ import { getFiles } from './helpers/helpers'
 import { observable, computed, action, extendObservable } from 'mobx'
 import { basename } from 'path'
 import api from '../core/api'
+import Logger from './helpers/logging';
+const logger = Logger('ViewManager');
+
 
 export default new class ViewManager{
 

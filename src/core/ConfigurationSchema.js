@@ -3,6 +3,8 @@ import api from '../core/api'
 import {getDirectories} from '../core/helpers/helpers'
 import { existsSync } from 'fs';
 import Path from 'path'
+import Logger from './helpers/logging';
+const logger = Logger('ConfigurationSchema');
 const { datasourcesPath, pluginsPath } = config;
 
 export default new class ConfigurationSchema{
@@ -15,13 +17,13 @@ export default new class ConfigurationSchema{
     _addDatasourceConfigurationSchema(path){
         const schemaPath = Path.join(path, 'config-schema.js');
         if (!existsSync(schemaPath)){
-            console.warn('Missing config-schema', schemaPath);
+            logger.warn('Missing config-schema', schemaPath);
             return; 
         } else {
-            console.log('Processing config-schema', schemaPath);
+            logger.verbose('Processing config-schema', schemaPath);
         }
         
-        console.log('addDatasourceConfigurationSchema : Processing file :', schemaPath);
+        logger.verbose('addDatasourceConfigurationSchema : Processing file :', schemaPath);
         const datasourceDefinition = __non_webpack_require__(schemaPath);
         Object.assign(this._datasourceConfigurationSchema, datasourceDefinition);
     }
@@ -33,7 +35,7 @@ export default new class ConfigurationSchema{
         for (const path of paths){
             this._addDatasourceConfigurationSchema(path);
         }
-        console.log("SCHEMA",this._datasourceConfigurationSchema )
+        logger.debug("SCHEMA",this._datasourceConfigurationSchema )
     }
 
 

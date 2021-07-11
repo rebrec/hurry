@@ -6,7 +6,8 @@ import { DatasourceDefinition, LegacyDatasourceDefinition, LegacyDatasourceDefin
 import { Shell, ShellOutputType } from '../Shell/Shell.types';
 import { ThemeProvider } from 'react-bootstrap';
 import { platform } from 'custom-electron-titlebar/lib/common/platform';
-
+import Logger from '../helpers/logging';
+const logger = Logger('DatasourceBase');
 export interface DatasourceBase{
     _nativeSearch?(kw: string): Promise<SearchResults>;
     _getShellSearchString?(kw: string): string;
@@ -83,11 +84,7 @@ export abstract class DatasourceBase implements DatasourceDefinition {
     private runInitChecks(): Promise<boolean> | boolean{
         return true;
     }
-    private _initInstanceNumber(){
-        (this.constructor as any).counter  = ((this.constructor as any).counter || 0) + 1;
-        this._instanceId = (this.constructor as any).counter;
-        this.addTemplateContext('instanceId', `${this._instanceId}`);
-    }
+
 
     get instanceId(): number { return this._instanceId; }
     
@@ -131,9 +128,9 @@ export abstract class DatasourceBase implements DatasourceDefinition {
     addTemplateContext(variableName: string, value: string){
         const obj: TemplateContextElement = {};
         obj[variableName] = value;
-        this.mergeTemplateContext(obj);
+        this._mergeTemplateContext(obj);
     }
-    mergeTemplateContext(context: TemplateContextElement){
+    _mergeTemplateContext(context: TemplateContextElement){
         Object.assign(this._templateContext, context);
     }
     

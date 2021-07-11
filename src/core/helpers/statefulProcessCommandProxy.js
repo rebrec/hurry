@@ -1,3 +1,6 @@
+import Logger from '../helpers/logging';
+const logger = Logger('DatStatefulProcessCommandProxyasourceManager');
+
 module.exports = StatefulProcessCommandProxy;
 
 var poolModule = require('generic-pool');
@@ -249,7 +252,7 @@ StatefulProcessCommandProxy.prototype._log2 = function(severity,origin,msg) {
         this._logFunction(severity,origin,msg);
 
     } else {
-        console.log(severity.toUpperCase() + " " + origin + " " + msg);
+        logger.verbose(severity.toUpperCase() + " " + origin + " " + msg);
     }
 }
 

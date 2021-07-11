@@ -1,4 +1,6 @@
 import { observable, action } from 'mobx'
+import Logger from '../helpers/logging';
+const logger = Logger('MenuItemElement');
 
 class MenuItemElement {
     @observable properties;
