@@ -1,7 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 import { inspect } from 'util';
-import chalk from 'chalk';
-import hasAnsi from 'has-ansi';
+import { hasAnsi} from './helpers'
 
 
 const config = {

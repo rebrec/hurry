@@ -1,11 +1,10 @@
-import Logger from '../helpers/logging';
 import  Path from  'path'
 import  Shell from '../Shell/Shell';
 import { ShellFeature, ShellOutputType } from '../Shell/Shell.types'
 import { getDirectories } from '../helpers/helpers'
 import { observable, computed, action, extendObservable } from 'mobx'
 import HistoryStore from '../../store/HistoryStore'
-
+import Logger from '../helpers/logging';
 const logger = Logger('ShellManager');
 
 if (process.env.NODE_ENV === 'test') {

@@ -7,6 +7,13 @@ import dns from 'dns';
 const dnsPromise = dns.promises;
 import net from 'net';
 
+const ansiRegex = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/;
+
+export const hasAnsi = function hasAnsi(string) {
+	return ansiRegex.test(string);
+}
+
+
 const { promisify } = require('util');
 const readdirAsync = promisify(readdir);
 const rmdirAsync = promisify(rmdir);

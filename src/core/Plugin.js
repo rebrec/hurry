@@ -1,6 +1,4 @@
-
-
-export default class Plugin {
+class Plugin {
     constructor(api){
         this._api = api;
     }
@@ -13,3 +11,10 @@ export default class Plugin {
     
     onUnload(){}
 } 
+
+export const Plugin = {
+    configurationSchema: {}
+    pluginDefinition:
+    Plugin: Plugin
+ 
+}

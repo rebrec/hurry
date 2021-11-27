@@ -88,7 +88,6 @@
     "electron-squirrel-startup": "^1.0.0",
     "fifo": "^2.3.0",
     "generic-pool": "2.4.4",
-    "has-ansi": "^5.0.0",
     "hurry-plugin-definition": "^1.0.2",
     "jquery": "^3.4.1",
     "lodash": "^4.17.20",
