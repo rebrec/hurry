@@ -1,19 +1,19 @@
 import Path from 'path';
+import { existsSync, writeFileSync, mkdirSync} from 'fs'
+const app = require('electron').remote.app
 import Logger from './core/helpers/logging';
 const logger = Logger('Config');
+const { ipcRenderer } = require("electron");
+const program = ipcRenderer.sendSync('getCommandLineParameters')
 
-const app = require('electron').remote.app
 let basepath;
 
-const { ipcRenderer } = require("electron");
-import { existsSync, writeFileSync, mkdirSync} from 'fs'
 
-const program = ipcRenderer.sendSync('getCommandLineParameters')
-logger.verbose('Program parameters', program);
+logger.silly('Program parameters', program);
 
-if (program.debug) { logger.verbose('Debug Mode Enabled')}
+if (program.debug) { logger.info('Debug Mode Enabled')}
 if (program.profileDir) { logger.verbose('Custom Profile directory to use:', program.profileDir)}
-if (program.dev) { logger.verbose('Dev Profile enabled')}
+if (program.dev) { logger.info('Dev Profile enabled')}
 
 const defaultConfig = require('./example/config');
 const exampleMenuData = require('./example/menuConfig.json');
@@ -21,9 +21,9 @@ const isProd = process.env.NODE_ENV === 'production';
 
 if (isProd) {
     basepath = Path.join(app.getAppPath(), '.webpack', 'renderer') 
- } else {
-    basepath = __dirname.split('node_modules')[0] + 'src';
- } 
+} else {
+basepath = __dirname.split('node_modules')[0] + 'src';
+} 
 
 const homedir = require('os').homedir();
 
