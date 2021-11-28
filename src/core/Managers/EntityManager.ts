@@ -1,6 +1,22 @@
 import { Entity, EntityType, Datasource, Shell } from "../Entity/Entity";
 
-type EntityTypesSettings = { [key in EntityType]: Array<any> }
+type EntityTypesPluralNames = "shells" | "datasources" | "plugins"
+type EntityTypesSettings = { [key in EntityTypesPluralNames]: Array<any> }
+
+const entityTypesPluralNameMapping: {[key in EntityType]: EntityTypesPluralNames} = {
+    "Shell": "shells",
+    "Datasource": "datasources",
+    "Plugin": "plugins"
+}
+
+type EntitySchemaDefinition = { name: string, schema: Object};
+type EntityGlobalSchemaDefinition = {
+    entities: {
+        shells: Array<EntitySchemaDefinition>,
+        datasources: Array<EntitySchemaDefinition>,
+        plugins: Array<EntitySchemaDefinition>,
+    }
+}
 
 class ConfigurationManager{
     _config = {
@@ -15,7 +31,7 @@ class ConfigurationManager{
         datasources: [],
         plugins: []
     }
-    _schema = {
+    _schema: EntityGlobalSchemaDefinition = {
         entities: {
             shells: [],
             datasources: [],
@@ -23,32 +39,39 @@ class ConfigurationManager{
         }
     };
 
-    _getEntityInstanceNoEntityClass(EntityClass: typeof Entity){
+    _getEntityMaxAllowedInstanceValue(EntityClass: typeof Entity){
         // Check in global configuration if this entity already exist
-
+        
         // else
         return 1;
     }
 
+    _getPluralEntityName(EntityClass: typeof Entity){
+        return entityTypesPluralNameMapping[EntityClass.entityType];
+    }
+
     registerEntityType(EntityClass: typeof Entity){
         let maxInstances=1;
-        const instancesNo=this._getEntityInstanceNo(EntityClass);
+        const instancesNo=this._getEntityMaxAllowedInstanceValue(EntityClass);
         if (EntityClass.multiInstances === true){
             maxInstances = (EntityClass.maxInstances === 0) ? -1 : EntityClass.maxInstances;
         }
-
-        this.entityTypes[EntityClass.entityType].push({
+        
+        this.entityTypes[this._getPluralEntityName(EntityClass)].push({
             name: EntityClass.entityName,
             maxInstances: maxInstances,
             instancesNo: instancesNo
         });
+        this._registerEntitySchema(EntityClass)
     }
 
-    registerEntitySchema(entityType : EntityType, name: string, schema={}){
-        this._schema.entities[entityType] = {
+    _registerEntitySchema(EntityClass: typeof Entity){
+        const schema = EntityClass.getConfigurationSchema();
+        const entitySchemaDefinition: EntitySchemaDefinition = {
             name: name,
             schema: schema
-        }
+        };
+        this._schema.entities[this._getPluralEntityName(EntityClass)].push(entitySchemaDefinition);
     }
 
 }
