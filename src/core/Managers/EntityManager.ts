@@ -91,7 +91,6 @@ export default class EntityManager<T extends typeof Entity>{
         const { name, multiInstances, maxInstances, entityType } = EntityClass
         const schema = EntityClass.getConfigurationSchema()
 
-        configurationManager.registerSetting
 
     }
 

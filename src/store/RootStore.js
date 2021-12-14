@@ -32,10 +32,20 @@ class RootStore {
 
     }
 
-    _init() {
-        this.shellManager.start();
-        this.pluginManager._init();
-        this.uiState._init();
+    
+    async init() {
+        // this.shellManager.start();
+        await this.shellManager.init();
+        await this.datasourceManager.init();
+        await this.pluginManager.init();
+        await this.uiState.init();
+    }
+
+    async start() {
+        await this.shellManager.start();
+        await this.datasourceManager.start();
+        await this.pluginManager.start();
+        await this.uiState.start();
     }
 
 }

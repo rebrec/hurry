@@ -72,6 +72,9 @@ const myFormat = format.printf( (info) => {
     if (config.logger.displayTimestamp) res += `${info.timestamp} | `
     res += `${info.moduleName.padEnd(maxModuleNameLength, ' ').substr(0, maxModuleNameLength)} `
     res += ('[' + info.level + ']').padStart(19, ' ');
+    if (info.funcName) {
+      res += ('[' + info.funcName + ']').padStart(19, ' ');
+    }
     res += ` : ${msg} ${rest}`  
     res += `                    [${getFileNameAndLineNumber()}]`;
     return res

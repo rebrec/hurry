@@ -1,5 +1,5 @@
 import  Path from  'path'
-import { getDirectories } from '../helpers/helpers'
+import { getDirectoriesAsync } from '../helpers/helpers'
 import { DatasourceBase, DatasourceShell, DatasourceJS, LegacyDatasourceJS, LegacyDatasourceShell } from '../Datasource/DatasourceBase'
 import { LegacyDatasourceDefinition } from '../Datasource/Datasource.types'
 import { ShellManager } from './ShellManager'
@@ -22,19 +22,26 @@ export class DatasourceManager{
     _defaultDataSource: string;
 
     constructor(shellManager: ShellManager, config: GenericConfig, historyStore: HistoryStore){
-        const { datasourcesPath, defaultDataSource } = config;
         this._initDatasources();
         this.config = config.datasources || {};
         this.shellManager = shellManager;
         this.historyStore = historyStore;
-        this._defaultDataSource = defaultDataSource;
+        this._defaultDataSource = config.defaultDataSource;
 
-        if (!config.isValid) return;
-        const datasourcesPaths = getDirectories(datasourcesPath);
+        // if (!config.isValid) return;
+        
+    }
+
+    async scanDirectories(){
+        const datasourcesPaths = await getDirectoriesAsync(this.config.datasourcesPath);
         
         for (const path of datasourcesPaths){
             this.addDatasourcePath(path);
         }
+    }
+
+    async init(){
+        await this.scanDirectories();
     }
 
     @action.bound _initDatasources(){

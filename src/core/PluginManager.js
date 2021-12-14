@@ -1,5 +1,5 @@
 import { existsSync } from 'fs'
-import { getFiles, getDirectories } from './helpers/helpers'
+import { getFiles, getDirectories, getDirectoriesAsync, existsAsync } from './helpers/helpers'
 import { observable, action } from 'mobx';
 import api from './api';
 import { config } from '../config'
@@ -18,38 +18,37 @@ const { platform } = require('os');
 
 export default class PluginManager{
     @observable _plugins = [];
+    _pluginInfos = [];
 
     constructor(config){
-        const {pluginsPath} = config;
-        const pluginSuffix = '.bundle.js';
-        this._pluginInfos = this._getPluginInfos(pluginsPath);
+        const { pluginsPath } = config;
+        this._config = config;
+        const pluginSuffix = '.bundle.js';   
     }
-
-    _getPluginInfos(pluginsPath){
+    
+    async _scanDirectory(path){
         const pluginInfos = []
-        const { builtinsPath } = config;
-        for (const pluginsPath of [builtinsPath, pluginsPath]) {
-            const pluginDirs = getDirectories(pluginsPath);
-            for (const pluginDirPath of pluginDirs){
-                logger.verbose('scanning ' + pluginDirPath);
-                const pluginRoot = Path.join(pluginDirPath, 'dist')
-                const pluginFullPath = Path.join(pluginRoot, 'main.bundle.js');
-                if (existsSync(pluginFullPath)){
-                    const pluginName = pluginRoot.split('/').splice(-2).shift()
-                    const pluginInfo = {
-                        pluginName: pluginName,
-                        pluginPath: pluginFullPath,
-                        pluginDir: pluginRoot
-                    }
-                    pluginInfos.push(pluginInfo);
-                    logger.verbose('Found plugin ' + pluginFullPath);
+        const pluginDirs = await getDirectoriesAsync(path);
+        for (const pluginDirPath of pluginDirs){
+            logger.verbose('scanning ' + pluginDirPath);
+            const pluginRoot = Path.join(pluginDirPath, 'dist')
+            const pluginFullPath = Path.join(pluginRoot, 'main.bundle.js');
+            if (await existsAsync(pluginFullPath)){
+                const pluginName = pluginRoot.split('/').splice(-2).shift()
+                const pluginInfo = {
+                    pluginName: pluginName,
+                    pluginPath: pluginFullPath,
+                    pluginDir: pluginRoot
                 }
+                this._pluginInfos.push(pluginInfo);
+                logger.verbose('Found plugin ' + pluginFullPath);
             }
         }
-        return pluginInfos;
     }
 
-    _init(){
+    async init(){
+        await Promise.all([this._scanDirectory(this._config.builtinsPath), this._scanDirectory(pluginsPath)]);
+        
         for (const info of this._pluginInfos){
             this._initPlugin(info);
         }
@@ -64,7 +63,7 @@ export default class PluginManager{
             const plugin = new Plugin(api, pluginContext);
             this.addPlugin(plugin);
         } catch (e) {
-            console.warn('Failed to load plugin ' + pluginPath, e);            
+            logger.warn('Failed to load plugin ' + pluginPath, e);            
         }
     }
 

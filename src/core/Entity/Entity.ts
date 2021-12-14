@@ -8,50 +8,50 @@ type CheckConfigurationResult = {
 export type EntityType = "Shell" | "Datasource" | "Plugin";
   
 export abstract class Entity {
-static entityName = ""; // cannot use name, as it is reserved
-static multiInstances = false;
-static maxInstances = 0;
-static entityType: EntityType;
+    static entityName = ""; // cannot use name, as it is reserved
+    static multiInstances = false;
+    static maxInstances = 0;
+    static entityType: EntityType;
 
-_config = {};
-get config() {
-    return this._config;
-}
-set config(config) {
-    this._config = config;
-}
-
-constructor(config = {}) {
-    this._config = config;
-    const MyChildEntityClass = <typeof Entity>this.constructor;
-    if (MyChildEntityClass.entityName === "") {
-        throw new Error("Entity cannot have empty name");
+    _config = {};
+    get config() {
+        return this._config;
     }
-    if (MyChildEntityClass.entityType === null) {
-        throw new Error("Entity type cannot be null");
+    set config(config) {
+        this._config = config;
     }
-}
 
-static getConfigurationSchema() {
-    return {};
-}
+    constructor(config = {}) {
+        this._config = config;
+        const MyChildEntityClass = <typeof Entity>this.constructor;
+        if (MyChildEntityClass.entityName === "") {
+            throw new Error("Entity cannot have empty name");
+        }
+        if (MyChildEntityClass.entityType === null) {
+            throw new Error("Entity type cannot be null");
+        }
+    }
 
-async checkConfiguration(): Promise<CheckConfigurationResult> {
-    return {
-        success: true,
-        failureMessage: ""
-    };
-}
+    static getConfigurationSchema() {
+        return {};
+    }
 
-isDatasource() {
-    return this instanceof Datasource;
-}
-isShell() {
-    return this instanceof Shell;
-}
-isPlugin() {
-    return this instanceof Plugin;
-}
+    async checkConfiguration(): Promise<CheckConfigurationResult> {
+        return {
+            success: true,
+            failureMessage: ""
+        };
+    }
+
+    isDatasource() {
+        return this instanceof Datasource;
+    }
+    isShell() {
+        return this instanceof Shell;
+    }
+    isPlugin() {
+        return this instanceof Plugin;
+    }
 
 }
 

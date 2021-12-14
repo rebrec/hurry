@@ -1,24 +1,28 @@
 import os from 'os'
 import { mkdtemp } from 'fs';
 import path from 'path'
-import { readdirSync, writeFileSync, existsSync, mkdirSync, readdir, rmdir, unlink } from 'fs';
+import { readdirSync, read, writeFileSync, existsSync, mkdirSync, readdir, rmdir, unlink } from 'fs';
 //import  ping from "net-ping";
 import dns from 'dns';
 const dnsPromise = dns.promises;
 import net from 'net';
+import Logger from '../helpers/logging';
+const logger = Logger('helpers');
+
 
 const ansiRegex = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/;
 
 export const hasAnsi = function hasAnsi(string) {
-	return ansiRegex.test(string);
+  return ansiRegex.test(string);
 }
 
+logger.info('test');
 
 const { promisify } = require('util');
 const readdirAsync = promisify(readdir);
 const rmdirAsync = promisify(rmdir);
 const unlinkAsync = promisify(unlink);
-
+export const existsAsync = promisify(existsSync);
 
 
 // try {
@@ -107,6 +111,21 @@ export const getDirectories = (source) => {
   return dirs || [];
 }
   
+export const getDirectoriesAsync = async (source) => {
+  const l = logger.child({funcName: 'getDirectoriesAsync'})
+  l.debug('getDirectoriesAsync(' + source + ')');
+  let dirents;
+  let dirs = [];
+  try {
+    dirents = await readdirAsync(source, { withFileTypes: true });
+    dirs = dirents.filter(dirent => dirent.isDirectory())
+      .map(dirent => path.join(source, dirent.name))
+    l.silly('output', dirs);
+  } catch (e){
+    l.error('unknown error');
+  }
+  return dirs || [];
+}
   
 export const getFiles = (source) => {
   let files;

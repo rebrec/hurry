@@ -1,14 +1,12 @@
 import EntityManager from './EntityManager'
 
-/*
+let entityMgr;
 beforeAll(async ()=>{
-    tmpFolder = await mkTmpDir("hurrytests-");
-    tmpFolder += path.sep;
-
-    shellMgr = new ShellManager(shellSettings, historyStore);
+    entityMgr = new EntityManager(configurationManager)
     await shellMgr.start();
         
 })
+/*
 
 afterAll(async ()=>{
     if (tmpFolder !== ''){

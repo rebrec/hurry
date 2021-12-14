@@ -56,8 +56,10 @@ class UiState {
         this.setSearchedText(config.defaultSearch);
         
     }
+    async init(){
 
-    _init(){
+    }
+    async start(){
         const ds = this.rootStore.datasourceManager.getDefaultDatasource();
         this.setDatasource(ds);
     }
