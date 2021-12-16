@@ -1,25 +1,47 @@
+
+
+export type CheckConfigurationResult = {
+    success: boolean;
+    failureMessage: string;
+};
+
 export abstract class Plugin {
+    static readonly PLUGIN_VERSION=2;
     static pluginName = ""; // cannot use name, as it is reserved
-    static multiInstances = false;
+    // static multiInstances = false;
     static maxInstances = 0; // -1 = unlimited / 0 = disabled / > 0 = limited
-
-
-    constructor(api){
-        this._api = api;
+    _pluginContext={};
+    _config = {};
+    isValid = false;
+    get config() {
+        return this._config;
+    }
+    set config(config) {
+        this._config = config;
+    }
+    constructor(pluginContext={}, config={}) {
+        this.config = config;
+        this._pluginContext = pluginContext;
     }
     
-    beginLoad(){}
     
-    onLoaded(){}
-    
-    onReady(){}
-    
-    onUnload(){}
-} 
 
-export const Plugin = {
-    configurationSchema: {}
-    pluginDefinition:
-    Plugin: Plugin
- 
-}
+    beginLoad(api: any){}
+    
+    onLoaded(api: any){}
+    
+    onReady(api: any){}
+    
+    onUnload(api: any){}
+
+    static getConfigurationSchema() {
+        return {};
+    }
+
+    async checkConfiguration(): Promise<CheckConfigurationResult> {
+        return {
+            success: true,
+            failureMessage: ""
+        };
+    }
+} 

@@ -20,20 +20,25 @@ export class DatasourceManager{
     historyStore: HistoryStore;
     config: GenericConfig;
     _defaultDataSource: string;
+    _datasourcesPath: string;
 
     constructor(shellManager: ShellManager, config: GenericConfig, historyStore: HistoryStore){
         this._initDatasources();
         this.config = config.datasources || {};
+        this._defaultDataSource = config.defaultDataSource;
+        this._datasourcesPath = config.datasourcesPath;
+        
         this.shellManager = shellManager;
         this.historyStore = historyStore;
-        this._defaultDataSource = config.defaultDataSource;
-
         // if (!config.isValid) return;
         
     }
 
     async scanDirectories(){
-        const datasourcesPaths = await getDirectoriesAsync(this.config.datasourcesPath);
+        const l = logger.child({funcName: "scanDirectories"});
+        l.silly('getDirectoriesAsync('+  this.config.datasourcesPath) +')';
+        const datasourcesPaths = await getDirectoriesAsync(this._datasourcesPath);
+        l.silly('datasourcesPaths=', datasourcesPaths);
         
         for (const path of datasourcesPaths){
             this.addDatasourcePath(path);
@@ -41,15 +46,21 @@ export class DatasourceManager{
     }
 
     async init(){
+        logger.silly('init()');
         await this.scanDirectories();
     }
 
+    async start(){
+
+    }
+    
     @action.bound _initDatasources(){
         this._datasources = {};
     }
 
     addDatasourcePath(path: string){
-        logger.verbose('addDatasource : Processing file :', path);
+        const l = logger.child({funcName: "addDatasourcePath"});
+        l.verbose('Processing file :', path);
         const datasourceDefinition = __non_webpack_require__(path);
         return this.addLegacyDatasourceDefinition(datasourceDefinition, path);
     }
@@ -70,7 +81,8 @@ export class DatasourceManager{
         return this.addDatasource(datasource);
     }
 
-    @action.bound async addDatasource(datasourceInstance: DatasourceBase) {
+    @action.bound async addDatasource(datasourceInstance: DatasourceBase, extraContext={}) {
+        datasourceInstance.mergeTemplateContext(extraContext)
         if (datasourceInstance.hasOwnProperty('platforms') && datasourceInstance.platforms.indexOf(platform())<0){
             console.log('DatasourceManager.addDatasource : Skipping incompatible Datasource', datasourceInstance.name);
             return;

@@ -34,18 +34,31 @@ class RootStore {
 
     
     async init() {
-        // this.shellManager.start();
+        const l = logger.child({funcName: "init"});
+        l.silly('start');
+        l.debug('shellManager init');
         await this.shellManager.init();
+        l.debug('datasourceManager init');
         await this.datasourceManager.init();
+        l.debug('pluginManager init');
         await this.pluginManager.init();
+        l.debug('uiState init');
         await this.uiState.init();
+        l.silly('end');
     }
 
     async start() {
+        const l = logger.child({funcName: "start"});
+        l.silly('start');
+        l.debug('shellManager init');
         await this.shellManager.start();
+        l.debug('datasourceManager init');
         await this.datasourceManager.start();
+        l.debug('pluginManager init');
         await this.pluginManager.start();
+        l.debug('uiState init');
         await this.uiState.start();
+        l.silly('end');
     }
 
 }

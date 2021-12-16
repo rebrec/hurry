@@ -1,6 +1,8 @@
 import Path from 'path';
 import { existsSync, writeFileSync, mkdirSync} from 'fs'
 const app = require('electron').remote.app
+import schemaManager from './core/ConfigurationSchema'
+
 import Logger from './core/helpers/logging';
 const logger = Logger('Config');
 const { ipcRenderer } = require("electron");
@@ -107,6 +109,11 @@ if (!newProfile && existsSync(config.projectRoot) && existsSync(config.menu.menu
     config.isValid = true;
 }
 
+// creating default values
+
+if (!config.hasOwnProperty('plugins')){
+    config.plugins = {};
+}
 
 const modulesRoot = Path.join(config.projectRoot, 'modules');
 
@@ -134,48 +141,83 @@ class PluginInstancesConfigurationManager {
     }
 
     addPlugin(pluginName, maxInstances){ // <===== -1 = unlimited / 0 = disabled / > 0 = limited
-        const pluginSettings = getPluginInstancesSettings(pluginName);
+        const l = logger.child({funcName:"addPlugin"});
+        l.silly('start');
+        const pluginSettings = this.getPluginInstancesSettings(pluginName);
+        l.silly('getting plugin instance settings', pluginSettings);
         pluginSettings.max = maxInstances;
         if (maxInstances >= 0){
             pluginSettings.count = Math.min(pluginSettings.count, maxInstances)
         }
+        l.silly('final instance settings', pluginSettings);
+        
         this._instances[pluginName] = pluginSettings;
+        l.silly('end');
     }
     getPluginInstancesSettings(pluginName) {
         return this._instances[pluginName] || {count: 1, max: 1}
     }
 
     getPluginInstanceCount(pluginName){
-        return getPluginInstancesSettings(pluginName).count
+        return this.getPluginInstancesSettings(pluginName).count
     }
 
     getPluginInstanceMax(pluginName){
-        return getPluginInstancesSettings(pluginName).max
+        return this.getPluginInstancesSettings(pluginName).max
     }
 }
- 
-const configurationManager = {
-    _global: config,
-    instancesManager: new PluginInstancesConfigurationManager(config.instances),
-    saveGlobalConfiguration: ()=>{throw "Not implemented yet"},
-    saveGlobalConfigurationAs: ()=>{throw "Not implemented yet"},
 
-    loadGlobalConfiguration: ()=>{throw "Not implemented yet"},
-    getGlobalConfig: ()=> { return this._global },
-    getPluginConfig: (instanceName) => { return this._global._plugins[instanceName]},
+class ConfigurationManager{
+    constructor(config){
+        this._globalSchema = config;
+        this.instancesManager = new PluginInstancesConfigurationManager(config.instances);
+        this.schemaManager = schemaManager;
+        Object.assign(this, config)
+    }
+    saveGlobalConfiguration(){throw "Not implemented yet"}
+    saveGlobalConfigurationAs(){throw "Not implemented yet"}
+    loadGlobalConfiguration(){throw "Not implemented yet"}
+
+    getGlobalConfig(){ return this._globalSchema }
+    getPluginConfig(instanceName){ return this._globalSchema.plugins[instanceName]}
     
-    _setGlobalConfig: (config)=>{throw "Not implemented yet"},
-    setPluginInstanceConfig: (instanceName, config) => { this._global._plugins[instanceName] = config},
+    _setGlobalConfig(config){throw "Not implemented yet"}
+    setPluginInstanceConfig(instanceName, config) { this._globalSchema.plugins[instanceName] = config}
 
-    getGlobalConfigurationSchema: ()=>{throw "Not implemented yet"},
-    getPluginConfigurationSchema: (pluginName)=>{throw "Not implemented yet"},
+    getGlobalConfigurationSchema(){throw "Not implemented yet"}
+    getPluginConfigurationSchema(pluginName){throw "Not implemented yet"}
 
-    setGlobalConfigurationSchema: (schema)=>{throw "Not implemented yet"},
-    setPluginConfigurationSchema: (pluginName, schema)=>{throw "Not implemented yet"},
+    setGlobalConfigurationSchema(schema){throw "Not implemented yet"}
+    setPluginConfigurationSchema(pluginName, schema){throw "Not implemented yet"}
 
 }
 
-Object.assign(configurationManager, config)
+
+// const configurationManager = {
+//     _globalSchema: config,
+//     instancesManager: new PluginInstancesConfigurationManager(config.instances),
+//     schemaManager: schemaManager,
+//     saveGlobalConfiguration: ()=>{throw "Not implemented yet"},
+//     saveGlobalConfigurationAs: ()=>{throw "Not implemented yet"},
+
+//     loadGlobalConfiguration: ()=>{throw "Not implemented yet"},
+//     getGlobalConfig: ()=> { return this._globalSchema },
+//     getPluginConfig: (instanceName) => { return this._globalSchema.plugins[instanceName]},
+    
+//     _setGlobalConfig: (config)=>{throw "Not implemented yet"},
+//     setPluginInstanceConfig: (instanceName, config) => { this._globalSchema.plugins[instanceName] = config},
+
+//     getGlobalConfigurationSchema: ()=>{throw "Not implemented yet"},
+//     getPluginConfigurationSchema: (pluginName)=>{throw "Not implemented yet"},
+
+//     setGlobalConfigurationSchema: (schema)=>{throw "Not implemented yet"},
+//     setPluginConfigurationSchema: (pluginName, schema)=>{throw "Not implemented yet"},
+
+//     getThis: () => { return this},
+// }
+const configurationManager = new ConfigurationManager(config);
+
+// Object.assign(configurationManager, config)
 
 //Object.assign(config, customSettings);
 

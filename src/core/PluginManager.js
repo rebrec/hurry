@@ -17,78 +17,194 @@ const { platform } = require('os');
 // const moduleRoot = Path.join(__dirname, '..', 'modules');
 
 export default class PluginManager{
-    @observable _plugins = [];
+    @observable _pluginDefinitions = [];
+    _pluginInstanceDefinitions = [];
     _pluginInfos = [];
 
     constructor(config){
-        const { pluginsPath } = config;
+        
         this._config = config;
         const pluginSuffix = '.bundle.js';   
     }
     
     async _scanDirectory(path){
+        logger.silly(`_scanDirectory(${path}) start`);
+        const l = logger.child({funcName: '_scanDirectory'});
         const pluginInfos = []
+        l.silly(`await getDirectoriesAsync`);
         const pluginDirs = await getDirectoriesAsync(path);
+        l.silly(`pluginDirs=`, pluginDirs);
         for (const pluginDirPath of pluginDirs){
-            logger.verbose('scanning ' + pluginDirPath);
+            l.verbose('scanning ' + pluginDirPath);
             const pluginRoot = Path.join(pluginDirPath, 'dist')
             const pluginFullPath = Path.join(pluginRoot, 'main.bundle.js');
-            if (await existsAsync(pluginFullPath)){
+            l.silly(`checking existance of ${pluginFullPath}`);
+            const exist = await existsAsync(pluginFullPath);
+            l.silly(`   ==> existance of ${pluginFullPath} : ${exist}`);
+            if (exist){
                 const pluginName = pluginRoot.split('/').splice(-2).shift()
                 const pluginInfo = {
                     pluginName: pluginName,
                     pluginPath: pluginFullPath,
                     pluginDir: pluginRoot
                 }
+                l.silly('saving pluginInfo', pluginInfo);
                 this._pluginInfos.push(pluginInfo);
-                logger.verbose('Found plugin ' + pluginFullPath);
+                l.verbose('Found plugin ' + pluginFullPath);
             }
         }
+        logger.silly(`_scanDirectory(${path}) end`);
     }
 
     async init(){
-        await Promise.all([this._scanDirectory(this._config.builtinsPath), this._scanDirectory(pluginsPath)]);
+        logger.verbose('init() start');
+        const { pluginsPath } = config;
+        const promises = [];
+        promises.push(this._scanDirectory(this._config.builtinsPath));
+        promises.push(this._scanDirectory(pluginsPath));
+        await Promise.all(promises);
         
         for (const info of this._pluginInfos){
             this._initPlugin(info);
         }
-        this._loadPlugins()
+        await this._createInstances();
+        await this._validateInstances();
+        logger.verbose('init() end');
+    }
+
+    async start(){
+        logger.verbose('start() start');
+        await this._loadInstances()
+        logger.verbose('start() end');
+    }
+
+
+    _validatePlugin(pluginClass){
+        const l = logger.child({funcName: "_validatePlugin"});
+        l.silly(`start`, pluginClass);
+        const props = [ 'pluginName', 'maxInstances' ]
+        for (const prop of props) {
+            if (!pluginClass.hasOwnProperty(prop)) { 
+                l.silly('property ' + prop + ' not found!')
+                return false 
+            }
+        }
+        if (pluginClass.PLUGIN_VERSION !== 2) {
+            l.silly(`Plugin is not compatible with this version of Hurry (found ${pluginClass.PLUGIN_VERSION} instead of 2)`);
+            return false;
+        }
+        return true;
     }
 
     _initPlugin(pluginContext){
-        const {pluginNAme, pluginPath, pluginDir} = pluginContext
-        logger.verbose('loadPlugin : Processing file: ', pluginPath);
+        const l = logger.child({funcName: "_initPlugin"});
+        l.silly(`start`, pluginContext);
+        const {pluginName, pluginPath, pluginDir} = pluginContext
+        l.verbose('Processing file: ', pluginPath);
         try {
-            const Plugin = __non_webpack_require__(pluginPath).default;
-            const plugin = new Plugin(api, pluginContext);
-            this.addPlugin(plugin);
+            const PluginClass = __non_webpack_require__(pluginPath).default;
+            if (!this._validatePlugin(PluginClass)) { 
+                l.warn('Failed to load plugin ' + pluginPath + ' : validatePlugin Failed')
+                return false
+            }
+            config.instancesManager.addPlugin(PluginClass.name, PluginClass.maxInstances);
+            // const plugin = new Plugin(api, pluginContext);
+            this._addPluginDefinition(PluginClass, pluginContext);
         } catch (e) {
-            logger.warn('Failed to load plugin ' + pluginPath, e);            
+            l.warn('Failed to load plugin ' + pluginPath, e);            
         }
+        l.silly(`end`);
+        
     }
 
-    _loadPlugins(){
-        for (const plugin of this._plugins){
-            plugin.beginLoad();
-        }
-        for (const plugin of this._plugins){
-            plugin.onLoaded();
-        }
-        for (const plugin of this._plugins){
-            plugin.onReady();
-        }
+    async _createInstances(){
+        const l = logger.child({funcName: "_createInstances"});
+        l.silly(`start`);
+        for (const pluginDefinition of this._pluginDefinitions){
+            const { pluginName } = pluginDefinition.class;
+            const PluginClass = pluginDefinition.class;
+            const {pluginContext} = pluginDefinition;
+            const instancesCount = config.instancesManager.getPluginInstanceCount(pluginName)
+            logger.verbose(`Creating ${instancesCount} instances for plugin ${pluginName}`)
+            for (let i=0;i<instancesCount;i++){
+                const instanceName = `${pluginName}_${i}`;
+                config.schemaManager.addPluginConfigurationSchema(instanceName, PluginClass.getConfigurationSchema());
+                const pluginConfig = config.getPluginConfig(instanceName);
+                const pluginInstanceDefinition = { 
+                    pluginName: pluginName,
+                    instanceId: instanceName,
+                    instance: new PluginClass(pluginContext, pluginConfig) 
+                };
 
+                this._pluginInstanceDefinitions.push(pluginInstanceDefinition)
+            }
+        }
+        l.silly(`end`);
+    }
+
+    _getValidPluginInstanceDefinitions(){
+        return this._pluginInstanceDefinitions.filter(elt => elt.instance.isValid);
+    }
+
+    async _validateInstances(){
+        logger.debug(`_validateInstances() start`);
+        const promises = [];
+        for (const pluginInstanceDefinition of this._pluginInstanceDefinitions){
+            const { pluginName, instanceId, instance } = pluginInstanceDefinition;
+            const promise = instance.checkConfiguration()
+                .then( (validationResult) =>{
+                    if (validationResult.success === false){
+                        api.store.uiState.displayToast(
+                            "Error",
+                            "Plugin configuration error",
+                            `Failed to validate configuration of instance ${instanceId} of plugin ${pluginName} : ${validationResult.failureMessage}`
+                        );
+                    }
+                    instance.isValid = validationResult.success;
+                });
+            promises.push(promise);
+        }
+        await Promise.all(promises);
+        logger.debug(`_validateInstances() end`);
+    }
+
+
+    _loadInstances(){
+        const l = logger.child({funcName: "_loadInstances"});
+        l.silly(`start`);
+        const instanceDefinitions = this._getValidPluginInstanceDefinitions();
+
+        for (const instanceDefinition of instanceDefinitions){
+            l.silly(`calling 'beginLoad' on instance ${instanceDefinition.instanceId}`);
+            instanceDefinition.instance.beginLoad(api);
+        }
+        for (const instanceDefinition of instanceDefinitions){
+            l.silly(`calling 'onLoaded' on instance ${instanceDefinition.instanceId}`);
+            instanceDefinition.instance.onLoaded(api);
+        }
+        for (const instanceDefinition of instanceDefinitions){
+            l.silly(`calling 'onReady' on instance ${instanceDefinition.instanceId}`);
+            instanceDefinition.instance.onReady(api);
+        }
 
     }
 
-    @action.bound addPlugin(plugin){
-        this._plugins.push(plugin);
+    @action.bound _addPluginDefinition(pluginClass, pluginContext){
+        const l = logger.child({funcName: "_addPluginDefinition"});
+        l.silly('start');
+        l.silly('pluginClass=', pluginClass);
+        l.silly('pluginContext=', pluginContext);
+        this._pluginDefinitions.push({
+            class: pluginClass,
+            context: pluginContext,
+        });
+        l.silly('end');
     }
 
     @action.bound removePlugin(plugin){
-        const index = this._plugins.indexOf(plugin);
+        const index = this._pluginDefinitions.indexOf(plugin);
         if (index > -1) {
-            this._plugins.splice(index, 1);
+            this._pluginDefinitions.splice(index, 1);
         }
         plugin.onUnload();
     }

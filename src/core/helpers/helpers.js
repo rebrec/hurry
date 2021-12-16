@@ -1,7 +1,7 @@
 import os from 'os'
 import { mkdtemp } from 'fs';
 import path from 'path'
-import { readdirSync, read, writeFileSync, existsSync, mkdirSync, readdir, rmdir, unlink } from 'fs';
+import { readdirSync, read, writeFileSync, exists, mkdirSync, readdir, rmdir, unlink } from 'fs';
 //import  ping from "net-ping";
 import dns from 'dns';
 const dnsPromise = dns.promises;
@@ -22,7 +22,7 @@ const { promisify } = require('util');
 const readdirAsync = promisify(readdir);
 const rmdirAsync = promisify(rmdir);
 const unlinkAsync = promisify(unlink);
-export const existsAsync = promisify(existsSync);
+export const existsAsync = promisify(exists);
 
 
 // try {

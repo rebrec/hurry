@@ -1,5 +1,5 @@
 interface DatasourceBase{
-    _nativeSearch?(kw: string): string;
+    nativeSearch?(kw: string): string;
     _getShellSearchString?(kw: string): string;
 }
 
@@ -18,7 +18,7 @@ abstract class DatasourceShell extends DatasourceBase{
 }
 
 abstract class DatasourceJS extends DatasourceBase{
-    abstract _nativeSearch(keyword: string): string;
+    abstract nativeSearch(keyword: string): string;
 }
 
 class DummyDatasourceShell extends DatasourceShell { _getShellSearchString(kw: string){return "Not implemented"} }

@@ -20,7 +20,7 @@ let tmpFolder = "";
 
 const dsConfig = {disabled: false};
 class DummyDatasourceShell extends DatasourceShell { _getShellSearchString(kw: string){return "Not implemented"}}
-class DummyDatasourceJS extends DatasourceJS { _nativeSearch(kw: string){return Promise.resolve({success: true, data: []})}}
+class DummyDatasourceJS extends DatasourceJS { nativeSearch(kw: string){return Promise.resolve({success: true, data: []})}}
 
 beforeAll(async ()=>{
     tmpFolder = await mkTmpDir("hurrytests-");
@@ -162,10 +162,10 @@ describe ("DatasourceBase", () => {
         test.todo("all getter / setter set and return their respective private variables");
     });
 
-    test("if className extends DatasourceJS, _nativeSearch(kw) must be implemented or throw an exception", ()=>{
+    test("if className extends DatasourceJS, nativeSearch(kw) must be implemented or throw an exception", ()=>{
         class DSBadJS extends DatasourceJS{}
-        class DSGoodJS extends DatasourceJS{ _nativeSearch(kw: string){return Promise.resolve({success: true, data: []})}}
-        expect(()=> new DSBadJS(DummyDatasourceDefinition, dsConfig, tmpFolder)).toThrowError('Class must implement _nativeSearch');
+        class DSGoodJS extends DatasourceJS{ nativeSearch(kw: string){return Promise.resolve({success: true, data: []})}}
+        expect(()=> new DSBadJS(DummyDatasourceDefinition, dsConfig, tmpFolder)).toThrowError('Class must implement nativeSearch');
         expect(()=> new DSGoodJS(DummyDatasourceDefinition, dsConfig, tmpFolder)).not.toThrow();
 
     });

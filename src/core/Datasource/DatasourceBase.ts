@@ -9,7 +9,7 @@ import { platform } from 'custom-electron-titlebar/lib/common/platform';
 import Logger from '../helpers/logging';
 const logger = Logger('DatasourceBase');
 export interface DatasourceBase{
-    _nativeSearch?(kw: string): Promise<SearchResults>;
+    nativeSearch?(kw: string): Promise<SearchResults>;
     _getShellSearchString?(kw: string): string;
 }
 
@@ -40,7 +40,7 @@ export abstract class DatasourceBase implements DatasourceDefinition {
 //DISABLED FOR NOW        
         // if (!(this instanceof DatasourceShell) && !(this instanceof DatasourceJS)) throw new Error("Datasource must be derived either from DatasourceShell or DatasourceJS classes");
         if ((this instanceof DatasourceShell) && (typeof this["_getShellSearchString"] !== "function")) throw new Error("Class must implement _getShellSearchString");
-        if ((this instanceof DatasourceJS) && (typeof this["_nativeSearch"] !== "function")) throw new Error("Class must implement _nativeSearch");
+        if ((this instanceof DatasourceJS) && (typeof this["nativeSearch"] !== "function")) throw new Error("Class must implement nativeSearch");
         
         this.name = definition.name;
         this.caption = definition.caption;
@@ -70,8 +70,8 @@ export abstract class DatasourceBase implements DatasourceDefinition {
         
         this.modulePath = `${modulePath}${modulePath.endsWith(Path.sep) ? '': Path.sep}`;
         this.addTemplateContext('modulePath', `${this.modulePath}`);
+        this.mergeTemplateContext(this.config);
 
-        Object.assign(this.templateContext, this.config);
         if (this.templateContext.hasOwnProperty('disabled')) { delete this.templateContext.disabled };
         if (this.config.disabled) return
         this.initCommands = parseTemplateArray(definition.initCommands, this.templateContext);
@@ -128,9 +128,9 @@ export abstract class DatasourceBase implements DatasourceDefinition {
     addTemplateContext(variableName: string, value: string){
         const obj: TemplateContextElement = {};
         obj[variableName] = value;
-        this._mergeTemplateContext(obj);
+        this.mergeTemplateContext(obj);
     }
-    _mergeTemplateContext(context: TemplateContextElement){
+    mergeTemplateContext(context: TemplateContextElement){
         Object.assign(this._templateContext, context);
     }
     
@@ -149,12 +149,12 @@ export abstract class DatasourceBase implements DatasourceDefinition {
     async search(keyword: string): Promise<SearchResults>{
 		if (!this._shellInstance) { throw new Error("search has been called but shell is not valid !")};
         let searchResults: SearchResults;
-		if (typeof this["_nativeSearch"] == "function") { 
-			searchResults = await this._nativeSearch(keyword) 
+		if (typeof this["nativeSearch"] == "function") { 
+			searchResults = await this.nativeSearch(keyword) 
 		} else if (typeof this["_getShellSearchString"] == "function"){
 			searchResults = await this._shellInstance.executeAsync(this._getShellSearchString(keyword), this.templateContext, ShellOutputType.Json) 
 		} else {
-            throw new Error('Please implement either _nativeSearch() or _getShellSearchString()');
+            throw new Error('Please implement either nativeSearch() or _getShellSearchString()');
         }
 
         if (searchResults.success){
@@ -187,7 +187,7 @@ export abstract class DatasourceJS extends DatasourceBase{
         super(definition, config, modulePath);
         this.setShell({name: 'js', registerInitCommands: ()=>{}, executeAsync: async()=>{}})
     }
-    abstract _nativeSearch(keyword: string): Promise<SearchResults>;
+    abstract nativeSearch(keyword: string): Promise<SearchResults>;
 }
 
 
@@ -221,7 +221,7 @@ export class LegacyDatasourceJS extends DatasourceBase{
         this._searchFunc = jsDefinition.searchFunc;
     }
     
-    _nativeSearch(keyword: string){
+    nativeSearch(keyword: string){
         return this._searchFunc(keyword)
     };
 }

@@ -39,6 +39,8 @@ export default class App extends React.Component {
 
   render() {
     const {uiState} = store;
+    const { status } = uiState.app;
+    console.log('AHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHA status', status);
     const ModalView = uiState.getModalView();
     return (<>
       {ModalView && (
@@ -46,7 +48,12 @@ export default class App extends React.Component {
           <ModalView />
         </ModalDialog> 
       )}
-      <Viewer/>
+      {(status === 0) && (
+        <h1>Loading...</h1>
+      )}
+      {(status !== 0) && (
+        <Viewer/>
+      )}
     </>);
   }
 }

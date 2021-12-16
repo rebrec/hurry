@@ -18,8 +18,9 @@ class Api {
         this.version = require('../../../package.json').version;
     }
 
-    _init(){
-        this.store._init();
+    async _init(){
+        await this.store.init();
+        await this.store.start();
     }
 
 
