@@ -27,12 +27,11 @@ export abstract class DatasourceBase implements DatasourceDefinition {
     private _config!: Config;
     private _shellInstance: Shell | undefined;
     
-    private _templateContext: TemplateContext = {instanceId:-1, modulePath: ''};
-    private _modulePath!: string;
+    private _templateContext: TemplateContext = {instanceId:-1, pluginDir: ''};
     
     // constructor(definition, config, modulePath){
     
-    constructor(definition: DatasourceDefinition, config: Config, modulePath: string){
+    constructor(definition: DatasourceDefinition, config: Config){
         const mandatoryDatasourceDefinition = ['name', 'caption', 'shellName', 'mainColumnProperty', 'columns', 'initCommands', 'platforms'];
         for (const prop of mandatoryDatasourceDefinition as Array<keyof DatasourceDefinition>) {
             if (!definition[prop]) throw new Error(`Missing Property "${prop}" in datasource definition`)
@@ -66,10 +65,6 @@ export abstract class DatasourceBase implements DatasourceDefinition {
         //     }
         // }
         
-        if (!existsSync(modulePath)) throw new Error("modulePath doesn't exist");
-        
-        this.modulePath = `${modulePath}${modulePath.endsWith(Path.sep) ? '': Path.sep}`;
-        this.addTemplateContext('modulePath', `${this.modulePath}`);
         this.mergeTemplateContext(this.config);
 
         if (this.templateContext.hasOwnProperty('disabled')) { delete this.templateContext.disabled };
@@ -122,8 +117,6 @@ export abstract class DatasourceBase implements DatasourceDefinition {
     get templateContext() : TemplateContext { return this._templateContext; }
     set templateContext(templateContext: TemplateContext) { this._templateContext = templateContext; }
     
-    get modulePath() : string { return this._modulePath; }
-    set modulePath(modulePath: string) { this._modulePath = modulePath; }
 
     addTemplateContext(variableName: string, value: string){
         const obj: TemplateContextElement = {};
@@ -182,47 +175,48 @@ export abstract class DatasourceShell extends DatasourceBase{
 
 
 export abstract class DatasourceJS extends DatasourceBase{
-    constructor(definition: DatasourceDefinition, config: Config, modulePath: string){
+    constructor(definition: DatasourceDefinition, config: Config){
         definition.shellName = 'js';
-        super(definition, config, modulePath);
+        definition.initCommands = [];
+        super(definition, config);
         this.setShell({name: 'js', registerInitCommands: ()=>{}, executeAsync: async()=>{}})
     }
     abstract nativeSearch(keyword: string): Promise<SearchResults>;
 }
 
 
-export class LegacyDatasourceShell extends DatasourceBase{
-    _searchFunc: (keyword: string) => string
+// export class LegacyDatasourceShell extends DatasourceBase{
+//     _searchFunc: (keyword: string) => string
 
-    constructor(definition: LegacyDatasourceDefinition, config: Config, modulePath: string){
-        if (!definition.hasOwnProperty('platforms')) { definition.platforms = ['win32', 'linux']}
-        super(definition, config, modulePath);
-        if (!definition.hasOwnProperty('searchFunc')) throw new Error('missing Shell DatasourceDefinition property : searchFunc');
-        const shellDefinition = (definition as unknown) as LegacyDatasourceDefinitionShell
-        this._searchFunc = shellDefinition.searchFunc;
-    }
+//     constructor(definition: LegacyDatasourceDefinition, config: Config, modulePath: string){
+//         if (!definition.hasOwnProperty('platforms')) { definition.platforms = ['win32', 'linux']}
+//         super(definition, config, modulePath);
+//         if (!definition.hasOwnProperty('searchFunc')) throw new Error('missing Shell DatasourceDefinition property : searchFunc');
+//         const shellDefinition = (definition as unknown) as LegacyDatasourceDefinitionShell
+//         this._searchFunc = shellDefinition.searchFunc;
+//     }
         
-    _getShellSearchString(keyword: string){
-        return this._searchFunc(keyword)
-    }
-}
+//     _getShellSearchString(keyword: string){
+//         return this._searchFunc(keyword)
+//     }
+// }
 
 
-export class LegacyDatasourceJS extends DatasourceBase{
-    _searchFunc: (keyword: string) => Promise<SearchResults>
+// export class LegacyDatasourceJS extends DatasourceBase{
+//     _searchFunc: (keyword: string) => Promise<SearchResults>
 
-    constructor(definition: LegacyDatasourceDefinition, config: Config, modulePath: string){
-        definition.shellName = 'js';
-        if (!definition.hasOwnProperty('platforms')) { definition.platforms = ['win32', 'linux']}
-        super(definition, config, modulePath);
-        this.setShell({name: 'js', registerInitCommands: ()=>{}, executeAsync: async()=>{}})
-        if (!definition.hasOwnProperty('searchFunc')) throw new Error('missing JS DatasourceDefinition property : searchFunc');
-        const jsDefinition = (definition as unknown) as LegacyDatasourceDefinitionJS
-        this._searchFunc = jsDefinition.searchFunc;
-    }
+//     constructor(definition: LegacyDatasourceDefinition, config: Config, modulePath: string){
+//         definition.shellName = 'js';
+//         if (!definition.hasOwnProperty('platforms')) { definition.platforms = ['win32', 'linux']}
+//         super(definition, config, modulePath);
+//         this.setShell({name: 'js', registerInitCommands: ()=>{}, executeAsync: async()=>{}})
+//         if (!definition.hasOwnProperty('searchFunc')) throw new Error('missing JS DatasourceDefinition property : searchFunc');
+//         const jsDefinition = (definition as unknown) as LegacyDatasourceDefinitionJS
+//         this._searchFunc = jsDefinition.searchFunc;
+//     }
     
-    nativeSearch(keyword: string){
-        return this._searchFunc(keyword)
-    };
-}
+//     nativeSearch(keyword: string){
+//         return this._searchFunc(keyword)
+//     };
+// }
 

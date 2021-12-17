@@ -63,11 +63,13 @@ export default class PluginManager{
         promises.push(this._scanDirectory(this._config.builtinsPath));
         promises.push(this._scanDirectory(pluginsPath));
         await Promise.all(promises);
-        
+        logger.debug('******************************** INIT PLUGINS **************************')
         for (const info of this._pluginInfos){
             this._initPlugin(info);
         }
+        logger.debug('******************************** CREATE INSTANCES **********************')
         await this._createInstances();
+        logger.debug('****************************** VALIDATE INSTANCES **********************')
         await this._validateInstances();
         logger.verbose('init() end');
     }
@@ -82,6 +84,10 @@ export default class PluginManager{
     _validatePlugin(pluginClass){
         const l = logger.child({funcName: "_validatePlugin"});
         l.silly(`start`, pluginClass);
+        if (pluginClass.PLUGIN_VERSION !== 2) {
+            l.silly(`Plugin is not compatible with this version of Hurry (found ${pluginClass.PLUGIN_VERSION} instead of 2)`);
+            return false;
+        }
         const props = [ 'pluginName', 'maxInstances' ]
         for (const prop of props) {
             if (!pluginClass.hasOwnProperty(prop)) { 
@@ -89,11 +95,7 @@ export default class PluginManager{
                 return false 
             }
         }
-        if (pluginClass.PLUGIN_VERSION !== 2) {
-            l.silly(`Plugin is not compatible with this version of Hurry (found ${pluginClass.PLUGIN_VERSION} instead of 2)`);
-            return false;
-        }
-        return true;
+            return true;
     }
 
     _initPlugin(pluginContext){
@@ -111,7 +113,8 @@ export default class PluginManager{
             // const plugin = new Plugin(api, pluginContext);
             this._addPluginDefinition(PluginClass, pluginContext);
         } catch (e) {
-            l.warn('Failed to load plugin ' + pluginPath, e);            
+            l.warn('Failed to load plugin ' + pluginPath);            
+            l.debug('loading error :', e);
         }
         l.silly(`end`);
         
@@ -147,10 +150,12 @@ export default class PluginManager{
     }
 
     async _validateInstances(){
-        logger.debug(`_validateInstances() start`);
+        const l = logger.child({funcName: "_validateInstances"});
         const promises = [];
         for (const pluginInstanceDefinition of this._pluginInstanceDefinitions){
             const { pluginName, instanceId, instance } = pluginInstanceDefinition;
+            l.debug(`validating instance ${instanceId}`);
+        
             const promise = instance.checkConfiguration()
                 .then( (validationResult) =>{
                     if (validationResult.success === false){
@@ -165,7 +170,6 @@ export default class PluginManager{
             promises.push(promise);
         }
         await Promise.all(promises);
-        logger.debug(`_validateInstances() end`);
     }
 
 
@@ -173,7 +177,8 @@ export default class PluginManager{
         const l = logger.child({funcName: "_loadInstances"});
         l.silly(`start`);
         const instanceDefinitions = this._getValidPluginInstanceDefinitions();
-
+        l.debug(`valid instances count : ${instanceDefinitions.length}`);
+        
         for (const instanceDefinition of instanceDefinitions){
             l.silly(`calling 'beginLoad' on instance ${instanceDefinition.instanceId}`);
             instanceDefinition.instance.beginLoad(api);

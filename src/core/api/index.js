@@ -11,7 +11,7 @@ class Api {
         this.config = config;
         this.store = store;
         this.helpers = {
-            logger: logger
+            Logger: Logger
         }
         this.remote = remote;
         this.menu = new MenuManager(this);

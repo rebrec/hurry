@@ -10,6 +10,7 @@ export const APP_STATUS = {
     WAITING_FOR_SEARCH: 1,
     SEARCHING: 2,
     DISPLAYING_RESULTS: 3,
+    CONFIGURATION_NEEDED: 4,
   };
 
 
@@ -17,6 +18,12 @@ class UiState {
     @observable currentView = null;
 
     @action.bound setCurrentView(view) { this.app.views.current = view; };
+    ;
+    @action.bound showConfigurationNeeded() { 
+        const l = logger.child({funcName: "showConfiguration"});
+        this.setAppStatus(APP_STATUS.CONFIGURATION_NEEDED);
+        this.setCurrentView('Configuration'); 
+    };
     
     @action.bound addView(name, View) {
         this.app.views.available.set(name, View);
@@ -79,19 +86,23 @@ class UiState {
         const l = logger.child('displayToast');
         l.info({
             toastType: toastType,
-            toastTitle: toastType,
+            toastTitle: toastTitle,
             toastMessage: toastMessage
         });
     }
 
     async start(){
+        const l = logger.child({funcName: "start"});
         const ds = this.rootStore.datasourceManager.getDefaultDatasource();
         if (!ds) {
-            this.displayToast('Error', 'UI Initialisation', 'There seems to be no Datasources available. Hurry need at least 1 datasource to work properly');
+            l.debug('Default datasource not found');
+            this.displayToast('Error', 'UI Initialisation', 'There seems to be no Datasources available.\nHurry need at least 1 datasource to work properly\nYou may need to fix your configuration setting');
+            this.showConfigurationNeeded();
             return
         }
+        l.debug('Setting default datasource', ds);
         this.setDatasource(ds);
-        this.uiState.setAppStatus(APP_STATUS.SEARCHING);
+        this.setAppStatus(APP_STATUS.SEARCHING);
         
     }
 

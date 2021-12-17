@@ -5,7 +5,7 @@ import { hasAnsi} from './helpers'
 
 const config = {
   logger: {
-    maxModuleNameLength: 25,
+    maxModuleNameLength: 10,
     displayTimestamp: false,
     filterModuleNames: true, // if true, only modules within 'keptModulesNames' will continue to be logged
     filterModuleNames: false,
@@ -71,10 +71,12 @@ const myFormat = format.printf( (info) => {
     let res = '';
     if (config.logger.displayTimestamp) res += `${info.timestamp} | `
     res += `${info.moduleName.padEnd(maxModuleNameLength, ' ').substr(0, maxModuleNameLength)} `
-    res += ('[' + info.level + ']').padStart(19, ' ');
     if (info.funcName) {
-      res += ('[' + info.funcName + ']').padStart(19, ' ');
+      res += ('[' + info.funcName + ']').padEnd(19, ' ');
+    } else {
+      res += ''.padEnd(19, ' ');
     }
+    res += ('[' + info.level + ']').padStart(19, ' ');
     res += ` : ${msg} ${rest}`  
     res += `                    [${getFileNameAndLineNumber()}]`;
     return res

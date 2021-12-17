@@ -13,6 +13,8 @@ import { faFolder, faFolderOpen, faTerminal, faChevronLeft, faChevronRight, faTi
 library.add(fab, faFolder, faFolderOpen, faTerminal, faChevronLeft, faChevronRight, faTimes, faDesktop, faReply )
 // import ViewManager from '../core/ViewManager'
 
+import { APP_STATUS } from '../store/UiState'
+
 import Viewer from './Viewer'
 import Main from './views/Main'
 import Configuration from './views/Configuration'
@@ -40,7 +42,6 @@ export default class App extends React.Component {
   render() {
     const {uiState} = store;
     const { status } = uiState.app;
-    console.log('AHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHAAHAHAHAHAHA status', status);
     const ModalView = uiState.getModalView();
     return (<>
       {ModalView && (
@@ -48,10 +49,10 @@ export default class App extends React.Component {
           <ModalView />
         </ModalDialog> 
       )}
-      {(status === 0) && (
+      {(status === APP_STATUS.INITIALIZING) && (
         <h1>Loading...</h1>
       )}
-      {(status !== 0) && (
+      {(status !== APP_STATUS.INITIALIZING) && (
         <Viewer/>
       )}
     </>);

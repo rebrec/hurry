@@ -2,6 +2,7 @@ import Path from 'path';
 import { existsSync, writeFileSync, mkdirSync} from 'fs'
 const app = require('electron').remote.app
 import schemaManager from './core/ConfigurationSchema'
+import { saveConfig } from "./core/helpers/helpers"
 
 import Logger from './core/helpers/logging';
 const logger = Logger('Config');
@@ -175,6 +176,10 @@ class ConfigurationManager{
         Object.assign(this, config)
     }
     saveGlobalConfiguration(){throw "Not implemented yet"}
+    saveConfig(){
+        saveConfig(this.profilePath, this._globalSchema);
+    }
+
     saveGlobalConfigurationAs(){throw "Not implemented yet"}
     loadGlobalConfiguration(){throw "Not implemented yet"}
 

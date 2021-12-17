@@ -1,13 +1,12 @@
-import { DatasourceDefinition, Config, Platforms } from '../../core/Datasource/Datasource.types';
 import { DatasourceShell, DatasourceJS } from '../../core/Datasource/DatasourceBase'
 import HostJSDatasourceDefinition from './HostJSDatasourceDefinition'
 import { existsSync, readFileSync } from 'fs';
 
 
 export class DatasourceJSHostFile extends DatasourceJS { 
-    db: Array<object>
+    db;
     constructor(config){ 
-        super(HostJSDatasourceDefinition as DatasourceDefinition, config, __dirname);
+        super(HostJSDatasourceDefinition, config);
         // this.db = require('./DemoJSONDatasource.data.json');
         // console.log(this.db);
         if (!existsSync(this.getVariable("hostfile"))) return false;
@@ -17,7 +16,7 @@ export class DatasourceJSHostFile extends DatasourceJS {
         return true;
     }
     
-    nativeSearch(kw: string){
+    nativeSearch(kw){
         let res = this.db.filter(el => {
             return (el.hostname.indexOf(kw)) > -1;
         })

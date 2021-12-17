@@ -29,7 +29,7 @@ export interface LegacyDatasourceDefinitionJS extends DatasourceDefinition {
 export interface TemplateContext {
     disabled?: boolean | undefined;
     instanceId: number,
-    modulePath: string
+    pluginDir: string,
 }
 export type GenericConfig = { [key: string]: any }
 

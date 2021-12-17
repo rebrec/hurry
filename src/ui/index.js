@@ -7,8 +7,9 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import 'bootstrap'
 
 
-api._init();
 window.api = api;
+api._init();
+
 
 ReactDOM.render(
             <App  />,

@@ -16,7 +16,6 @@ export const hasAnsi = function hasAnsi(string) {
   return ansiRegex.test(string);
 }
 
-logger.info('test');
 
 const { promisify } = require('util');
 const readdirAsync = promisify(readdir);

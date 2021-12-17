@@ -44,17 +44,17 @@ describe ("DatasourceManager", () => {
         expect(mgr).not.toBe(undefined);
     });
     
-    test("can use legacy Datasource Definition", async() => {
-        const mgr = new DatasourceManager(shellMgr, dsMgrConfig, historyStore)
-        const def = require('../Datasource/tests/DemoJSONDatasource.datasource.definition');
-        await mgr.addLegacyDatasourceDefinition(def, path.join(__dirname, '..', 'Datasource', 'tests'));
-        const ds = mgr.getDatasource(def.caption + "_1");
-        expect(ds).not.toEqual(null);
-        return ds.search("host3")
-        .then((res: DatasourceBase) =>{
-            expect(res).toStrictEqual({"success":true,"data":[{"hostname":"host3","username":"user3","something":"else3","datasource":{"name":"demo-json-array-datasource_1","mainColumnProperty":"hostname","columns":[{"columnName":"Hostname","property":"hostname"},{"columnName":"Username","property":"username"},{"columnName":"Whatever","property":"something"}]},"_pingableProperty":"hostname"}]});
-        })
-    });
+    // test("can use legacy Datasource Definition", async() => {
+    //     const mgr = new DatasourceManager(shellMgr, dsMgrConfig, historyStore)
+    //     const def = require('../Datasource/tests/DemoJSONDatasource.datasource.definition');
+    //     await mgr.addLegacyDatasourceDefinition(def, path.join(__dirname, '..', 'Datasource', 'tests'));
+    //     const ds = mgr.getDatasource(def.caption + "_1");
+    //     expect(ds).not.toEqual(null);
+    //     return ds.search("host3")
+    //     .then((res: DatasourceBase) =>{
+    //         expect(res).toStrictEqual({"success":true,"data":[{"hostname":"host3","username":"user3","something":"else3","datasource":{"name":"demo-json-array-datasource_1","mainColumnProperty":"hostname","columns":[{"columnName":"Hostname","property":"hostname"},{"columnName":"Username","property":"username"},{"columnName":"Whatever","property":"something"}]},"_pingableProperty":"hostname"}]});
+    //     })
+    // });
 
 
 

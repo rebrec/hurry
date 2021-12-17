@@ -18,7 +18,9 @@ export default new class ConfigurationSchema{
         
     addPluginConfigurationSchema(instanceName, schema){
         logger.verbose('_addPluginConfigurationSchema : Adding schema for plugin instance :', instanceName);
-        Object.assign(this._pluginConfigurationSchema, {name: instanceName, schema: schema});
+        const pluginSchema = {};
+        pluginSchema[instanceName] = schema;
+        Object.assign(this._pluginConfigurationSchema, pluginSchema);
     }
 
     _addDatasourceConfigurationSchema(path){
