@@ -1,4 +1,5 @@
 import React from 'react'
+window.React1 = React;
 import { observer } from 'mobx-react'
 import api from '../core/api'
 const { store } = api
@@ -21,6 +22,8 @@ import Configuration from './views/Configuration'
 import MenuEditorView from './views/MenuEditorView'
 import ModalDialog from './components/ModalDialog'
 
+import { ReactNotifications } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 
 @observer
 export default class App extends React.Component {
@@ -44,6 +47,7 @@ export default class App extends React.Component {
     const { status } = uiState.app;
     const ModalView = uiState.getModalView();
     return (<>
+      <ReactNotifications />
       {ModalView && (
         <ModalDialog onClose={uiState.hideModal} zIndex="50">
           <ModalView />

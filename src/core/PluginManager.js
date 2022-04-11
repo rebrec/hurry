@@ -126,17 +126,19 @@ export default class PluginManager{
         for (const pluginDefinition of this._pluginDefinitions){
             const { pluginName } = pluginDefinition.class;
             const PluginClass = pluginDefinition.class;
-            const {pluginContext} = pluginDefinition;
+            const {context} = pluginDefinition;
             const instancesCount = config.instancesManager.getPluginInstanceCount(pluginName)
             logger.verbose(`Creating ${instancesCount} instances for plugin ${pluginName}`)
             for (let i=0;i<instancesCount;i++){
                 const instanceName = `${pluginName}_${i}`;
+                context.instanceNumber = i;
+                context.instanceName = instanceName;
                 config.schemaManager.addPluginConfigurationSchema(instanceName, PluginClass.getConfigurationSchema());
                 const pluginConfig = config.getPluginConfig(instanceName);
                 const pluginInstanceDefinition = { 
                     pluginName: pluginName,
                     instanceId: instanceName,
-                    instance: new PluginClass(pluginContext, pluginConfig) 
+                    instance: new PluginClass(context, pluginConfig) 
                 };
 
                 this._pluginInstanceDefinitions.push(pluginInstanceDefinition)
@@ -156,7 +158,7 @@ export default class PluginManager{
             const { pluginName, instanceId, instance } = pluginInstanceDefinition;
             l.debug(`validating instance ${instanceId}`);
         
-            const promise = instance.checkConfiguration()
+            const promise = instance.checkConfiguration(api)
                 .then( (validationResult) =>{
                     if (validationResult.success === false){
                         api.store.uiState.displayToast(

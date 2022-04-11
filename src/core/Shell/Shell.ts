@@ -130,7 +130,8 @@ export default class Shell{
         } else if (processJSON){        
           let tmp;
           try {
-            obj = JSON.parse(res.stdout);
+            if (res.stdout !== '') { obj = JSON.parse(res.stdout); }
+            else { obj = ''}
             if (obj === '') { obj = null }
             if (obj === null) { tmp = []; }
             else if (!obj.length) { tmp = [obj]; }

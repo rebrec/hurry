@@ -103,6 +103,7 @@
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.12.0",
     "react-jsonschema-form": "^1.8.1",
+    "react-notifications-component": "^3.4.1",
     "react-split-pane": "^0.1.89",
     "sass-loader": "^8.0.0",
     "targz": "^1.0.1",

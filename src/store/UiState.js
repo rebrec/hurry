@@ -2,6 +2,8 @@ import { observable, computed, action, extendObservable } from 'mobx'
 // import ping from 'ping'
 import { pingHost } from '../core/helpers/helpers';
 import Logger from '../core/helpers/logging';
+import { Store } from 'react-notifications-component';
+
 const logger = Logger('UiState');
 
 
@@ -83,12 +85,37 @@ class UiState {
     }
 
     displayToast(toastType="Error", toastTitle, toastMessage){
+        const typeMap = {
+            "Error": "danger",
+            "error": "danger",
+            "info": "info",
+            "Info": "info"
+        };
+        const notificationType = typeMap[toastType];
+        if (!notificationType) {
+            this.displayToast("Error", "displayToast", "toastType " + toastType + " is invalid!");
+        }
         const l = logger.child('displayToast');
         l.info({
             toastType: toastType,
             toastTitle: toastTitle,
             toastMessage: toastMessage
         });
+
+        Store.addNotification({
+            title: toastTitle,
+            message: toastMessage,
+            type: notificationType,
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 10000,
+              onScreen: true
+            }
+        });
+
     }
 
     async start(){
