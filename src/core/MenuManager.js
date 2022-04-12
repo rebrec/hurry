@@ -18,6 +18,9 @@ export default class MenuManager{
                 ]
             },
             {label: '&Reload', click: () => { this._api.reloadBrowserWindow() }},
+            {label: '&Plugins', submenu: [
+                {label: '&Main View', click: () => { this._api.store.uiState.setCurrentView('Main') }},
+            ]},
             {
                 label: '&Help',
                     submenu: [
