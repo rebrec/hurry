@@ -35,7 +35,8 @@ const getFileNameAndLineNumber = () => {
         if (funcName.indexOf('DerivedLogger')>-1) foundDerivedLogger = true;
         return res;
       });
-      return callSite.getFileName() + ':' + callSite.getLineNumber();
+      if (callSite) return callSite.getFileName() + ':' + callSite.getLineNumber();
+      return "N/A : N/A"
   } finally {
       Error.prepareStackTrace = oldStackTrace;
   }
