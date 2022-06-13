@@ -56,7 +56,6 @@ class Menu extends React.Component {
   }
 
   handlePanelLeftClick(e, elt){
-    // debugger;
     switch (elt.type) {
       case 'CONTAINER':
         this.setState({
