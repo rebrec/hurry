@@ -42,7 +42,7 @@ export default class PluginManager{
             const exist = await existsAsync(pluginFullPath);
             l.silly(`   ==> existance of ${pluginFullPath} : ${exist}`);
             if (exist){
-                const pluginName = pluginRoot.split('/').splice(-2).shift()
+                const pluginName = pluginRoot.split(Path.sep).splice(-2).shift()
                 const pluginInfo = {
                     pluginName: pluginName,
                     pluginPath: pluginFullPath,
