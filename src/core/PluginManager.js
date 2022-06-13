@@ -175,24 +175,32 @@ export default class PluginManager{
     }
 
 
-    _loadInstances(){
+    async _loadInstances(){
         const l = logger.child({funcName: "_loadInstances"});
         l.silly(`start`);
         const instanceDefinitions = this._getValidPluginInstanceDefinitions();
         l.debug(`valid instances count : ${instanceDefinitions.length}`);
         
+        const promisesBeginLoad = [];
         for (const instanceDefinition of instanceDefinitions){
             l.silly(`calling 'beginLoad' on instance ${instanceDefinition.instanceId}`);
-            instanceDefinition.instance.beginLoad(api);
+            promisesBeginLoad.push(instanceDefinition.instance.beginLoad(api));
         }
+        await Promise.all(promisesBeginLoad);
+
+        const promisesOnLoaded = [];
         for (const instanceDefinition of instanceDefinitions){
             l.silly(`calling 'onLoaded' on instance ${instanceDefinition.instanceId}`);
-            instanceDefinition.instance.onLoaded(api);
+            promisesOnLoaded.push(instanceDefinition.instance.onLoaded(api));
         }
+        await Promise.all(promisesOnLoaded);
+
+        const promisesOnReady = [];
         for (const instanceDefinition of instanceDefinitions){
             l.silly(`calling 'onReady' on instance ${instanceDefinition.instanceId}`);
-            instanceDefinition.instance.onReady(api);
+            promisesOnReady.push(instanceDefinition.instance.onReady(api));
         }
+        await Promise.all(promisesOnReady);
 
     }
 
