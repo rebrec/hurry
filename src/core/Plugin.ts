@@ -26,13 +26,13 @@ export abstract class Plugin {
     
     
 
-    beginLoad(api: any){}
+    async beginLoad(api: any){}
     
-    onLoaded(api: any){}
+    async onLoaded(api: any){}
     
-    onReady(api: any){}
+    async onReady(api: any){}
     
-    onUnload(api: any){}
+    async onUnload(api: any){}
 
     static getConfigurationSchema() {
         return {};
