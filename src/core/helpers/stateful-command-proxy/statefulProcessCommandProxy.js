@@ -1,9 +1,12 @@
-module.exports = StatefulProcessCommandProxy;
+export default StatefulProcessCommandProxy;
 
-var poolModule = require('generic-pool');
-var ProcessProxy = require('./processProxy');
+import  poolModule from 'generic-pool';
+import ProcessProxy from  './processProxy';
 // var Promise = require('Promise');
-const { observable, action } = require('mobx');
+import { observable, action } from 'mobx';
+
+import Logger from '../logging';
+const logger = Logger('StatefulProcessCommandProxy');
 
 /**
 * StatefulProcessCommandProxy is the gateway for executing commands
@@ -297,7 +300,7 @@ StatefulProcessCommandProxy.prototype.shutdown = function() {
 StatefulProcessCommandProxy.prototype.executeCommand = function(command) {
 
     var self = this;
-
+    logger.silly('executeCommand: ' + command);
     return new Promise(function(fulfill, reject) {
 
         self._pool.acquire(function(error, processProxy) {

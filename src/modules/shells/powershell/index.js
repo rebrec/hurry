@@ -21,4 +21,6 @@ module.exports = {
     platform: ['win32', 'linux'],
     processCommand: processCommand,
     processArgs:  processArgs,
+    initCommands: [],
+    preDestroyCommands: [],
 }

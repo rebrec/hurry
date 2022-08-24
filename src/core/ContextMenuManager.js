@@ -1,5 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { readFileSync } from "fs"
+import Logger from './helpers/logging';
+const logger = Logger('ContextMenuManager');
 
 export default class ContextMenuManager{
     constructor(filePath){

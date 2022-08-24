@@ -2,8 +2,12 @@ module.exports = {
     name: "featureposh1",
     shell: "powershell",
     initCommands: [
-        "Write-Host 'Little Test POSH'",
-        "Write-Host 'Another command POSH'"
+        "Start-Transcript -Path 'c:\\toto.txt'",
+        "Write-Host 'Test ligne 1'",
+        "Write-Host 'Test ligne 2'",
+        "Write-Host 'Test ligne 3'",
+        "Write-Host 'Test ligne 4'",
+        "Write-Host 'Test ligne 5'"
     ],
     preDestroyCommands: [
         "Write-Host 'Predestroy 1 POSH'",

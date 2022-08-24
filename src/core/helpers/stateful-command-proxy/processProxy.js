@@ -1,4 +1,7 @@
-module.exports = ProcessProxy;
+import Logger from '../logging';
+const logger = Logger('ProcessProxy');
+
+export default ProcessProxy;
 
 var fifo = require('fifo');
 var Command = require('./command');
@@ -276,7 +279,7 @@ ProcessProxy.prototype._log2 = function(severity,origin,msg) {
         this._logFunction(severity,origin,msg);
 
     } else {
-        console.log(severity.toUpperCase() + " " +origin+ " " + msg);
+        logger.verbose(severity.toUpperCase() + " " +origin+ " " + msg);
     }
 }
 

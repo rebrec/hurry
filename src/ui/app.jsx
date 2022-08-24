@@ -1,4 +1,5 @@
 import React from 'react'
+window.React1 = React;
 import { observer } from 'mobx-react'
 import api from '../core/api'
 const { store } = api
@@ -13,12 +14,16 @@ import { faFolder, faFolderOpen, faTerminal, faChevronLeft, faChevronRight, faTi
 library.add(fab, faFolder, faFolderOpen, faTerminal, faChevronLeft, faChevronRight, faTimes, faDesktop, faReply )
 // import ViewManager from '../core/ViewManager'
 
+import { APP_STATUS } from '../store/UiState'
+
 import Viewer from './Viewer'
 import Main from './views/Main'
 import Configuration from './views/Configuration'
 import MenuEditorView from './views/MenuEditorView'
 import ModalDialog from './components/ModalDialog'
 
+import { ReactNotifications } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 
 @observer
 export default class App extends React.Component {
@@ -39,14 +44,21 @@ export default class App extends React.Component {
 
   render() {
     const {uiState} = store;
+    const { status } = uiState.app;
     const ModalView = uiState.getModalView();
     return (<>
+      <ReactNotifications />
       {ModalView && (
         <ModalDialog onClose={uiState.hideModal} zIndex="50">
           <ModalView />
         </ModalDialog> 
       )}
-      <Viewer/>
+      {(status === APP_STATUS.INITIALIZING) && (
+        <h1>Loading...</h1>
+      )}
+      {(status !== APP_STATUS.INITIALIZING) && (
+        <Viewer/>
+      )}
     </>);
   }
 }

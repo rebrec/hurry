@@ -1,11 +1,18 @@
 import { observable, computed, action, extendObservable } from 'mobx'
 // import ping from 'ping'
 import { pingHost } from '../core/helpers/helpers';
+import Logger from '../core/helpers/logging';
+import { Store } from 'react-notifications-component';
 
-const APP_STATUS = {
+const logger = Logger('UiState');
+
+
+export const APP_STATUS = {
+    INITIALIZING: 0,
     WAITING_FOR_SEARCH: 1,
     SEARCHING: 2,
     DISPLAYING_RESULTS: 3,
+    CONFIGURATION_NEEDED: 4,
   };
 
 
@@ -13,10 +20,30 @@ class UiState {
     @observable currentView = null;
 
     @action.bound setCurrentView(view) { this.app.views.current = view; };
+    ;
+    @action.bound showConfigurationNeeded() { 
+        const l = logger.child({funcName: "showConfiguration"});
+        this.setAppStatus(APP_STATUS.CONFIGURATION_NEEDED);
+        this.setCurrentView('Configuration'); 
+    };
     
     @action.bound addView(name, View) {
         this.app.views.available.set(name, View);
     };
+
+    @action.bound setAppStatus(status) {
+        if (typeof status === 'string') {
+            status = status.toUpperCase();
+            if (!Object.keys(APP_STATUS).includes(status)) {
+                throw new Error("Invalid status " + status + ". Valid values are " + Object.keys(APP_STATUS))
+            }
+            this.app.status = APP_STATUS[status];
+        } else {
+            this.app.status = status;
+        }
+        
+    };
+
     @observable app = {
         views: {
             current: null,
@@ -26,7 +53,7 @@ class UiState {
             view: null
         },
         datasource: { caption: "N / A" },
-        status: APP_STATUS.WAITING_FOR_SEARCH,
+        status: APP_STATUS.INITIALIZING,
         menu: {
             visible: false,
             selectedTab: "Action"
@@ -50,13 +77,60 @@ class UiState {
     constructor(rootStore, config) {
         this.rootStore = rootStore;
         this.initViews();
-        this.setSearchedText(config.defaultSearch);
+        // this.setSearchedText(config.defaultSearch);
         
     }
+    async init(){
 
-    _init(){
+    }
+
+    displayToast(toastType="Error", toastTitle, toastMessage){
+        const typeMap = {
+            "Error": "danger",
+            "error": "danger",
+            "info": "info",
+            "Info": "info"
+        };
+        const notificationType = typeMap[toastType];
+        if (!notificationType) {
+            this.displayToast("Error", "displayToast", "toastType " + toastType + " is invalid!");
+        }
+        const l = logger.child('displayToast');
+        l.info({
+            toastType: toastType,
+            toastTitle: toastTitle,
+            toastMessage: toastMessage
+        });
+
+        Store.addNotification({
+            title: toastTitle,
+            message: toastMessage,
+            type: notificationType,
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 10000,
+              onScreen: true
+            }
+        });
+
+    }
+
+    async start(){
+        const l = logger.child({funcName: "start"});
         const ds = this.rootStore.datasourceManager.getDefaultDatasource();
+        if (!ds) {
+            l.debug('Default datasource not found');
+            this.displayToast('Error', 'UI Initialisation', 'There seems to be no Datasources available.\nHurry need at least 1 datasource to work properly\nYou may need to fix your configuration setting');
+            this.showConfigurationNeeded();
+            return
+        }
+        l.debug('Setting default datasource', ds);
         this.setDatasource(ds);
+        this.setAppStatus(APP_STATUS.SEARCHING);
+        
     }
 
     getModalView(){
@@ -68,28 +142,46 @@ class UiState {
     }
 
     @action.bound initViews(){
+        logger.silly('initView start');
         this.app.views.available = new Map();
-        this.clearSearch();
+        // this.clearSearch();
     }
     @action.bound setDatasource(ds){
+        logger.silly('setDatasource start', ds);
         this.app.datasource = ds;
         this.clearSearch();
     }
     @action.bound clearSearch(){
+        logger.silly('clearSearch start');
         this.setSearchResults();
         this.setAppStatus(APP_STATUS.SEARCHING);
     }
-    @action.bound setAppStatus(status){ this.app.status = status; }
-    @action.bound toggleMenu(){ this.app.menu.visible = !this.app.menu.visible; }
-    @action.bound showMenu(){ this.app.menu.visible = true; }
-    @action.bound hideMenu(){ this.app.menu.visible = false; }
-    @action.bound showModal(view){ this.app.modal.view = view; }
-    @action.bound hideModal(){ this.app.modal.view = null; }
+    // @action.bound setAppStatus(status){ this.app.status = status; }
+    @action.bound toggleMenu(){ 
+        this.app.menu.visible = !this.app.menu.visible; 
+    }
+    @action.bound showMenu(){ 
+        this.app.menu.visible = true;
+    }
+    @action.bound hideMenu(){ 
+        this.app.menu.visible = false; 
+    }
+    @action.bound showModal(view){ 
+        this.app.modal.view = view; 
+    }
+    @action.bound hideModal(){ 
+        this.app.modal.view = null; 
+    }
 
-    @action.bound setSearchedText(text){ this.search.text = text; }
-    @action.bound setSearchResults(results=[]){ this.search.results = results; }
+    @action.bound setSearchedText(text){ 
+        this.search.text = text; 
+    }
+    @action.bound setSearchResults(results=[]){ 
+        this.search.results = results; 
+    }
     // @action.bound updateSearchResultsRecord(recordIndex, newValue){ this.search.results[recordIndex] = newValue; }
     @action.bound updateSearchResultPingStatus(element){
+        logger.silly('updateSearchResultPingStatus start');
         if (element._pingableProperty) {
             const pingValue = element[element._pingableProperty];
             pingHost(pingValue)
@@ -103,13 +195,15 @@ class UiState {
                 console.error(err);
             });
         }
-
+        logger.silly('updateSearchResultPingStatus start');
     }
     @action.bound updateSearchResultsPingStatus(){
+        logger.silly('updateSearchResultsPingStatus start');
         for (let i=0;i< this.search.results.length;i++){
             const result = this.search.results[i];
             this.updateSearchResultPingStatus(result);
         }
+        logger.silly('updateSearchResultsPingStatus start');
     }
     
     @action.bound selectHost(hostElement) {
@@ -121,6 +215,7 @@ class UiState {
     }
 
     @action.bound startSearch() {
+        logger.silly('startSearch start');
         const { datasource } = this.app;
         const { text } = this.search;
         
@@ -145,14 +240,20 @@ class UiState {
                   this.setAppStatus(APP_STATUS.WAITING_FOR_SEARCH);
 
               }
+              logger.silly('startSearch start');
           });
-
     }
 
     
-    @action.bound selectMenuTab(caption){ this.app.menu.selectedTab = caption; }
+    @action.bound selectMenuTab(caption){ 
+        logger.silly('selectMenuTab start');
+        this.app.menu.selectedTab = caption; 
+        logger.silly('selectMenuTab start');
+    }
     @action.bound selectRunnerConsoleTab(caption){ 
+        logger.silly('selectRunnerConsoleTab start');
         this.app.runnerConsole.selectedTab = caption; 
+        logger.silly('selectRunnerConsoleTab start');
     }
     
 

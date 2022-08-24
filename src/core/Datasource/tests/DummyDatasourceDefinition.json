@@ -1,0 +1,12 @@
+{
+    "name": "DummyDefinition",
+    "caption": "Dummy Definition",
+    "shellName": "powershell",
+    "initCommands" : [],
+    "platforms": ["win32", "linux"],
+    "columns": [  
+        { "columnName": "Hostname", "property": "hostname" },
+        { "columnName": "IP Address", "property": "ipaddress" }
+    ],
+    "mainColumnProperty": "hostname"
+    }

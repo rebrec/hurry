@@ -55,7 +55,7 @@ class MenuItemDetailContainer extends React.Component {
         type: {
           title: "Type",
           type: "string",
-          default: "COMMAND",
+          default: "COMMAND",
           readOnly: true
         },
       },
@@ -119,7 +119,7 @@ class MenuItemDetailCommand extends React.Component {
         type: {
           title: "Type",
           type: "string",
-          default: "COMMAND",
+          default: "COMMAND",
           readOnly: true
         },
         platform :{
@@ -133,15 +133,17 @@ class MenuItemDetailCommand extends React.Component {
         },
         commands :{
           title: "Commands",
-          type: "array" ,
+          type: "array",
           items: {
             type: "string",
-          }
+            default: "COMMAND",
+          },
         },
       }
     }
     const { element } = this.props;
     const {properties} = this.props.element;
+    console.log("properties ::::::", properties);
     console.log('STRINGIFY', JSON.stringify(properties));
     return (
       <>

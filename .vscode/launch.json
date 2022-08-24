@@ -32,22 +32,19 @@
        
       },
       {
+        "name": "Debug Jest Tests",
         "type": "node",
         "request": "launch",
-        "name": "Mocha All",
-        "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-        "args": [
-            "-r",
-            "@babel/register",
-            "--timeout",
-            "999999",
-            "--colors",
-            "${workspaceFolder}/test/**/*.js",
+        "runtimeArgs": [
+          "--inspect-brk",
+          "${workspaceRoot}/node_modules/.bin/jest",
+          "--runInBand"
         ],
         "console": "integratedTerminal",
-        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
         "internalConsoleOptions": "neverOpen",
-        "protocol": "inspector"
-    },
+        "port": 9229,
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
+       
+      }
     ]
   }

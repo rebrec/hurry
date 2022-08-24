@@ -1,5 +1,8 @@
 const { observable, action } = require('mobx');
 const { ipcRenderer, shell } = require("electron");
+import Logger from './helpers/logging';
+const logger = Logger('MenuManager');
+
 export default class MenuManager{
     constructor(api){
         this._api = api;
@@ -15,6 +18,9 @@ export default class MenuManager{
                 ]
             },
             {label: '&Reload', click: () => { this._api.reloadBrowserWindow() }},
+            {label: '&Plugins', submenu: [
+                {label: '&Main View', click: () => { this._api.store.uiState.setCurrentView('Main') }},
+            ]},
             {
                 label: '&Help',
                     submenu: [

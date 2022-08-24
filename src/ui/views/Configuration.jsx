@@ -57,7 +57,7 @@ export default class Configuration extends React.Component {
             <div className="col-sm-12">
               <Form 
                 schema={schema}
-                formData={config}
+                formData={config.getGlobalConfig()}
                 onSubmit={this.onSubmitted}
                 onError={log("errors")} 
               />

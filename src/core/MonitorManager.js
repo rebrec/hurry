@@ -1,5 +1,6 @@
 const { observable, action } = require('mobx');
-
+import Logger from './helpers/logging';
+const logger = Logger('MonitorManager');
 
 export default class MonitorManager{
     @observable monitors = [];

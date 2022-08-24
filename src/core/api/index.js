@@ -1,21 +1,30 @@
-import config from '../../config'
+import { config } from '../../config'
 import store from '../../store/RootStore'
 import MenuManager from '../../core/MenuManager'
-import {remote} from "electron"
+import {remote, clipboard} from "electron"
+import Logger from '../helpers/logging';
+const logger = Logger('Api');
 const { dialog } = remote
-
 
 class Api {
     constructor() {
         this.config = config;
         this.store = store;
+        this.electron = {
+            remote: remote,
+            clipboard: clipboard
+        }
+        this.helpers = {
+            Logger: Logger
+        }
         this.remote = remote;
         this.menu = new MenuManager(this);
         this.version = require('../../../package.json').version;
     }
 
-    _init(){
-        this.store._init();
+    async _init(){
+        await this.store.init();
+        await this.store.start();
     }
 
 

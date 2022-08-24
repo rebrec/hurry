@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "experimentalDecorators": true,
-    "experimentalDecorators": true,
-    "experimentalDecorators": true,
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -18,7 +15,8 @@
     "isolatedModules": false,
     "noEmit": true,
     "jsx": "react",
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "webpack-env"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "jest.setup.js"],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/__tests__/**", "**/tests/**"]
 }

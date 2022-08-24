@@ -1,5 +1,7 @@
 import { observable, action } from 'mobx'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
+import Logger from '../core/helpers/logging';
+const logger = Logger('HistoryStore');
 
 class HistoryStore {
     @observable commands = [];
