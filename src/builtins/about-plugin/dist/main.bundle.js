@@ -38741,10 +38741,26 @@ var Plugin = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Plugin.prototype.beginLoad = function (api) { };
-    Plugin.prototype.onLoaded = function (api) { };
-    Plugin.prototype.onReady = function (api) { };
-    Plugin.prototype.onUnload = function (api) { };
+    Plugin.prototype.beginLoad = function (api) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); });
+    };
+    Plugin.prototype.onLoaded = function (api) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); });
+    };
+    Plugin.prototype.onReady = function (api) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); });
+    };
+    Plugin.prototype.onUnload = function (api) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); });
+    };
     Plugin.getConfigurationSchema = function () {
         return {};
     };

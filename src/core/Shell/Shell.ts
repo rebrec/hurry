@@ -32,11 +32,7 @@ const defaultConfig = {
 };
 
 
-const emptyShellConfig: ShellConfigInternal = { 
-  name: "", initCommands: [], preDestroyCommands: [], verboseLogging: false,
-  monitorMgr: new MonitorManager({name: "empty"}),
-  logFunction: (s: string, o: string, m: string) => {}
-}
+
 export default class Shell{
   
   @observable runner:any;
@@ -52,6 +48,11 @@ export default class Shell{
 
     this.registerInitCommands(initCommands);
     this.registerPreDestroyCommands(preDestroyCommands);
+    const emptyShellConfig: ShellConfigInternal = { 
+      name: "", initCommands: [], preDestroyCommands: [], verboseLogging: false,
+      monitorMgr: new MonitorManager({name: "empty"}),
+      logFunction: (s: string, o: string, m: string) => {}
+    }
     this.config = emptyShellConfig;
     Object.assign(this.config, defaultConfig, config);
     if (!this.config.verboseLogging) { this.config.verboseLogging = true }
@@ -71,6 +72,16 @@ export default class Shell{
   }
 
   isRunning(){
+    logger.error('isRunning: ALWAYS RETURNING FALSE DUE TO BUG THAT FREEZE WHEN RUNNING MULTIPLE PLUGINS USING SAME SHELL DONT FORGET TO FIX')
+    logger.error('isRunning: ALWAYS RETURNING FALSE DUE TO BUG THAT FREEZE WHEN RUNNING MULTIPLE PLUGINS USING SAME SHELL DONT FORGET TO FIX')
+    logger.error('isRunning: ALWAYS RETURNING FALSE DUE TO BUG THAT FREEZE WHEN RUNNING MULTIPLE PLUGINS USING SAME SHELL DONT FORGET TO FIX')
+    logger.error('isRunning: ALWAYS RETURNING FALSE DUE TO BUG THAT FREEZE WHEN RUNNING MULTIPLE PLUGINS USING SAME SHELL DONT FORGET TO FIX')
+    logger.error('isRunning: ALWAYS RETURNING FALSE DUE TO BUG THAT FREEZE WHEN RUNNING MULTIPLE PLUGINS USING SAME SHELL DONT FORGET TO FIX')
+    logger.error('isRunning: ALWAYS RETURNING FALSE DUE TO BUG THAT FREEZE WHEN RUNNING MULTIPLE PLUGINS USING SAME SHELL DONT FORGET TO FIX')
+    logger.error('isRunning: ALWAYS RETURNING FALSE DUE TO BUG THAT FREEZE WHEN RUNNING MULTIPLE PLUGINS USING SAME SHELL DONT FORGET TO FIX')
+    logger.error('isRunning: ALWAYS RETURNING FALSE DUE TO BUG THAT FREEZE WHEN RUNNING MULTIPLE PLUGINS USING SAME SHELL DONT FORGET TO FIX')
+
+    return false;
     return this.runner !== undefined;
   }
 
@@ -88,8 +99,12 @@ export default class Shell{
   }
 
   async registerInitCommands(commands: string[] = []){
+    logger.silly('registerInitCommands: ', commands)
+
     Array.prototype.push.apply(this.initCommands, commands);
     const promises: Array<any> = [];
+    // logger.silly('registerInitCommands: isRunning = ', this.isRunning())
+
     if (this.isRunning()) {
       for (const command of commands){
         promises.push(this._run(command));

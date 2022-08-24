@@ -95,7 +95,7 @@ export const pingHost = (target, options) => {
 
 export const saveConfig = (profilePath, data) => {
   const configPath = path.join(profilePath, 'config.js');
-  writeFileSync(configPath, "module.exports = " + JSON.stringify(data));
+  writeFileSync(configPath, "module.exports = " + JSON.stringify(data, null, " "));
 }
 
 

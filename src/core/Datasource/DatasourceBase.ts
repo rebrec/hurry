@@ -107,7 +107,7 @@ export abstract class DatasourceBase implements DatasourceDefinition {
     async setShell(shellInstance: Shell):Promise<boolean> { 
         if (shellInstance.name !== this.shellName) throw new Error("Invalid Shell provided");
         this._shellInstance = shellInstance;
-        this._shellInstance.registerInitCommands(this.initCommands);
+        await this._shellInstance.registerInitCommands(this.initCommands);
         return await this.init();
     }
     

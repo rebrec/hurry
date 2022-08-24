@@ -20813,9 +20813,11 @@ var DatasourceBase = /** @class */ (function () {
                         if (shellInstance.name !== this.shellName)
                             throw new Error("Invalid Shell provided");
                         this._shellInstance = shellInstance;
-                        this._shellInstance.registerInitCommands(this.initCommands);
+                        return [4 /*yield*/, this._shellInstance.registerInitCommands(this.initCommands)];
+                    case 1:
+                        _a.sent();
                         return [4 /*yield*/, this.init()];
-                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2: return [2 /*return*/, _a.sent()];
                 }
             });
         });
@@ -21027,10 +21029,26 @@ var Plugin = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Plugin.prototype.beginLoad = function (api) { };
-    Plugin.prototype.onLoaded = function (api) { };
-    Plugin.prototype.onReady = function (api) { };
-    Plugin.prototype.onUnload = function (api) { };
+    Plugin.prototype.beginLoad = function (api) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); });
+    };
+    Plugin.prototype.onLoaded = function (api) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); });
+    };
+    Plugin.prototype.onReady = function (api) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); });
+    };
+    Plugin.prototype.onUnload = function (api) {
+        return __awaiter(this, void 0, void 0, function () { return __generator(this, function (_a) {
+            return [2 /*return*/];
+        }); });
+    };
     Plugin.getConfigurationSchema = function () {
         return {};
     };
@@ -21265,7 +21283,7 @@ var pingHost = function pingHost(target, options) {
 };
 var saveConfig = function saveConfig(profilePath, data) {
   var configPath = path__WEBPACK_IMPORTED_MODULE_4___default.a.join(profilePath, 'config.js');
-  Object(fs__WEBPACK_IMPORTED_MODULE_3__["writeFileSync"])(configPath, "module.exports = " + JSON.stringify(data));
+  Object(fs__WEBPACK_IMPORTED_MODULE_3__["writeFileSync"])(configPath, "module.exports = " + JSON.stringify(data, null, " "));
 };
 var getDirectories = function getDirectories(source) {
   var dirs;
@@ -21457,7 +21475,8 @@ var getFileNameAndLineNumber = function getFileNameAndLineNumber() {
       if (funcName.indexOf('DerivedLogger') > -1) foundDerivedLogger = true;
       return res;
     });
-    return callSite.getFileName() + ':' + callSite.getLineNumber();
+    if (callSite) return callSite.getFileName() + ':' + callSite.getLineNumber();
+    return "N/A : N/A";
   } finally {
     Error.prepareStackTrace = oldStackTrace;
   }

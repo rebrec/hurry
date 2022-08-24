@@ -48,6 +48,7 @@ export class DatasourceManager{
     async init(){
         logger.silly('init()');
         // await this.scanDirectories();
+
     }
 
     async start(){
@@ -83,6 +84,9 @@ export class DatasourceManager{
 
     
     @action.bound async addDatasource(datasourceInstance: DatasourceBase, extraContext: {}) {
+        const l = logger.child({funcName: "addDatasource"});
+        l.debug('datasourceInstance=', datasourceInstance);
+        l.debug('extraContext=', extraContext);
         datasourceInstance.mergeTemplateContext(extraContext)
         if (datasourceInstance.hasOwnProperty('platforms') && datasourceInstance.platforms.indexOf(platform())<0){
             console.log('DatasourceManager.addDatasource : Skipping incompatible Datasource', datasourceInstance.name);
