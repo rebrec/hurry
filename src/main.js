@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, globalShortcut, protocol } = require("electron");
+import {windowStateKeeper} from './core/helpers/stateKeeper';
 import Path from 'path'
 import { ipcMain } from "electron";
 import Config from './config.main'
@@ -39,22 +40,25 @@ ipcMain.on("getCommandLineParameters", (event, arg) => {
 
 let mainWindow;
 Menu.setApplicationMenu(false);
-const createWindow = () => {
+const createWindow = async () => {
+  const mainWindowStateKeeper = await windowStateKeeper('main');
   // Create the browser window.
 
   // fullscreen: true,
   // width: 800,
   // height: 600,
   mainWindow = new BrowserWindow({
-  width: 800,
-  height: 600,
-  show: true,
-    webPreferences: {
-      nodeIntegration: true,
-      preload: __dirname + "/preload.js"
-    }
+    x: mainWindowStateKeeper.x,
+    y: mainWindowStateKeeper.y,
+    width: mainWindowStateKeeper.width,
+    height: mainWindowStateKeeper.height,
+    show: true,
+      webPreferences: {
+        nodeIntegration: true,
+        preload: __dirname + "/preload.js"
+      }
   });
-
+  mainWindowStateKeeper.track(mainWindow);
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
   console.log("Debug Mode:", program.debug);
