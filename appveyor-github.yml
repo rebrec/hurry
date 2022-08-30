@@ -29,7 +29,7 @@ deploy:
   description: ''
   provider: GitHub
   auth_token:
-    secure: ewc4vyGxmUjt4bGrvy0rLHwjcxmY5VUvo0qynCUKrdh8JdTbs5Vi2UyGmtRKelV2
+    secure: SOnOulthk/sU/u3ej4NXqfQ4FZ7vsblOwKg5Aj91/0pQNbKq9iMefNlyOZeygyQ1
   artifact: /.*\.*/            # upload all NuGet packages to release assets
   draft: false
   prerelease: false
