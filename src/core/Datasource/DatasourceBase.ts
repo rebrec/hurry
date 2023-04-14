@@ -4,7 +4,7 @@ import { parseTemplate, parseTemplateArray } from '../helpers/helpers';
 
 import { DatasourceDefinition, LegacyDatasourceDefinition, LegacyDatasourceDefinitionShell, LegacyDatasourceDefinitionJS, SearchResults, Column, InitCommands, TemplateContext, TemplateContextElement, Config, Platforms } from './Datasource.types'
 import { Shell, ShellOutputType } from '../Shell/Shell.types';
-import { ThemeProvider } from 'react-bootstrap';
+// import { ThemeProvider } from 'react-bootstrap';
 import { platform } from 'custom-electron-titlebar/lib/common/platform';
 import Logger from '../helpers/logging';
 const logger = Logger('DatasourceBase');
