@@ -6,24 +6,24 @@
 
 
 .history-header {
-    color: #58e0cd;
+    color: $history-header;
     // font-weight: bolder;
     font-size: 1.2em;
     text-decoration: underline;
 }
 
 .history-row{
-    background-color: #656565;
+    background-color: $history-row;
     user-select: none;
     font-size: 0.85rem;
 }
 
 .history-row:hover{
-    background-color: #424141;
+    background-color: $history-row-hover;
 }
 
 .history-view-context{
-    color: #00ffdd;
+    color: $history-view-context;
     font-weight: bold;
     text-overflow: ellipsis;
     overflow: hidden; 
@@ -31,7 +31,7 @@
 }
 
 .history-view-command-caption{
-    color: #d9ff00;
+    color: $history-view-command-caption;
     text-overflow: ellipsis;
     overflow: hidden; 
     white-space: nowrap;

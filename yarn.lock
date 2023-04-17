@@ -4296,10 +4296,10 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-custom-electron-titlebar@^3.1.0:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/custom-electron-titlebar/-/custom-electron-titlebar-3.2.1.tgz#d94f44820e6a36864ba11986b2a93faeb0dc98d7"
-  integrity sha512-Bb+vgH0Vjz6pZfT6xDQ7K9C9EZBMkcC80CdiBneV42xMc2gEl9MAJ4VhTvAdSp3ryN/YgZgbLzqoyfJU6nNkRg==
+custom-electron-titlebar@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/custom-electron-titlebar/-/custom-electron-titlebar-4.1.2.tgz#8ceb6e9ef8ac32e0bea8a3a78ea315096582d49f"
+  integrity sha512-sLNLRYhDR/UOCP0oiO6dAiyMrgTr7yb8JjxE/MK2eAJwO+UbbF1lXOG3RxwWFwPJgJfyZnk0rPC8Ke+GKe4M4A==
 
 cyclist@^1.0.1:
   version "1.0.1"

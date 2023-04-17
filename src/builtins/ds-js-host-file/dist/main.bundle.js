@@ -20704,6 +20704,7 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 };
 
 
+// import { ThemeProvider } from 'react-bootstrap';
 
 var logger = Object(_helpers_logging__WEBPACK_IMPORTED_MODULE_2__["default"])('DatasourceBase');
 var DatasourceBase = /** @class */ (function () {

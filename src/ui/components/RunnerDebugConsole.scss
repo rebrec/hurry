@@ -7,7 +7,7 @@
     border-width:1px;
 }
 .console-row:hover{
-    background: #072991;
+    background: $process-console-row-hover;
 }
 
 .process-console-stdin::before {
@@ -17,17 +17,18 @@
 
 .process-console-stdin {
     //background-color: $console-background;
-    color: cyan;
+    color: $process-console-stdin;
     font-style: italic;
     font-weight: bold;
 }
 .process-console-stdout {
     //background-color: $console-background;
-    color: #8cff20;
+    color: $process-console-stdout;
     font-style: normal;
     font-size: smaller;
 
 }
+
 span.shell-prompt {
     padding-left: 0.5em;
     padding-right: 0.5em;

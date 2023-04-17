@@ -7,11 +7,11 @@
   background: $hostlistline-selected-background;
 }
 .hostlistline-status-unknown{
-  background: #e4ece7;
+  background: $hostlistline-status-unknown;
 }
 .hostlistline-status-online{
-  background: #6af19e;
+  background: $hostlistline-status-online;
 }
 .hostlistline-status-offline{
-  background: #cf7458;
+  background: $hostlistline-status-offline;
 }

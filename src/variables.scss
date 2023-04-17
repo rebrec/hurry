@@ -1,9 +1,33 @@
-$color1: #4f4d4e;
+$color1: #1d1d1d;
 $textColor: #cbc9cb;
-$color3: #716e70;
-$borderColor: #bbb6b9;
+$color3: #383838;
+
+$lineColor:#1d1d1d;
+$hoverColor: lighten($lineColor, 10%);
+
+$borderColor: #474546;
 $hostlistline-selected-background: #c2c2c2;
 $console-background: darkblue;
 
-$history-background: #656565;
+
+$modal-background-color: rgba(24, 24, 24, 0.7);
+$modal-box-background-color: $color1 - 10;
+$modal-box-border-color: $color1 + 2;
+$modal-box-close-hover-color: $color1;
+
+
+$hostlistline-status-online: $lineColor;
+$hostlistline-status-offline: #cf7458;
+$hostlistline-status-unknown: #e4ece7;
+
+$process-console-stdout:#8cff20;
+$process-console-stdin: cyan;
+$process-console-row-hover: #072991;
+
+$history-header: #627e7a;
+$history-row: $lineColor;
+$history-row-hover: $hoverColor;
+$history-view-context: #477e76;
+$history-view-command-caption: #717a3c;
+$history-background: $color1;
 $console-background: $history-background;

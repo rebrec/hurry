@@ -4,6 +4,7 @@ import Path from 'path'
 import { ipcMain } from "electron";
 import Config from './config.main'
 import "./main-process/ipcMain";
+
 const homedir = require('os').homedir();
 let config;
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -11,6 +12,13 @@ if (require("electron-squirrel-startup")) {
   // eslint-disable-line global-require
   app.quit();
 }
+
+
+// let MyTitleBar = new customTitlebar.Titlebar({
+//   backgroundColor: customTitlebar.Color.fromHex('#03a9f4'),
+//   shadow: true,
+//   // icon: './icon.svg'
+// });
 
 import { Command } from 'commander';
 const isDevelopment = process.env.NODE_ENV !== 'production';
@@ -52,6 +60,7 @@ const createWindow = async () => {
     y: mainWindowStateKeeper.y,
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
+    titleBarStyle: 'hidden',
     show: true,
       webPreferences: {
         nodeIntegration: true,
